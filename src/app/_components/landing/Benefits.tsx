@@ -83,20 +83,19 @@ export default function Benefits() {
           ))}
         </div>
         
-        {/* CTA Box */}
-        <div className="mx-auto mt-16 max-w-2xl rounded-2xl bg-gradient-to-r from-dark-700 to-dark-800 p-8 shadow-card border border-dark-600">
-          <div className="flex flex-col items-center justify-between gap-8 md:flex-row">
-            <div>
-              <h3 className="text-xl font-bold text-dark-50">Ready to get started?</h3>
-              <p className="mt-2 text-dark-200">Try Sonic Flow free for 7 days.</p>
-            </div>
-            <Link 
-              href="#pricing" 
-              className="whitespace-nowrap rounded-xl bg-accent-600 px-6 py-3 text-center text-base font-medium text-dark-50 shadow-md transition-colors hover:bg-accent-700"
-            >
-              Start Free Trial
-            </Link>
-          </div>
+        {/* CTA Section */}
+        <div className="mx-auto mt-16 max-w-2xl text-center">
+          <h3 className="text-xl font-bold text-dark-50 mb-3">Ready to get started?</h3>
+          <p className="mb-6 text-dark-200">Try Sonic Flow free for 7 days.</p>
+          <Link 
+            href="#pricing" 
+            className="whitespace-nowrap rounded-xl bg-accent-600 px-8 py-4 text-center text-base font-medium text-dark-50 shadow-md transition-colors hover:bg-accent-700 inline-block"
+          >
+            Start Free Trial
+          </Link>
+          
+          {/* Orange divider */}
+          <div className="mx-auto mt-12 h-px w-32 bg-gradient-to-r from-accent-700/20 via-accent-600/50 to-accent-700/20"></div>
         </div>
       </div>
     </section>

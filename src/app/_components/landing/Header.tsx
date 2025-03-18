@@ -20,7 +20,6 @@ export default function Header() {
 
   const navItems = [
     { name: 'Features', href: '#features' },
-    { name: 'How It Works', href: '#how-it-works' },
     { name: 'Pricing', href: '#pricing' },
     { name: 'FAQ', href: '#faq' }
   ];
@@ -42,7 +41,7 @@ export default function Header() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
               </svg>
             </div>
-            <span className="text-xl font-bold text-dark-50">Sonic Flow</span>
+            <span className="text-2xl font-bold text-dark-50">Sonic Flow</span>
           </Link>
 
           {/* Desktop Navigation */}

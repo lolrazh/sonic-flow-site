@@ -5,7 +5,6 @@ import {
   Footer, 
   Header,
   Hero, 
-  HowItWorks, 
   Pricing, 
   UserPersonas 
 } from "~/app/_components/landing";
@@ -17,7 +16,6 @@ export default function Home() {
       <Hero />
       <UserPersonas />
       <CompatibleApps />
-      <HowItWorks />
       <Pricing />
       <Benefits />
       <FAQ />

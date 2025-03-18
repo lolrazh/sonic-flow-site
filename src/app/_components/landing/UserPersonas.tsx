@@ -45,23 +45,24 @@ export default function UserPersonas() {
           {personas.map((persona, index) => (
             <div
               key={index}
-              className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-dark-800 to-dark-700 p-1"
+              className="group relative overflow-hidden rounded-2xl bg-dark-800/50 p-8 backdrop-blur-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
             >
-              {/* Gradient border effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-accent-700/30 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
+              {/* Hover gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-br from-accent-700/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
               
-              <div className="relative flex h-full flex-col rounded-xl bg-dark-800 p-8">
-                <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full bg-dark-700 p-3">
+              {/* Card content */}
+              <div className="relative z-10">
+                <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-dark-700 p-3">
                   {persona.icon}
                 </div>
                 <h3 className="mb-3 text-xl font-semibold text-dark-50">
                   {persona.title}
                 </h3>
                 <p className="text-dark-200">{persona.description}</p>
-                
-                {/* Card accent */}
-                <div className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-accent-700 to-accent-500/30"></div>
               </div>
+              
+              {/* Card accent */}
+              <div className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-accent-700/50 to-transparent opacity-50 transition-opacity duration-300 group-hover:opacity-100"></div>
             </div>
           ))}
         </div>
