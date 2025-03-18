@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { LoadingSpinner } from "~/components/ui";
-import { getSession, onAuthStateChange } from "~/lib/auth";
+import { supabase } from "~/lib/auth";
 
 export default function DashboardLayout({
   children,
@@ -17,16 +17,16 @@ export default function DashboardLayout({
   useEffect(() => {
     const checkUser = async () => {
       try {
-        const { session, error: sessionError } = await getSession();
+        const { data, error } = await supabase.auth.getSession();
         
-        if (sessionError) {
-          console.error("Error checking auth session:", sessionError);
+        if (error) {
+          console.error("Error checking auth session:", error);
           setError("Authentication error. Please try logging in again.");
           router.push('/login');
           return;
         }
         
-        if (!session) {
+        if (!data.session) {
           console.log("No active session found, redirecting to login");
           router.push('/login');
         } else {
@@ -42,8 +42,8 @@ export default function DashboardLayout({
     checkUser();
     
     // Listen for auth state changes
-    const subscription = onAuthStateChange((session) => {
-      if (!session) {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_OUT' || !session) {
         router.push('/login');
       }
     });

@@ -1,22 +1,13 @@
 import { createClient } from "@supabase/supabase-js";
 import { type Session } from "@supabase/supabase-js";
+import 'cross-fetch/polyfill';
 
-// Create and export Supabase client with polyfill disabled for browser compatibility
+// Create and export Supabase client
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
-// Create client with fetch implementation options for browser compatibility
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
-  auth: {
-    persistSession: true,
-    autoRefreshToken: true,
-    detectSessionInUrl: true
-  },
-  global: {
-    // Disable node-fetch polyfill
-    fetch: fetch.bind(globalThis)
-  }
-});
+// Create a simpler client config for better browser compatibility
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 // Auth helper functions
 export async function getSession(): Promise<{ session: Session | null; error: Error | null }> {

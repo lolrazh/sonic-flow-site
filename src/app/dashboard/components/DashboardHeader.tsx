@@ -2,15 +2,16 @@
 
 import { BiLogOut } from "react-icons/bi";
 import { SiteName } from "~/components/ui";
-import { signOut } from "~/lib/auth";
+import { supabase } from "~/lib/auth";
 
 export default function DashboardHeader() {
   const handleSignOut = async () => {
-    const { error } = await signOut();
-    if (error) {
+    try {
+      await supabase.auth.signOut();
+      window.location.href = "/";
+    } catch (error) {
       console.error("Error signing out:", error);
     }
-    window.location.href = "/";
   };
 
   return (

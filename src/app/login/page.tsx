@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
-import { SiteName } from "~/components/ui";
+import { SiteName, LoadingSpinner } from "~/components/ui";
 import { supabase, getSession, getRedirectUrl, onAuthStateChange } from "~/lib/auth";
 
 export default function Login() {
@@ -18,14 +18,7 @@ export default function Login() {
   useEffect(() => {
     const checkSession = async () => {
       try {
-        const { session, error: sessionError } = await getSession();
-        
-        if (sessionError) {
-          console.error("Session check error:", sessionError);
-          setError("Error checking your session. Please try again.");
-          setLoading(false);
-          return;
-        }
+        const { data: { session } } = await supabase.auth.getSession();
         
         if (session) {
           router.push("/dashboard");
@@ -42,8 +35,8 @@ export default function Login() {
     checkSession();
 
     // Add an auth state change listener
-    const subscription = onAuthStateChange((session) => {
-      if (session) {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN' && session) {
         console.log('User signed in, redirecting to dashboard');
         router.push("/dashboard");
       }
@@ -56,11 +49,7 @@ export default function Login() {
   }, [router]);
 
   if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-dark-900">
-        <div className="h-12 w-12 animate-spin rounded-full border-4 border-dark-600 border-t-accent-600"></div>
-      </div>
-    );
+    return <LoadingSpinner fullScreen />;
   }
 
   return (
@@ -104,15 +93,6 @@ export default function Login() {
                       inputText: '#f9fafb', // dark-50
                       inputBorder: '#374151', // dark-600
                     },
-                    borderWidths: {
-                      buttonBorderWidth: '1px',
-                      inputBorderWidth: '1px',
-                    },
-                    radii: {
-                      borderRadiusButton: '0.5rem',
-                      buttonBorderRadius: '0.5rem',
-                      inputBorderRadius: '0.5rem',
-                    },
                   },
                 },
                 className: {
@@ -124,14 +104,8 @@ export default function Login() {
               }}
               theme="dark"
               providers={["google"]}
-              providerScopes={{
-                google: 'profile email'
-              }}
-              redirectTo={getRedirectUrl()}
-              onlyThirdPartyProviders={false}
-              magicLink={false}
+              redirectTo={`${typeof window !== 'undefined' ? window.location.origin : ''}/dashboard`}
               view={isSignUp ? "sign_up" : "sign_in"}
-              showLinks={true}
             />
           </div>
 
