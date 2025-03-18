@@ -105,13 +105,12 @@ export default function Benefits() {
           <div className="mx-auto max-w-2xl text-center">
             <h3 className="text-3xl font-bold text-dark-50 mb-4">Ready to get started?</h3>
             <p className="mb-8 text-xl text-dark-200">Try Sonic Flow free for 7 days.</p>
-            <a 
-              href="#pricing" 
-              onClick={(e) => handleScrollToSection(e, '#pricing')}
+            <Link 
+              href="/login"
               className="whitespace-nowrap rounded-xl bg-accent-600 px-8 py-4 text-center text-lg font-medium text-dark-50 shadow-md transition-colors hover:bg-accent-700 inline-block cursor-pointer"
             >
-              Start Free Trial
-            </a>
+              Get Started
+            </Link>
           </div>
         </div>
       </div>

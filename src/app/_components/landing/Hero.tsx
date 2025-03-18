@@ -45,14 +45,13 @@ export default function Hero() {
               Save time, boost productivity, and say goodbye to manual typing.
             </p>
             <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-              <a 
-                href="#pricing" 
-                onClick={(e) => handleScrollToSection(e, '#pricing')}
+              <Link 
+                href="/login"
                 className="group relative overflow-hidden rounded-xl bg-accent-700 px-6 py-3 text-center text-base font-medium text-dark-50 shadow-md transition-colors hover:bg-accent-800 cursor-pointer"
               >
-                <span className="relative z-10">Start 7-Day Free Trial</span>
+                <span className="relative z-10">Get Started</span>
                 <span className="absolute bottom-0 left-0 h-1 w-full bg-accent-900 transition-all duration-300 group-hover:h-full"></span>
-              </a>
+              </Link>
               <a 
                 href="#features" 
                 onClick={(e) => handleScrollToSection(e, '#features')}

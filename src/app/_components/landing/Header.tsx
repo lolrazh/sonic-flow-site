@@ -83,7 +83,7 @@ export default function Header() {
               ))}
             </ul>
             <Link
-              href="/signup"
+              href="/login"
               className="ml-8 rounded-xl bg-accent-600 px-5 py-2 text-dark-50 shadow-sm transition-colors hover:bg-accent-700"
             >
               Get Started
@@ -129,7 +129,7 @@ export default function Header() {
                 ))}
                 <li className="pt-2">
                   <Link
-                    href="/signup"
+                    href="/login"
                     className="block rounded-xl bg-accent-600 px-5 py-3 text-center text-dark-50 shadow-sm transition-colors hover:bg-accent-700"
                   >
                     Get Started
