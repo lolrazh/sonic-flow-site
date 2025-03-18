@@ -1,7 +1,9 @@
 import { 
   Benefits, 
-  CompatibleApps, 
+  CompatibleApps,
+  FAQ,
   Footer, 
+  Header,
   Hero, 
   HowItWorks, 
   Pricing, 
@@ -11,12 +13,14 @@ import {
 export default function Home() {
   return (
     <main className="min-h-screen">
+      <Header />
       <Hero />
       <UserPersonas />
       <CompatibleApps />
       <HowItWorks />
       <Pricing />
       <Benefits />
+      <FAQ />
       <Footer />
     </main>
   );

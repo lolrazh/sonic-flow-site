@@ -35,9 +35,6 @@ export default function Footer() {
             <Link href="/cookies" className="transition-colors hover:text-accent-500">
               Cookie Policy
             </Link>
-            <Link href="/contact" className="transition-colors hover:text-accent-500">
-              Contact Support
-            </Link>
           </div>
         </div>
         

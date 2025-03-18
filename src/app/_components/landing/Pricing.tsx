@@ -1,17 +1,62 @@
 "use client";
 
 import Link from 'next/link';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 export default function Pricing() {
+  const [isAnnual, setIsAnnual] = useState(true);
+  
+  // Price values
+  const monthlyPrice = 6;
+  const annualPrice = 4.5;
+  const savingsPercent = 25;
+  
   return (
     <section className="bg-dark-900 py-24" id="pricing">
       <div className="container mx-auto px-4">
         <h2 className="mb-6 text-center text-3xl font-bold text-dark-50 md:text-4xl">
           Simple <span className="text-accent-600">Pricing</span>
         </h2>
-        <p className="mx-auto mb-16 max-w-2xl text-center text-dark-200">
-          One low monthly price. Unlimited transcription. Cancel anytime.
+        <p className="mx-auto mb-8 max-w-2xl text-center text-dark-200">
+          One low price. Unlimited transcription. Cancel anytime.
         </p>
+        
+        {/* Billing toggle */}
+        <div className="mb-12 flex items-center justify-center">
+          <div className="relative inline-flex items-center rounded-full bg-dark-800 p-1">
+            <button
+              onClick={() => setIsAnnual(false)}
+              className={`relative z-10 rounded-full px-4 py-2 text-sm transition-colors ${
+                !isAnnual ? 'text-dark-50' : 'text-dark-300'
+              }`}
+            >
+              Monthly
+            </button>
+            
+            <button
+              onClick={() => setIsAnnual(true)}
+              className={`relative z-10 rounded-full px-4 py-2 text-sm transition-colors ${
+                isAnnual ? 'text-dark-50' : 'text-dark-300'
+              }`}
+            >
+              Annual
+              <span className="ml-1 inline-flex items-center rounded-full bg-accent-600/20 px-2 py-0.5 text-xs font-medium text-accent-500">
+                Save {savingsPercent}%
+              </span>
+            </button>
+            
+            <motion.div
+              className="absolute inset-0 z-0 rounded-full bg-dark-700"
+              initial={false}
+              animate={{
+                x: isAnnual ? '50%' : '0%',
+                width: '50%',
+              }}
+              transition={{ type: 'spring', bounce: 0.3, duration: 0.6 }}
+            />
+          </div>
+        </div>
         
         <div className="mx-auto max-w-md">
           <div className="overflow-hidden rounded-3xl border border-dark-600 bg-gradient-to-br from-dark-800 to-dark-700 shadow-card">
@@ -22,8 +67,12 @@ export default function Pricing() {
               <div className="rounded-2xl bg-dark-800/60 p-6 text-center">
                 <h3 className="text-2xl font-bold text-dark-50">Unlimited Plan</h3>
                 <div className="my-4 flex items-center justify-center">
-                  <span className="text-6xl font-bold text-accent-600">$5</span>
-                  <span className="ml-2 text-dark-300">/month</span>
+                  <span className="text-6xl font-bold text-accent-600">
+                    ${isAnnual ? annualPrice : monthlyPrice}
+                  </span>
+                  <span className="ml-2 text-dark-300">
+                    /{isAnnual ? 'month, billed annually' : 'month'}
+                  </span>
                 </div>
                 <p className="text-dark-200">7-Day Free Trial</p>
               </div>
