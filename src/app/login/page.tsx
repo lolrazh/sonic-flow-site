@@ -3,29 +3,38 @@
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { createClient } from "@supabase/supabase-js";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
-import SiteName from "~/app/_components/shared/SiteName";
-
-// Create Supabase client
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+import { SiteName } from "~/components/ui";
+import { supabase, getSession, getRedirectUrl, onAuthStateChange } from "~/lib/auth";
 
 export default function Login() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const isSignUp = searchParams.get('auth') === 'signup';
 
   useEffect(() => {
     const checkSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (session) {
-        router.push("/dashboard");
-      } else {
+      try {
+        const { session, error: sessionError } = await getSession();
+        
+        if (sessionError) {
+          console.error("Session check error:", sessionError);
+          setError("Error checking your session. Please try again.");
+          setLoading(false);
+          return;
+        }
+        
+        if (session) {
+          router.push("/dashboard");
+        } else {
+          setLoading(false);
+        }
+      } catch (err) {
+        console.error("Unexpected error:", err);
+        setError("An unexpected error occurred. Please try again.");
         setLoading(false);
       }
     };
@@ -33,14 +42,12 @@ export default function Login() {
     checkSession();
 
     // Add an auth state change listener
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        if (event === 'SIGNED_IN' && session) {
-          console.log('User signed in, redirecting to dashboard');
-          router.push("/dashboard");
-        }
+    const subscription = onAuthStateChange((session) => {
+      if (session) {
+        console.log('User signed in, redirecting to dashboard');
+        router.push("/dashboard");
       }
-    );
+    });
 
     // Cleanup the subscription when component unmounts
     return () => {
@@ -68,6 +75,12 @@ export default function Login() {
       {/* Auth UI */}
       <div className="container mx-auto flex flex-1 flex-col items-center justify-center px-4 py-12">
         <div className="w-full max-w-md">
+          {error && (
+            <div className="mb-4 rounded-lg bg-red-900/20 p-4 text-red-400">
+              <p>{error}</p>
+            </div>
+          )}
+          
           <div className="mb-8 text-center">
             <h1 className="mb-2 text-3xl font-bold text-dark-50">
               {isSignUp ? "Create your account" : "Welcome back"}
@@ -114,7 +127,7 @@ export default function Login() {
               providerScopes={{
                 google: 'profile email'
               }}
-              redirectTo={`${typeof window !== 'undefined' ? window.location.origin : ''}/dashboard`}
+              redirectTo={getRedirectUrl()}
               onlyThirdPartyProviders={false}
               magicLink={false}
               view={isSignUp ? "sign_up" : "sign_in"}

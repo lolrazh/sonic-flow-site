@@ -1,17 +1,15 @@
 "use client";
 
 import { BiLogOut } from "react-icons/bi";
-import { createClient } from "@supabase/supabase-js";
-import SiteName from "~/app/_components/shared/SiteName";
-
-// Create Supabase client
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+import { SiteName } from "~/components/ui";
+import { signOut } from "~/lib/auth";
 
 export default function DashboardHeader() {
   const handleSignOut = async () => {
-    await supabase.auth.signOut();
+    const { error } = await signOut();
+    if (error) {
+      console.error("Error signing out:", error);
+    }
     window.location.href = "/";
   };
 

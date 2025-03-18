@@ -2,12 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { createClient } from "@supabase/supabase-js";
-
-// Create Supabase client
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+import { LoadingSpinner } from "~/components/ui";
+import { getSession, onAuthStateChange } from "~/lib/auth";
 
 export default function DashboardLayout({
   children,
@@ -15,15 +11,17 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
     const checkUser = async () => {
       try {
-        const { data: { session }, error } = await supabase.auth.getSession();
+        const { session, error: sessionError } = await getSession();
         
-        if (error) {
-          console.error("Error checking auth session:", error);
+        if (sessionError) {
+          console.error("Error checking auth session:", sessionError);
+          setError("Authentication error. Please try logging in again.");
           router.push('/login');
           return;
         }
@@ -35,8 +33,8 @@ export default function DashboardLayout({
           console.log("Active session found, user is authenticated");
           setIsLoading(false);
         }
-      } catch (error) {
-        console.error("Unexpected error checking session:", error);
+      } catch (err) {
+        console.error("Unexpected error checking session:", err);
         router.push('/login');
       }
     };
@@ -44,13 +42,11 @@ export default function DashboardLayout({
     checkUser();
     
     // Listen for auth state changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        if (event === 'SIGNED_OUT' || !session) {
-          router.push('/login');
-        }
+    const subscription = onAuthStateChange((session) => {
+      if (!session) {
+        router.push('/login');
       }
-    );
+    });
 
     // Cleanup subscription
     return () => {
@@ -59,9 +55,16 @@ export default function DashboardLayout({
   }, [router]);
 
   if (isLoading) {
+    return <LoadingSpinner fullScreen />;
+  }
+
+  if (error) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-dark-900">
-        <div className="h-12 w-12 animate-spin rounded-full border-4 border-dark-600 border-t-accent-600"></div>
+      <div className="flex min-h-screen flex-col items-center justify-center bg-dark-900 p-4 text-center">
+        <div className="rounded-lg bg-red-900/20 p-6 text-red-400">
+          <h2 className="mb-2 text-xl font-semibold">Authentication Error</h2>
+          <p>{error}</p>
+        </div>
       </div>
     );
   }
