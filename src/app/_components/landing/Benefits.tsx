@@ -4,6 +4,24 @@ import Link from 'next/link';
 import PillUI from './PillUI';
 
 export default function Benefits() {
+  // Smooth scroll function
+  const handleScrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    
+    const targetId = href.replace('#', '');
+    const element = document.getElementById(targetId);
+    
+    if (element) {
+      window.scrollTo({
+        behavior: 'smooth',
+        top: element.offsetTop - 100 // Offset for header height
+      });
+      
+      // Update URL without page reload
+      window.history.pushState({}, '', href);
+    }
+  };
+
   const benefits = [
     {
       title: "Unobtrusive UI",
@@ -82,20 +100,22 @@ export default function Benefits() {
             </div>
           ))}
         </div>
-        
-        {/* CTA Section */}
-        <div className="mx-auto mt-16 max-w-2xl text-center">
-          <h3 className="text-xl font-bold text-dark-50 mb-3">Ready to get started?</h3>
-          <p className="mb-6 text-dark-200">Try Sonic Flow free for 7 days.</p>
-          <Link 
-            href="#pricing" 
-            className="whitespace-nowrap rounded-xl bg-accent-600 px-8 py-4 text-center text-base font-medium text-dark-50 shadow-md transition-colors hover:bg-accent-700 inline-block"
-          >
-            Start Free Trial
-          </Link>
-          
-          {/* Orange divider */}
-          <div className="mx-auto mt-12 h-px w-32 bg-gradient-to-r from-accent-700/20 via-accent-600/50 to-accent-700/20"></div>
+      </div>
+      
+      {/* CTA Section - Made bigger and separated */}
+      <div className="mt-32 mb-32 py-16 bg-dark-800/30">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-2xl text-center">
+            <h3 className="text-2xl font-bold text-dark-50 mb-4">Ready to get started?</h3>
+            <p className="mb-8 text-lg text-dark-200">Try Sonic Flow free for 7 days.</p>
+            <a 
+              href="#pricing" 
+              onClick={(e) => handleScrollToSection(e, '#pricing')}
+              className="whitespace-nowrap rounded-xl bg-accent-600 px-10 py-5 text-center text-lg font-medium text-dark-50 shadow-md transition-colors hover:bg-accent-700 inline-block cursor-pointer"
+            >
+              Start Free Trial
+            </a>
+          </div>
         </div>
       </div>
     </section>

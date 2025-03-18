@@ -5,6 +5,24 @@ import Link from 'next/link';
 import PillUI from './PillUI';
 
 export default function Hero() {
+  // Smooth scroll function
+  const handleScrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    
+    const targetId = href.replace('#', '');
+    const element = document.getElementById(targetId);
+    
+    if (element) {
+      window.scrollTo({
+        behavior: 'smooth',
+        top: element.offsetTop - 100 // Offset for header height
+      });
+      
+      // Update URL without page reload
+      window.history.pushState({}, '', href);
+    }
+  };
+  
   return (
     <section className="relative bg-gradient-to-b from-dark-900 to-dark-800 py-32 md:py-40">
       {/* Background gradient elements */}
@@ -27,19 +45,21 @@ export default function Hero() {
               Save time, boost productivity, and say goodbye to manual typing.
             </p>
             <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-              <Link 
+              <a 
                 href="#pricing" 
-                className="group relative overflow-hidden rounded-xl bg-accent-700 px-6 py-3 text-center text-base font-medium text-dark-50 shadow-md transition-colors hover:bg-accent-800"
+                onClick={(e) => handleScrollToSection(e, '#pricing')}
+                className="group relative overflow-hidden rounded-xl bg-accent-700 px-6 py-3 text-center text-base font-medium text-dark-50 shadow-md transition-colors hover:bg-accent-800 cursor-pointer"
               >
                 <span className="relative z-10">Start 7-Day Free Trial</span>
                 <span className="absolute bottom-0 left-0 h-1 w-full bg-accent-900 transition-all duration-300 group-hover:h-full"></span>
-              </Link>
-              <Link 
+              </a>
+              <a 
                 href="#features" 
-                className="rounded-xl border border-dark-500 bg-dark-700 px-6 py-3 text-center text-base font-medium text-dark-100 shadow-sm transition-colors hover:bg-dark-600"
+                onClick={(e) => handleScrollToSection(e, '#features')}
+                className="rounded-xl border border-dark-500 bg-dark-700 px-6 py-3 text-center text-base font-medium text-dark-100 shadow-sm transition-colors hover:bg-dark-600 cursor-pointer"
               >
                 Explore Features
-              </Link>
+              </a>
             </div>
           </div>
 

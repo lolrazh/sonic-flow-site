@@ -24,6 +24,29 @@ export default function Header() {
     { name: 'FAQ', href: '#faq' }
   ];
 
+  // Smooth scroll function
+  const handleScrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    
+    const targetId = href.replace('#', '');
+    const element = document.getElementById(targetId);
+    
+    if (element) {
+      // Close mobile menu if open
+      if (mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+      
+      window.scrollTo({
+        behavior: 'smooth',
+        top: element.offsetTop - 100 // Offset for header height
+      });
+      
+      // Update URL without page reload
+      window.history.pushState({}, '', href);
+    }
+  };
+
   return (
     <header 
       className={`fixed top-0 z-50 w-full transition-all duration-300 ${
@@ -49,12 +72,13 @@ export default function Header() {
             <ul className="flex space-x-8">
               {navItems.map((item) => (
                 <li key={item.name}>
-                  <Link 
+                  <a 
                     href={item.href}
-                    className="text-dark-200 transition-colors hover:text-accent-500"
+                    onClick={(e) => handleScrollToSection(e, item.href)}
+                    className="text-dark-200 transition-colors hover:text-accent-500 cursor-pointer"
                   >
                     {item.name}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -94,20 +118,19 @@ export default function Header() {
               <ul className="flex flex-col space-y-4">
                 {navItems.map((item) => (
                   <li key={item.name}>
-                    <Link 
+                    <a 
                       href={item.href}
+                      onClick={(e) => handleScrollToSection(e, item.href)}
                       className="block py-2 text-dark-200 transition-colors hover:text-accent-500"
-                      onClick={() => setMobileMenuOpen(false)}
                     >
                       {item.name}
-                    </Link>
+                    </a>
                   </li>
                 ))}
                 <li className="pt-2">
                   <Link
                     href="/signup"
                     className="block rounded-xl bg-accent-600 px-5 py-3 text-center text-dark-50 shadow-sm transition-colors hover:bg-accent-700"
-                    onClick={() => setMobileMenuOpen(false)}
                   >
                     Get Started
                   </Link>

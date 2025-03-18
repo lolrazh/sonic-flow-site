@@ -1,38 +1,45 @@
 "use client";
 
 import { 
-  AlignCenter, 
-  Book, 
-  Calendar, 
-  MessageCircle,
-  Code, 
+  AlignCenter,
+  BookText,
+  Bookmark, 
+  Code2, 
+  FileCode,
   FileText, 
   Github, 
   Mail, 
   MessageSquare, 
-  Settings, 
+  Pencil,
+  Search,
+  Slack,
   Table, 
   Terminal, 
   Type,
+  Video,
+  Zap
 } from "lucide-react";
 import { IconCloud } from "~/components/magicui/icon-cloud";
 
 export default function CompatibleApps() {
-  // Icon array for the cloud
+  // Icon array for the cloud - representing popular apps
   const appIcons = [
-    <Terminal size={75} color="#F97316" strokeWidth={1.5} />,
-    <Book size={75} color="#EC4899" strokeWidth={1.5} />,
-    <Calendar size={75} color="#8B5CF6" strokeWidth={1.5} />,
-    <AlignCenter size={75} color="#1D4ED8" strokeWidth={1.5} />,
-    <Code size={75} color="#10B981" strokeWidth={1.5} />,
-    <MessageCircle size={75} color="#F59E0B" strokeWidth={1.5} />,
-    <Github size={75} color="#6B7280" strokeWidth={1.5} />,
-    <Mail size={75} color="#EF4444" strokeWidth={1.5} />,
-    <MessageSquare size={75} color="#8B5CF6" strokeWidth={1.5} />,
-    <Table size={75} color="#0EA5E9" strokeWidth={1.5} />,
-    <FileText size={75} color="#6366F1" strokeWidth={1.5} />,
-    <Type size={75} color="#EF4444" strokeWidth={1.5} />,
-    <Settings size={75} color="#6B7280" strokeWidth={1.5} />,
+    <Mail size={75} color="#EA4335" strokeWidth={1.5} />, // Gmail
+    <Slack size={75} color="#4A154B" strokeWidth={1.5} />, // Slack
+    <Github size={75} color="#181717" strokeWidth={1.5} />, // GitHub
+    <FileCode size={75} color="#007ACC" strokeWidth={1.5} />, // VS Code
+    <Terminal size={75} color="#000000" strokeWidth={1.5} />, // Terminal/Cursor
+    <MessageSquare size={75} color="#10A37F" strokeWidth={1.5} />, // ChatGPT
+    <Zap size={75} color="#8E75B2" strokeWidth={1.5} />, // Gemini
+    <BookText size={75} color="#000000" strokeWidth={1.5} />, // Notion
+    <Type size={75} color="#4285F4" strokeWidth={1.5} />, // Google Docs
+    <Table size={75} color="#0F9D58" strokeWidth={1.5} />, // Google Sheets
+    <Video size={75} color="#DB4437" strokeWidth={1.5} />, // Google Meet
+    <Search size={75} color="#4285F4" strokeWidth={1.5} />, // Google Search
+    <Pencil size={75} color="#FBBC05" strokeWidth={1.5} />, // Google Keep
+    <Code2 size={75} color="#F24E1E" strokeWidth={1.5} />, // Figma
+    <Bookmark size={75} color="#0072C6" strokeWidth={1.5} />, // Outlook
+    <AlignCenter size={75} color="#00ADEF" strokeWidth={1.5} />, // Microsoft Word
   ];
 
   return (
@@ -46,7 +53,7 @@ export default function CompatibleApps() {
           Seamlessly compatible with all your favorite apps and platforms
         </p>
         
-        <div className="relative mx-auto h-[400px] w-full max-w-3xl">
+        <div className="relative mx-auto h-[450px] w-full max-w-3xl flex items-center justify-center">
           <IconCloud icons={appIcons} />
         </div>
         

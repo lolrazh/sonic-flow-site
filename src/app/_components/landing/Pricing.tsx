@@ -9,8 +9,8 @@ export default function Pricing() {
   
   // Price values
   const monthlyPrice = 6;
-  const annualPrice = 4.5;
-  const savingsPercent = 25;
+  const annualPrice = 4;
+  const savingsPercent = 33;
   
   return (
     <section className="bg-dark-900 py-24" id="pricing">
@@ -25,26 +25,30 @@ export default function Pricing() {
         {/* Billing toggle */}
         <div className="mb-12 flex items-center justify-center">
           <div className="relative inline-flex items-center rounded-full bg-dark-800 p-1">
-            <button
-              onClick={() => setIsAnnual(false)}
-              className={`relative z-10 rounded-full px-4 py-2 text-sm transition-colors ${
-                !isAnnual ? 'text-dark-50' : 'text-dark-300'
-              }`}
-            >
-              Monthly
-            </button>
-            
-            <button
-              onClick={() => setIsAnnual(true)}
-              className={`relative z-10 rounded-full px-4 py-2 text-sm transition-colors ${
-                isAnnual ? 'text-dark-50' : 'text-dark-300'
-              }`}
-            >
-              Annual
-              <span className="ml-1 inline-flex items-center rounded-full bg-accent-600/20 px-2 py-0.5 text-xs font-medium text-accent-500">
-                Save {savingsPercent}%
-              </span>
-            </button>
+            <div className="flex">
+              <button
+                onClick={() => setIsAnnual(false)}
+                className={`relative z-10 rounded-full px-4 py-2 text-sm transition-colors ${
+                  !isAnnual ? 'text-dark-50' : 'text-dark-300'
+                }`}
+              >
+                Monthly
+              </button>
+              
+              <div className="flex items-center">
+                <button
+                  onClick={() => setIsAnnual(true)}
+                  className={`relative z-10 rounded-full px-4 py-2 text-sm transition-colors ${
+                    isAnnual ? 'text-dark-50' : 'text-dark-300'
+                  }`}
+                >
+                  Annual
+                </button>
+                <span className="ml-1 z-20 inline-flex items-center rounded-full bg-accent-600/20 px-2 py-0.5 text-xs font-medium text-accent-500">
+                  Save {savingsPercent}%
+                </span>
+              </div>
+            </div>
             
             <motion.div
               className="absolute inset-0 z-0 rounded-full bg-dark-700"

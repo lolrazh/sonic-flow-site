@@ -66,12 +66,15 @@ export default function FAQ() {
         </p>
         
         <div className="mx-auto max-w-3xl">
-          <div className="divide-y divide-dark-700 rounded-2xl border border-dark-700 bg-dark-800/50 shadow-card">
+          <div className="space-y-4">
             {faqItems.map((faq, index) => (
-              <div key={index} className="overflow-hidden">
+              <div 
+                key={index} 
+                className="overflow-hidden"
+              >
                 <button
                   onClick={() => toggleFAQ(index)}
-                  className="flex w-full items-center justify-between p-6 text-left transition-colors hover:bg-dark-700/30"
+                  className="flex w-full items-center justify-between rounded-xl p-6 text-left transition-colors bg-dark-800/30 hover:bg-dark-800/50"
                 >
                   <h3 className="text-lg font-medium text-dark-100">{faq.question}</h3>
                   <motion.div
@@ -91,7 +94,7 @@ export default function FAQ() {
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.3 }}
                     >
-                      <div className="px-6 pb-6 pt-0">
+                      <div className="px-6 py-4 bg-dark-800/20 rounded-b-xl">
                         <p className="text-dark-200">{faq.answer}</p>
                       </div>
                     </motion.div>
@@ -99,11 +102,6 @@ export default function FAQ() {
                 </AnimatePresence>
               </div>
             ))}
-          </div>
-          
-          {/* Decorative element */}
-          <div className="relative mx-auto mt-12 h-3 w-32">
-            <div className="absolute h-1 w-full rounded-full bg-gradient-to-r from-accent-700/20 via-accent-600/40 to-accent-500/20"></div>
           </div>
         </div>
       </div>
