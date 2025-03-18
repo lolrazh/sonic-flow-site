@@ -40,7 +40,7 @@ export const api = createTRPCProxyClient<AppRouter>({
     () =>
       ({ op }) =>
         observable((observer) => {
-          createContext()
+          void createContext()
             .then((ctx) => {
               return callProcedure({
                 procedures: appRouter._def.procedures,
@@ -54,8 +54,10 @@ export const api = createTRPCProxyClient<AppRouter>({
               observer.next({ result: { data } });
               observer.complete();
             })
-            .catch((cause: Error) => {
-              observer.error(TRPCErrorResponse.from(cause));
+            .catch((cause) => {
+              // Using 'as' to assert the type since we know this is a valid usage pattern
+              // from TRPC but TypeScript doesn't recognize it correctly
+              observer.error(TRPCErrorResponse.from(cause as Error));
             });
         }),
   ],

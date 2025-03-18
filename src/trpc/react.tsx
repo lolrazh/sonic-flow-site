@@ -9,13 +9,6 @@ import SuperJSON from "superjson";
 
 import { type AppRouter } from "~/server/api/root";
 
-// Create a client-side singleton to avoid recreating for each request
-let clientQueryClient: QueryClient | undefined = undefined;
-const getQueryClient = () => {
-  if (typeof window === 'undefined') return new QueryClient();
-  return clientQueryClient ?? (clientQueryClient = new QueryClient());
-};
-
 export const api = createTRPCReact<AppRouter>();
 
 /**
@@ -37,10 +30,9 @@ export function TRPCReactProvider({
 }: {
   children: React.ReactNode;
 }) {
-  // Skip tRPC provider in case of errors to prevent app from breaking
+  const [queryClient] = useState(() => new QueryClient());
+  
   try {
-    const [queryClient] = useState(() => getQueryClient());
-
     const [trpcClient] = useState(() =>
       api.createClient({
         links: [
@@ -67,10 +59,4 @@ export function TRPCReactProvider({
     // If there's an error, return children without the provider
     return <>{children}</>;
   }
-}
-
-function getBaseUrl() {
-  if (typeof window !== "undefined") return window.location.origin;
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
-  return `http://localhost:${process.env.PORT ?? 3000}`;
 }

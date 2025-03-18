@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import 'cross-fetch/polyfill';
 
 // Create and export Supabase client
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? '';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '';
 
 // Create a simpler client config for better browser compatibility
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
@@ -14,7 +14,7 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 export async function getSession(): Promise<{ session: Session | null; error: Error | null }> {
   try {
     const { data, error } = await supabase.auth.getSession();
-    return { session: data.session, error: error || null };
+    return { session: data.session, error: error ?? null };
   } catch (error) {
     console.error("Error getting session:", error);
     return { session: null, error: error instanceof Error ? error : new Error(String(error)) };
@@ -24,14 +24,14 @@ export async function getSession(): Promise<{ session: Session | null; error: Er
 export async function signOut(): Promise<{ error: Error | null }> {
   try {
     const { error } = await supabase.auth.signOut();
-    return { error: error || null };
+    return { error: error ?? null };
   } catch (error) {
     console.error("Error signing out:", error);
     return { error: error instanceof Error ? error : new Error(String(error)) };
   }
 }
 
-export function getRedirectUrl(path: string = "/dashboard"): string {
+export function getRedirectUrl(path = "/dashboard"): string {
   // Ensure we have the correct origin in all environments
   const origin = typeof window !== 'undefined' ? window.location.origin : '';
   return `${origin}${path}`;
@@ -65,7 +65,7 @@ export function useSession() {
         }
         
         setSession(data.session);
-        setUser(data.session?.user || null);
+        setUser(data.session?.user ?? null);
       } catch (err) {
         console.error("Session check error:", err);
         setError(err instanceof Error ? err : new Error(String(err)));
@@ -74,13 +74,13 @@ export function useSession() {
       }
     };
 
-    checkSession();
+    void checkSession();
 
     // Set up auth state change listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event: AuthChangeEvent, currentSession) => {
         setSession(currentSession);
-        setUser(currentSession?.user || null);
+        setUser(currentSession?.user ?? null);
         setLoading(false);
       }
     );

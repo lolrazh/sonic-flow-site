@@ -7,8 +7,8 @@ import DashboardHeader from "./components/DashboardHeader";
 import Image from "next/image";
 
 // Create Supabase client
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? '';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '';
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 // Shadcn-style Switch component
@@ -35,10 +35,10 @@ const Switch = ({ checked, onChange, id }: { checked: boolean; onChange: (checke
 };
 
 export default function Dashboard() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<object | null>(null);
   const [userDetails, setUserDetails] = useState<{ name?: string; avatar_url?: string }>({});
-  const [trialDaysLeft, setTrialDaysLeft] = useState(14); // Mock data
-  const [isOnTrial, setIsOnTrial] = useState(true); // Mock data
+  const [trialDaysLeft] = useState(14); // Mock data
+  const [isOnTrial] = useState(true); // Mock data
   const [appSettings, setAppSettings] = useState({
     darkMode: true,
     notifications: false,
@@ -53,18 +53,25 @@ export default function Dashboard() {
       
       // Extract user details from Google provider
       if (user) {
+        interface UserMetadata {
+          full_name?: string;
+          name?: string;
+          avatar_url?: string;
+        }
+        
         // Try to get name and avatar from user metadata (OAuth providers store this)
-        const name = user.user_metadata?.full_name || user.user_metadata?.name;
-        const avatarUrl = user.user_metadata?.avatar_url;
+        const metadata = user.user_metadata as UserMetadata | undefined;
+        const name = metadata?.full_name ?? metadata?.name;
+        const avatarUrl = metadata?.avatar_url;
 
         setUserDetails({
-          name: name || user.email?.split('@')[0],
+          name: name ?? (user.email?.split('@')[0]),
           avatar_url: avatarUrl
         });
       }
     };
 
-    getUserData();
+    void getUserData();
   }, []);
 
   const handleSettingChange = (setting: string, value: boolean) => {
@@ -82,7 +89,7 @@ export default function Dashboard() {
       <div className="container mx-auto max-w-6xl px-4 py-12">
         <header className="mb-12">
           <h1 className="text-3xl font-bold text-dark-50">
-            Welcome to Sonic Flow, <span className="text-accent-500">{userDetails.name || 'User'}</span>
+            Welcome to Sonic Flow, <span className="text-accent-500">{userDetails.name ?? 'User'}</span>
           </h1>
           <p className="mt-2 text-dark-300">
             Manage your account and settings here
@@ -110,8 +117,10 @@ export default function Dashboard() {
                 </div>
               )}
               <div>
-                <div className="font-medium text-dark-100">{userDetails.name || user.email?.split('@')[0]}</div>
-                <div className="text-sm text-dark-300">{user.email}</div>
+                <div className="font-medium text-dark-100">{userDetails.name ?? (user && 'email' in user && typeof user.email === 'string' ? user.email.split('@')[0] : 'User')}</div>
+                {user && 'email' in user && typeof user.email === 'string' && (
+                  <div className="text-sm text-dark-300">{user.email}</div>
+                )}
               </div>
             </div>
             
@@ -121,7 +130,9 @@ export default function Dashboard() {
                   <BiUser className="mr-2 text-accent-500" size={20} />
                   <span className="text-dark-200">Email</span>
                 </div>
-                <span className="font-medium text-dark-100">{user.email}</span>
+                {user && 'email' in user && typeof user.email === 'string' && (
+                  <span className="font-medium text-dark-100">{user.email}</span>
+                )}
               </div>
             </div>
             

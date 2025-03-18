@@ -24,7 +24,7 @@ function easeOutCubic(t: number): number {
 export function IconCloud({ icons, images }: IconCloudProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [iconPositions, setIconPositions] = useState<Icon[]>([]);
-  const [rotation, setRotation] = useState({ x: 0, y: 0 });
+  const [rotation] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [lastMousePos, setLastMousePos] = useState({ x: 0, y: 0 });
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -46,8 +46,8 @@ export function IconCloud({ icons, images }: IconCloudProps) {
   useEffect(() => {
     if (!icons && !images) return;
 
-    const items = icons || images || [];
-    imagesLoadedRef.current = new Array(items.length).fill(false);
+    const items = icons ?? images ?? [];
+    imagesLoadedRef.current = Array.from({ length: items.length }, () => false);
 
     const newIconCanvases = items.map((item, index) => {
       const offscreen = document.createElement("canvas");
@@ -96,9 +96,9 @@ export function IconCloud({ icons, images }: IconCloudProps) {
 
   // Generate initial icon positions on a sphere
   useEffect(() => {
-    const items = icons || images || [];
+    const items = icons ?? images ?? [];
     const newIcons: Icon[] = [];
-    const numIcons = items.length || 20;
+    const numIcons = items.length ?? 20;
 
     // Fibonacci sphere parameters
     const offset = 2 / numIcons;
@@ -308,17 +308,17 @@ export function IconCloud({ icons, images }: IconCloudProps) {
   }, [icons, images, iconPositions, isDragging, mousePos, targetRotation]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      width={400}
-      height={400}
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseUp}
-      className="rounded-lg"
-      aria-label="Interactive 3D Icon Cloud"
-      role="img"
-    />
+    <div className="w-full h-full overflow-hidden">
+      <canvas
+        ref={canvasRef}
+        className="w-full h-full cursor-grab"
+        width={500}
+        height={500}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+      />
+    </div>
   );
 }

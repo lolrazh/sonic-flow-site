@@ -128,7 +128,7 @@ export default function Login() {
               </>
             ) : (
               <>
-                Don't have an account?{" "}
+                Don&apos;t have an account?{" "}
                 <Link href="/login?auth=signup" className="font-medium text-accent-500 hover:text-accent-400">
                   Sign up
                 </Link>
