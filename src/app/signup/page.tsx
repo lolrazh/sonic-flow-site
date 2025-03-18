@@ -10,7 +10,7 @@ import { clientSupabase } from "~/lib/supabase/client";
 import { useSession } from "~/lib/auth";
 import type { AuthChangeEvent } from "@supabase/supabase-js";
 
-export default function Login() {
+export default function SignUp() {
   const router = useRouter();
   const { loading: sessionLoading, user } = useSession();
   const [authError, setAuthError] = useState<string | null>(null);
@@ -74,10 +74,10 @@ export default function Login() {
           
           <div className="mb-8 text-center">
             <h1 className="mb-2 text-3xl font-bold text-dark-50">
-              Welcome back
+              Create your account
             </h1>
             <p className="text-dark-300">
-              Sign in to your Sonic Flow account
+              Sign up to start using Sonic Flow
             </p>
           </div>
 
@@ -112,14 +112,14 @@ export default function Login() {
               theme="dark"
               providers={["google"]}
               redirectTo={`${typeof window !== 'undefined' ? window.location.origin : ''}/dashboard`}
-              view="sign_in"
+              view="sign_up"
             />
           )}
 
           <div className="mt-6 text-center text-sm text-dark-400">
-            Don&apos;t have an account?{" "}
-            <Link href="/signup" className="font-medium text-accent-500 hover:text-accent-400">
-              Sign up
+            Already have an account?{" "}
+            <Link href="/login" className="font-medium text-accent-500 hover:text-accent-400">
+              Sign in
             </Link>
           </div>
         </div>

@@ -81,9 +81,15 @@ export default function Header() {
             </ul>
             <Link
               href="/login"
-              className="ml-8 rounded-xl bg-accent-600 px-5 py-2 text-dark-50 shadow-sm transition-colors hover:bg-accent-700"
+              className="ml-8 text-dark-200 transition-colors hover:text-accent-500"
             >
-              Get Started
+              Log In
+            </Link>
+            <Link
+              href="/signup"
+              className="ml-4 rounded-xl bg-accent-600 px-5 py-2 text-dark-50 shadow-sm transition-colors hover:bg-accent-700"
+            >
+              Sign Up
             </Link>
           </nav>
 
@@ -124,12 +130,20 @@ export default function Header() {
                     </a>
                   </li>
                 ))}
-                <li className="pt-2">
+                <li>
                   <Link
                     href="/login"
+                    className="block py-2 text-dark-200 transition-colors hover:text-accent-500"
+                  >
+                    Log In
+                  </Link>
+                </li>
+                <li className="pt-2">
+                  <Link
+                    href="/signup"
                     className="block rounded-xl bg-accent-600 px-5 py-3 text-center text-dark-50 shadow-sm transition-colors hover:bg-accent-700"
                   >
-                    Get Started
+                    Sign Up
                   </Link>
                 </li>
               </ul>

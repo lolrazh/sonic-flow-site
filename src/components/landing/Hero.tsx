@@ -11,7 +11,7 @@ import { PillUI } from './index';
 export default function Hero({
   headline = "Dictate with Speed. Type without Typing.",
   subheadline = "Sonic Flow is an AI-powered dictation tool that seamlessly transcribes your speech into any text field. Save time, boost productivity, and say goodbye to manual typing.",
-  primaryCta = { text: "Get Started", href: "/login" },
+  primaryCta = { text: "Get Started", href: "/signup" },
   secondaryCta = { text: "Explore Features", href: "#features" }
 }: HeroProps = {}) {
   // Smooth scroll function
@@ -40,7 +40,7 @@ export default function Hero({
   
   // Safe default values to prevent undefined errors
   const primaryCtaText = primaryCta?.text ?? "Get Started";
-  const primaryCtaHref = primaryCta?.href ?? "/login";
+  const primaryCtaHref = primaryCta?.href ?? "/signup";
   const secondaryCtaText = secondaryCta?.text ?? "Explore Features";
   const secondaryCtaHref = secondaryCta?.href ?? "#features";
 
