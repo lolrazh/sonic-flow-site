@@ -1,19 +1,22 @@
 import "server-only";
 
-import { createHydrationHelpers } from "@trpc/react-query/rsc";
+import { createTRPCProxyClient, loggerLink } from "@trpc/client";
+import { callProcedure } from "@trpc/server";
+import { observable } from "@trpc/server/observable";
+import { type TRPCErrorResponse } from "@trpc/server/rpc";
 import { headers } from "next/headers";
 import { cache } from "react";
+import SuperJSON from "superjson";
 
-import { createCaller, type AppRouter } from "~/server/api/root";
+import { appRouter, type AppRouter } from "~/server/api/root";
 import { createTRPCContext } from "~/server/api/trpc";
-import { createQueryClient } from "./query-client";
 
 /**
  * This wraps the `createTRPCContext` helper and provides the required context for the tRPC API when
  * handling a tRPC call from a React Server Component.
  */
 const createContext = cache(async () => {
-  const heads = new Headers(await headers());
+  const heads = new Headers(headers());
   heads.set("x-trpc-source", "rsc");
 
   return createTRPCContext({
@@ -21,10 +24,39 @@ const createContext = cache(async () => {
   });
 });
 
-const getQueryClient = cache(createQueryClient);
-const caller = createCaller(createContext);
-
-export const { trpc: api, HydrateClient } = createHydrationHelpers<AppRouter>(
-  caller,
-  getQueryClient
-);
+export const api = createTRPCProxyClient<AppRouter>({
+  transformer: SuperJSON,
+  links: [
+    loggerLink({
+      enabled: (op) =>
+        process.env.NODE_ENV === "development" ||
+        (op.direction === "down" && op.result instanceof Error),
+    }),
+    /**
+     * Custom RSC link that calls the procedures directly in the server without the need for HTTP.
+     *
+     * @see https://trpc.io/docs/client/links
+     */
+    () =>
+      ({ op }) =>
+        observable((observer) => {
+          createContext()
+            .then((ctx) => {
+              return callProcedure({
+                procedures: appRouter._def.procedures,
+                path: op.path,
+                rawInput: op.input,
+                ctx,
+                type: op.type,
+              });
+            })
+            .then((data) => {
+              observer.next({ result: { data } });
+              observer.complete();
+            })
+            .catch((cause: Error) => {
+              observer.error(TRPCErrorResponse.from(cause));
+            });
+        }),
+  ],
+});

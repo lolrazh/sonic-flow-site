@@ -2,8 +2,7 @@ import "~/styles/globals.css";
 
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
-
-import { TRPCReactProvider } from "~/trpc/react";
+import { ClientWrapper } from "~/components/ClientWrapper";
 
 export const metadata: Metadata = {
   title: "Sonic Flow - AI-Powered Dictation Tool",
@@ -17,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
       <body>
-        <TRPCReactProvider>{children}</TRPCReactProvider>
+        <ClientWrapper>
+          {children}
+        </ClientWrapper>
       </body>
     </html>
   );
