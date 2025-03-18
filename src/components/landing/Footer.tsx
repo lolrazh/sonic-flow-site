@@ -1,7 +1,11 @@
 "use client";
 
+import React from 'react';
 import Link from 'next/link';
 
+/**
+ * Footer component for the landing page
+ */
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   

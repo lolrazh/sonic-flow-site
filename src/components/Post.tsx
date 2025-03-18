@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
-
+import React, { useState } from "react";
 import { api } from "~/trpc/react";
 
+/**
+ * LatestPost component - displays and creates posts
+ */
 export function LatestPost() {
   const [latestPost] = api.post.getLatest.useSuspenseQuery();
 
@@ -47,4 +49,4 @@ export function LatestPost() {
       </form>
     </div>
   );
-}
+} 

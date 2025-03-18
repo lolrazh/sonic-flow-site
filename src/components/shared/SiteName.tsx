@@ -1,5 +1,6 @@
 "use client";
 
+import React from 'react';
 import Link from 'next/link';
 
 interface SiteNameProps {
@@ -7,6 +8,9 @@ interface SiteNameProps {
   className?: string;
 }
 
+/**
+ * SiteName component - displays the site name/logo 
+ */
 export default function SiteName({ href = "/", className = "text-xl" }: SiteNameProps) {
   const siteName = "Sonic Flow";
   

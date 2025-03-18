@@ -1,19 +1,17 @@
 "use client";
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
+import { type FAQProps } from './types';
 
-interface FAQItem {
-  question: string;
-  answer: string;
-}
-
-export default function FAQ() {
-  // Default open state - first FAQ is initially open
-  const [openFAQs, setOpenFAQs] = useState<number[]>([0]);
-
-  const faqItems: FAQItem[] = [
+/**
+ * FAQ component - displays frequently asked questions with expandable answers
+ */
+export default function FAQ({
+  title = "Frequently Asked Questions",
+  subtitle = "Everything you need to know about Sonic Flow",
+  items = [
     {
       question: "What makes Sonic Flow different from other dictation tools?",
       answer: "Sonic Flow combines state-of-the-art AI transcription with a uniquely unobtrusive interface. Unlike other dictation tools, our minimalist pill UI stays out of your way until you need it, and works seamlessly with any desktop application without requiring special plugins or integrations."
@@ -34,13 +32,16 @@ export default function FAQ() {
       question: "Is there a limit to how much I can dictate?",
       answer: "No limits! Our unlimited plan gives you unlimited dictation time for a simple, predictable monthly or annual fee. Dictate as much as you need without worrying about hitting usage caps or unexpected charges."
     }
-  ];
+  ]
+}: FAQProps = {}) {
+  // Default open state - first FAQ is initially open
+  const [openFAQs, setOpenFAQs] = useState<number[]>([0]);
 
   const toggleFAQ = (index: number) => {
     // If this is the only open FAQ and we're trying to close it, don't allow
     if (openFAQs.length === 1 && openFAQs.includes(index)) {
       // Find the next FAQ to open (or previous if at the end)
-      const nextIndex = index === faqItems.length - 1 ? 0 : index + 1;
+      const nextIndex = index === items.length - 1 ? 0 : index + 1;
       setOpenFAQs([nextIndex]);
     } 
     // If this FAQ is already open, close it only if there's at least one other open
@@ -59,15 +60,16 @@ export default function FAQ() {
     <section className="bg-dark-900 py-24" id="faq">
       <div className="container mx-auto px-4">
         <h2 className="mb-6 text-center text-3xl font-bold text-dark-50 md:text-4xl">
-          Frequently <span className="text-accent-600">Asked Questions</span>
+          {title.split(' ')[0]}{' '}
+          <span className="text-accent-600">{title.split(' ').slice(1).join(' ')}</span>
         </h2>
         <p className="mx-auto mb-16 max-w-2xl text-center text-dark-200">
-          Everything you need to know about Sonic Flow
+          {subtitle}
         </p>
         
         <div className="mx-auto max-w-3xl">
           <div className="space-y-4">
-            {faqItems.map((faq, index) => (
+            {items.map((faq, index) => (
               <div 
                 key={index} 
                 className="overflow-hidden"

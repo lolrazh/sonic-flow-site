@@ -1,18 +1,19 @@
 "use client";
 
+import React from 'react';
 import { 
   AlignCenter,
   BookText,
   Bookmark, 
   Code2, 
   FileCode,
-  FileText, 
+  // FileText, // Commented out since it's unused
   Github, 
   Mail, 
-  MessageSquare, 
+  MessageSquare,
   Pencil,
   Search,
-  Slack,
+  Slack, 
   Table, 
   Terminal, 
   Type,
@@ -21,7 +22,6 @@ import {
 } from "lucide-react";
 import { IconCloud } from "~/components/magicui/icon-cloud";
 import { type CompatibleAppProps } from './types';
-import React from 'react';
 
 /**
  * CompatibleApps component - displays compatible applications in an icon cloud
@@ -29,8 +29,8 @@ import React from 'react';
 export default function CompatibleApps({
   title = "Works Everywhere You Type",
   subtitle = "Seamlessly compatible with all your favorite apps and platforms",
-  apps = []
-}: CompatibleAppProps = {}) {
+  // apps = [] // Unused parameter, removed
+}: Omit<CompatibleAppProps, 'apps'> = {}) {
   // Icon array for the cloud - representing popular apps
   const appIcons = [
     <Mail key="mail" size={100} color="#EA4335" strokeWidth={1.5} />, // Gmail

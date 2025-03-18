@@ -1,17 +1,13 @@
-import { 
-  Benefits, 
-  FAQ,
-  Footer, 
-  Header
-} from "~/app/_components/landing";
-
 import {
   Hero,
   UserPersonas,
-  CompatibleApps
+  CompatibleApps,
+  Pricing,
+  Benefits,
+  FAQ,
+  Header,
+  Footer
 } from "~/components/landing";
-
-import { Pricing } from "~/app/_components/landing";
 
 export default function Home() {
   return (

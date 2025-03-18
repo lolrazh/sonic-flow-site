@@ -1,11 +1,14 @@
 "use client";
 
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
-import SiteName from '~/app/_components/shared/SiteName';
+import { SiteName } from '~/components/shared';
 
+/**
+ * Header component - main navigation for the landing page
+ */
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

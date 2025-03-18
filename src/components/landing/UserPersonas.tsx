@@ -41,7 +41,7 @@ export default function UserPersonas({
     <section className="bg-dark-900 py-24" id="who-its-for">
       <div className="container mx-auto px-4">
         <h2 className="mb-6 text-center text-3xl font-bold text-dark-50 md:text-4xl">
-          Who It's <span className="text-accent-600">For</span>
+          Who It&apos;s <span className="text-accent-600">For</span>
         </h2>
         <p className="mx-auto mb-16 max-w-2xl text-center text-dark-200">
           Sonic Flow is designed for professionals who need to capture thoughts quickly without disrupting their workflow.

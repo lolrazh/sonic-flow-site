@@ -1,6 +1,7 @@
 /**
  * TypeScript interfaces for landing page components
  */
+import type React from 'react';
 
 export interface PillUIProps {
   isAnimated?: boolean;

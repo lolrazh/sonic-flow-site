@@ -1,25 +1,45 @@
 "use client";
 
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { type PricingProps } from './types';
 
-export default function Pricing() {
+/**
+ * Pricing component - displays pricing plans and options
+ */
+export default function Pricing({
+  title = "Simple Pricing",
+  subtitle = "One low price. Unlimited transcription. Cancel anytime.",
+  price = 5,
+  currency = "$",
+  trialDays = 7,
+  features = [
+    "Unlimited dictation time",
+    "Use in any desktop application",
+    "Advanced AI transcription",
+    "Regular updates",
+    "Email support"
+  ],
+  ctaText = "Start Your Free Trial",
+  ctaHref = "/signup"
+}: PricingProps = {}) {
   const [isAnnual, setIsAnnual] = useState(true);
   
   // Price values
-  const monthlyPrice = 6;
-  const annualPrice = 4;
-  const savingsPercent = 33;
+  const monthlyPrice = Math.round(price * 1.2); // 20% more for monthly
+  const annualPrice = price;
+  const savingsPercent = Math.round(((monthlyPrice - annualPrice) / monthlyPrice) * 100);
   
   return (
     <section className="bg-dark-900 py-24" id="pricing">
       <div className="container mx-auto px-4">
         <h2 className="mb-6 text-center text-3xl font-bold text-dark-50 md:text-4xl">
-          Simple <span className="text-accent-600">Pricing</span>
+          {title.split(' ')[0]}{' '}
+          <span className="text-accent-600">{title.split(' ').slice(1).join(' ')}</span>
         </h2>
         <p className="mx-auto mb-8 max-w-2xl text-center text-dark-200">
-          One low price. Unlimited transcription. Cancel anytime.
+          {subtitle}
         </p>
         
         {/* Billing toggle */}
@@ -69,64 +89,34 @@ export default function Pricing() {
                 <h3 className="text-2xl font-bold text-dark-50">Unlimited Plan</h3>
                 <div className="my-4 flex items-center justify-center">
                   <span className="text-6xl font-bold text-accent-600">
-                    ${isAnnual ? annualPrice : monthlyPrice}
+                    {currency}{isAnnual ? annualPrice : monthlyPrice}
                   </span>
                   <span className="ml-2 text-dark-300">
                     /{isAnnual ? 'month, billed annually' : 'month'}
                   </span>
                 </div>
-                <p className="text-dark-200">7-Day Free Trial</p>
+                <p className="text-dark-200">{trialDays}-Day Free Trial</p>
               </div>
               
               <div className="mt-8">
                 <ul className="mb-8 space-y-5">
-                  <li className="flex items-center">
-                    <div className="mr-3 flex h-6 w-6 items-center justify-center rounded-full bg-accent-700/20">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-accent-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <span className="text-dark-100">Unlimited dictation time</span>
-                  </li>
-                  <li className="flex items-center">
-                    <div className="mr-3 flex h-6 w-6 items-center justify-center rounded-full bg-accent-700/20">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-accent-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <span className="text-dark-100">Use in any desktop application</span>
-                  </li>
-                  <li className="flex items-center">
-                    <div className="mr-3 flex h-6 w-6 items-center justify-center rounded-full bg-accent-700/20">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-accent-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <span className="text-dark-100">Advanced AI transcription</span>
-                  </li>
-                  <li className="flex items-center">
-                    <div className="mr-3 flex h-6 w-6 items-center justify-center rounded-full bg-accent-700/20">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-accent-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <span className="text-dark-100">Regular updates</span>
-                  </li>
-                  <li className="flex items-center">
-                    <div className="mr-3 flex h-6 w-6 items-center justify-center rounded-full bg-accent-700/20">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-accent-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <span className="text-dark-100">Email support</span>
-                  </li>
+                  {features.map((feature, index) => (
+                    <li key={index} className="flex items-center">
+                      <div className="mr-3 flex h-6 w-6 items-center justify-center rounded-full bg-accent-700/20">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-accent-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <span className="text-dark-100">{feature}</span>
+                    </li>
+                  ))}
                 </ul>
                 
                 <Link 
-                  href="/signup" 
+                  href={ctaHref} 
                   className="group relative block w-full overflow-hidden rounded-xl bg-accent-600 px-6 py-4 text-center font-medium text-dark-50 shadow-md transition-colors hover:bg-accent-700"
                 >
-                  <span className="relative z-10">Start Your Free Trial</span>
+                  <span className="relative z-10">{ctaText}</span>
                   <span className="absolute bottom-0 left-0 h-0 w-full bg-accent-800 transition-all duration-300 group-hover:h-full"></span>
                 </Link>
                 

@@ -1,28 +1,17 @@
 "use client";
 
 import Link from 'next/link';
-import PillUI from './PillUI';
+import { PillUI } from './index';
+import { type BenefitProps } from './types';
+import React from 'react';
 
-export default function Benefits() {
-  // Smooth scroll function
-  const handleScrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    
-    const targetId = href.replace('#', '');
-    const element = document.getElementById(targetId);
-    
-    if (element) {
-      window.scrollTo({
-        behavior: 'smooth',
-        top: element.offsetTop - 100 // Offset for header height
-      });
-      
-      // Update URL without page reload
-      window.history.pushState({}, '', href);
-    }
-  };
-
-  const benefits = [
+/**
+ * Benefits component - displays the benefits of using the product
+ */
+export default function Benefits({
+  title = "Why Sonic Flow?",
+  subtitle = "Experience the future of dictation with our sleek, intelligent interface",
+  benefits = [
     {
       title: "Unobtrusive UI",
       description: "A tiny pill that hides until you need it.",
@@ -51,10 +40,12 @@ export default function Benefits() {
         </svg>
       ),
     },
-  ];
-
+  ]
+}: BenefitProps = {}) {
+  // Smooth scroll function - removed unused function
+  
   return (
-    <section className="relative bg-gradient-to-b from-dark-800 to-dark-900 py-24 overflow-hidden">
+    <section className="relative bg-gradient-to-b from-dark-800 to-dark-900 py-24 overflow-hidden" id="benefits">
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden opacity-10">
         <div className="absolute -right-10 bottom-1/4 h-64 w-64 rounded-full bg-accent-700 blur-3xl"></div>
@@ -63,11 +54,12 @@ export default function Benefits() {
       
       <div className="container relative mx-auto px-4">
         <h2 className="mb-6 text-center text-3xl font-bold text-dark-50 md:text-4xl">
-          Why <span className="text-accent-600">Sonic Flow</span>?
+          {title.split(' ')[0]}{' '}
+          <span className="text-accent-600">{title.split(' ').slice(1).join(' ')}</span>
         </h2>
         
         <p className="mx-auto mb-16 max-w-2xl text-center text-dark-200">
-          Experience the future of dictation with our sleek, intelligent interface
+          {subtitle}
         </p>
         
         {/* Floating Pill UI */}

@@ -1,5 +1,6 @@
 "use client";
 
+import React from 'react';
 import Link from 'next/link';
 import { type HeroProps } from './types';
 import { PillUI } from './index';
@@ -33,10 +34,16 @@ export default function Hero({
 
   // Split headline for styling (first part normal, second part with line break)
   const headlineParts = headline.split('.');
-  const firstPart = headlineParts[0] || '';
+  const firstPart = headlineParts[0] ?? '';
   const hasTwoParts = headlineParts.length > 1 && headlineParts[1].trim() !== '';
   const secondPart = hasTwoParts ? headlineParts[1].trim() : '';
   
+  // Safe default values to prevent undefined errors
+  const primaryCtaText = primaryCta?.text ?? "Get Started";
+  const primaryCtaHref = primaryCta?.href ?? "/login";
+  const secondaryCtaText = secondaryCta?.text ?? "Explore Features";
+  const secondaryCtaHref = secondaryCta?.href ?? "#features";
+
   return (
     <section className="relative bg-gradient-to-b from-dark-900 to-dark-800 py-32 md:py-40">
       {/* Background gradient elements */}
@@ -64,18 +71,18 @@ export default function Hero({
             </p>
             <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
               <Link 
-                href={primaryCta.href}
+                href={primaryCtaHref}
                 className="group relative overflow-hidden rounded-xl bg-accent-700 px-6 py-3 text-center text-base font-medium text-dark-50 shadow-md transition-colors hover:bg-accent-800 cursor-pointer"
               >
-                <span className="relative z-10">{primaryCta.text}</span>
+                <span className="relative z-10">{primaryCtaText}</span>
                 <span className="absolute bottom-0 left-0 h-1 w-full bg-accent-900 transition-all duration-300 group-hover:h-full"></span>
               </Link>
               <a 
-                href={secondaryCta.href} 
-                onClick={(e) => handleScrollToSection(e, secondaryCta.href)}
+                href={secondaryCtaHref} 
+                onClick={(e) => handleScrollToSection(e, secondaryCtaHref)}
                 className="rounded-xl border border-dark-500 bg-dark-700 px-6 py-3 text-center text-base font-medium text-dark-100 shadow-sm transition-colors hover:bg-dark-600 cursor-pointer"
               >
-                {secondaryCta.text}
+                {secondaryCtaText}
               </a>
             </div>
           </div>
@@ -98,7 +105,9 @@ export default function Hero({
                 {/* Window content */}
                 <div className="flex min-h-[240px] flex-col items-center justify-center p-6 text-dark-200">
                   <div className="w-full rounded border border-dark-500 bg-dark-800 p-4 text-sm">
-                    <div className="mb-2 text-dark-300">// Your dictated text appears here</div>
+                    <div className="mb-2 text-dark-300">
+                      {/* Your dictated text appears here */}
+                    </div>
                     <div className="text-accent-400">This is being dictated by Sonic Flow...</div>
                     <div className="mt-1 h-4 w-2 animate-pulse bg-dark-400"></div>
                   </div>
