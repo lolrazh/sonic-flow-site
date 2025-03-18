@@ -6,49 +6,47 @@ import Link from "next/link";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { SiteName, LoadingSpinner } from "~/components/ui";
-import { supabase, getSession, getRedirectUrl, onAuthStateChange } from "~/lib/auth";
+import { clientSupabase } from "~/lib/supabase/client";
+import { useSession } from "~/lib/auth";
+import type { AuthChangeEvent } from "@supabase/supabase-js";
 
 export default function Login() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const isSignUp = searchParams.get('auth') === 'signup';
+  const { loading: sessionLoading, user } = useSession();
+  const [authError, setAuthError] = useState<string | null>(null);
+  const [authLoading, setAuthLoading] = useState(false);
+  const isSignUp = searchParams?.get('auth') === 'signup';
 
+  // Redirect if already logged in
   useEffect(() => {
-    const checkSession = async () => {
-      try {
-        const { data: { session } } = await supabase.auth.getSession();
-        
-        if (session) {
+    if (user && !sessionLoading) {
+      router.push("/dashboard");
+    }
+  }, [user, sessionLoading, router]);
+
+  // Setup auth state listener
+  useEffect(() => {
+    const { data: { subscription } } = clientSupabase.auth.onAuthStateChange(
+      (event: AuthChangeEvent) => {
+        if (event === 'SIGNED_IN') {
+          setAuthLoading(true);
           router.push("/dashboard");
-        } else {
-          setLoading(false);
+        } else if (event === 'SIGNED_OUT') {
+          setAuthLoading(false);
+        } else if (event.includes('ERROR')) {
+          setAuthError("Authentication failed. Please try again.");
+          setAuthLoading(false);
         }
-      } catch (err) {
-        console.error("Unexpected error:", err);
-        setError("An unexpected error occurred. Please try again.");
-        setLoading(false);
       }
-    };
+    );
 
-    checkSession();
-
-    // Add an auth state change listener
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN' && session) {
-        console.log('User signed in, redirecting to dashboard');
-        router.push("/dashboard");
-      }
-    });
-
-    // Cleanup the subscription when component unmounts
     return () => {
       subscription.unsubscribe();
     };
   }, [router]);
 
-  if (loading) {
+  if (sessionLoading) {
     return <LoadingSpinner fullScreen />;
   }
 
@@ -64,9 +62,15 @@ export default function Login() {
       {/* Auth UI */}
       <div className="container mx-auto flex flex-1 flex-col items-center justify-center px-4 py-12">
         <div className="w-full max-w-md">
-          {error && (
+          {authError && (
             <div className="mb-4 rounded-lg bg-red-900/20 p-4 text-red-400">
-              <p>{error}</p>
+              <p>{authError}</p>
+              <button 
+                onClick={() => setAuthError(null)}
+                className="mt-2 text-sm text-red-400 hover:text-red-300"
+              >
+                Dismiss
+              </button>
             </div>
           )}
           
@@ -79,9 +83,14 @@ export default function Login() {
             </p>
           </div>
 
-          <div className="overflow-hidden rounded-2xl border border-dark-700 bg-dark-800 p-8">
+          {authLoading ? (
+            <div className="flex justify-center py-8">
+              <LoadingSpinner />
+              <span className="ml-3 text-dark-300">Authenticating...</span>
+            </div>
+          ) : (
             <Auth
-              supabaseClient={supabase}
+              supabaseClient={clientSupabase}
               appearance={{
                 theme: ThemeSupa,
                 variables: {
@@ -107,7 +116,7 @@ export default function Login() {
               redirectTo={`${typeof window !== 'undefined' ? window.location.origin : ''}/dashboard`}
               view={isSignUp ? "sign_up" : "sign_in"}
             />
-          </div>
+          )}
 
           <div className="mt-6 text-center text-sm text-dark-400">
             {isSignUp ? (

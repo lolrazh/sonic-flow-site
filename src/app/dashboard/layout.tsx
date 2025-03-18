@@ -1,60 +1,26 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { LoadingSpinner } from "~/components/ui";
-import { supabase } from "~/lib/auth";
+import { useSession } from "~/lib/auth";
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { loading, user, error } = useSession();
   const router = useRouter();
 
   useEffect(() => {
-    const checkUser = async () => {
-      try {
-        const { data, error } = await supabase.auth.getSession();
-        
-        if (error) {
-          console.error("Error checking auth session:", error);
-          setError("Authentication error. Please try logging in again.");
-          router.push('/login');
-          return;
-        }
-        
-        if (!data.session) {
-          console.log("No active session found, redirecting to login");
-          router.push('/login');
-        } else {
-          console.log("Active session found, user is authenticated");
-          setIsLoading(false);
-        }
-      } catch (err) {
-        console.error("Unexpected error checking session:", err);
-        router.push('/login');
-      }
-    };
+    if (!loading && !user) {
+      console.log("No authenticated user found, redirecting to login");
+      router.push('/login');
+    }
+  }, [loading, user, router]);
 
-    checkUser();
-    
-    // Listen for auth state changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_OUT' || !session) {
-        router.push('/login');
-      }
-    });
-
-    // Cleanup subscription
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [router]);
-
-  if (isLoading) {
+  if (loading) {
     return <LoadingSpinner fullScreen />;
   }
 
@@ -63,10 +29,15 @@ export default function DashboardLayout({
       <div className="flex min-h-screen flex-col items-center justify-center bg-dark-900 p-4 text-center">
         <div className="rounded-lg bg-red-900/20 p-6 text-red-400">
           <h2 className="mb-2 text-xl font-semibold">Authentication Error</h2>
-          <p>{error}</p>
+          <p>{error.message}</p>
         </div>
       </div>
     );
+  }
+
+  // Only render children if user is authenticated
+  if (!user) {
+    return null;
   }
 
   return (
