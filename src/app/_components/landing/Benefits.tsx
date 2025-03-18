@@ -79,7 +79,7 @@ export default function Benefits() {
           {benefits.map((benefit, index) => (
             <div
               key={index}
-              className="group relative overflow-hidden rounded-2xl bg-dark-800/50 p-8 backdrop-blur-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
+              className="group relative overflow-hidden rounded-2xl bg-dark-800/50 p-8 backdrop-blur-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg border border-accent-600/10 hover:border-accent-600/20"
             >
               {/* Hover gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-br from-accent-700/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
@@ -94,24 +94,21 @@ export default function Benefits() {
                 </h3>
                 <p className="text-dark-200">{benefit.description}</p>
               </div>
-              
-              {/* Card accent */}
-              <div className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-accent-700/50 to-transparent opacity-50 transition-opacity duration-300 group-hover:opacity-100"></div>
             </div>
           ))}
         </div>
       </div>
       
       {/* CTA Section - Made bigger and separated */}
-      <div className="mt-32 mb-32 py-16 bg-dark-800/30">
+      <div className="mt-28 mb-16 py-16 bg-dark-800/30">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-2xl text-center">
-            <h3 className="text-2xl font-bold text-dark-50 mb-4">Ready to get started?</h3>
-            <p className="mb-8 text-lg text-dark-200">Try Sonic Flow free for 7 days.</p>
+            <h3 className="text-3xl font-bold text-dark-50 mb-4">Ready to get started?</h3>
+            <p className="mb-8 text-xl text-dark-200">Try Sonic Flow free for 7 days.</p>
             <a 
               href="#pricing" 
               onClick={(e) => handleScrollToSection(e, '#pricing')}
-              className="whitespace-nowrap rounded-xl bg-accent-600 px-10 py-5 text-center text-lg font-medium text-dark-50 shadow-md transition-colors hover:bg-accent-700 inline-block cursor-pointer"
+              className="whitespace-nowrap rounded-xl bg-accent-600 px-8 py-4 text-center text-lg font-medium text-dark-50 shadow-md transition-colors hover:bg-accent-700 inline-block cursor-pointer"
             >
               Start Free Trial
             </a>

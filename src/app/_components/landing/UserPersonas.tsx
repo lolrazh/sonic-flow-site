@@ -45,7 +45,7 @@ export default function UserPersonas() {
           {personas.map((persona, index) => (
             <div
               key={index}
-              className="group relative overflow-hidden rounded-2xl bg-dark-800/50 p-8 backdrop-blur-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
+              className="group relative overflow-hidden rounded-2xl bg-dark-800/50 p-8 backdrop-blur-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg border border-accent-600/10 hover:border-accent-600/20"
             >
               {/* Hover gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-br from-accent-700/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
@@ -60,9 +60,6 @@ export default function UserPersonas() {
                 </h3>
                 <p className="text-dark-200">{persona.description}</p>
               </div>
-              
-              {/* Card accent */}
-              <div className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-accent-700/50 to-transparent opacity-50 transition-opacity duration-300 group-hover:opacity-100"></div>
             </div>
           ))}
         </div>

@@ -24,22 +24,22 @@ import { IconCloud } from "~/components/magicui/icon-cloud";
 export default function CompatibleApps() {
   // Icon array for the cloud - representing popular apps
   const appIcons = [
-    <Mail size={75} color="#EA4335" strokeWidth={1.5} />, // Gmail
-    <Slack size={75} color="#4A154B" strokeWidth={1.5} />, // Slack
-    <Github size={75} color="#181717" strokeWidth={1.5} />, // GitHub
-    <FileCode size={75} color="#007ACC" strokeWidth={1.5} />, // VS Code
-    <Terminal size={75} color="#000000" strokeWidth={1.5} />, // Terminal/Cursor
-    <MessageSquare size={75} color="#10A37F" strokeWidth={1.5} />, // ChatGPT
-    <Zap size={75} color="#8E75B2" strokeWidth={1.5} />, // Gemini
-    <BookText size={75} color="#000000" strokeWidth={1.5} />, // Notion
-    <Type size={75} color="#4285F4" strokeWidth={1.5} />, // Google Docs
-    <Table size={75} color="#0F9D58" strokeWidth={1.5} />, // Google Sheets
-    <Video size={75} color="#DB4437" strokeWidth={1.5} />, // Google Meet
-    <Search size={75} color="#4285F4" strokeWidth={1.5} />, // Google Search
-    <Pencil size={75} color="#FBBC05" strokeWidth={1.5} />, // Google Keep
-    <Code2 size={75} color="#F24E1E" strokeWidth={1.5} />, // Figma
-    <Bookmark size={75} color="#0072C6" strokeWidth={1.5} />, // Outlook
-    <AlignCenter size={75} color="#00ADEF" strokeWidth={1.5} />, // Microsoft Word
+    <Mail size={100} color="#EA4335" strokeWidth={1.5} />, // Gmail
+    <Slack size={100} color="#4A154B" strokeWidth={1.5} />, // Slack
+    <Github size={100} color="#181717" strokeWidth={1.5} />, // GitHub
+    <FileCode size={100} color="#007ACC" strokeWidth={1.5} />, // VS Code
+    <Terminal size={100} color="#000000" strokeWidth={1.5} />, // Terminal/Cursor
+    <MessageSquare size={100} color="#10A37F" strokeWidth={1.5} />, // ChatGPT
+    <Zap size={100} color="#8E75B2" strokeWidth={1.5} />, // Gemini
+    <BookText size={100} color="#000000" strokeWidth={1.5} />, // Notion
+    <Type size={100} color="#4285F4" strokeWidth={1.5} />, // Google Docs
+    <Table size={100} color="#0F9D58" strokeWidth={1.5} />, // Google Sheets
+    <Video size={100} color="#DB4437" strokeWidth={1.5} />, // Google Meet
+    <Search size={100} color="#4285F4" strokeWidth={1.5} />, // Google Search
+    <Pencil size={100} color="#FBBC05" strokeWidth={1.5} />, // Google Keep
+    <Code2 size={100} color="#F24E1E" strokeWidth={1.5} />, // Figma
+    <Bookmark size={100} color="#0072C6" strokeWidth={1.5} />, // Outlook
+    <AlignCenter size={100} color="#00ADEF" strokeWidth={1.5} />, // Microsoft Word
   ];
 
   return (
@@ -53,12 +53,9 @@ export default function CompatibleApps() {
           Seamlessly compatible with all your favorite apps and platforms
         </p>
         
-        <div className="relative mx-auto h-[450px] w-full max-w-3xl flex items-center justify-center">
+        <div className="relative mx-auto h-[550px] w-full max-w-4xl flex items-center justify-center">
           <IconCloud icons={appIcons} />
         </div>
-        
-        {/* Orange accent line */}
-        <div className="mx-auto mt-8 h-1 w-24 rounded bg-gradient-to-r from-accent-800 to-accent-600"></div>
       </div>
     </section>
   );

@@ -63,10 +63,7 @@ export default function Pricing() {
         </div>
         
         <div className="mx-auto max-w-md">
-          <div className="overflow-hidden rounded-3xl border border-dark-600 bg-gradient-to-br from-dark-800 to-dark-700 shadow-card">
-            {/* Card accent top */}
-            <div className="h-1.5 w-full bg-gradient-to-r from-accent-700 via-accent-600 to-accent-500"></div>
-            
+          <div className="overflow-hidden rounded-3xl border border-accent-600/20 bg-dark-800 to-dark-700">
             <div className="p-8">
               <div className="rounded-2xl bg-dark-800/60 p-6 text-center">
                 <h3 className="text-2xl font-bold text-dark-50">Unlimited Plan</h3>
@@ -138,11 +135,6 @@ export default function Pricing() {
                 </p>
               </div>
             </div>
-          </div>
-          
-          {/* Decorative pill element */}
-          <div className="relative mx-auto mt-12 h-3 w-32">
-            <div className="absolute h-1 w-full rounded-full bg-gradient-to-r from-accent-700/20 via-accent-600/40 to-accent-500/20"></div>
           </div>
         </div>
       </div>
