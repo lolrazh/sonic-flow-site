@@ -6,6 +6,7 @@ import Link from "next/link";
 import { createClient } from "@supabase/supabase-js";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
+import SiteName from "~/app/_components/shared/SiteName";
 
 // Create Supabase client
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
@@ -58,11 +59,7 @@ export default function Login() {
       {/* Header */}
       <header className="border-b border-dark-800 py-4">
         <div className="container mx-auto px-4">
-          <Link href="/" className="text-xl font-bold text-dark-50">
-            <span className="bg-gradient-to-r from-accent-500 to-accent-400 bg-clip-text text-transparent">
-              Sonic Flow
-            </span>
-          </Link>
+          <SiteName />
         </div>
       </header>
 
