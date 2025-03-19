@@ -62,8 +62,8 @@ export default function Hero({
       <div className="relative z-10 flex min-h-screen w-full items-center">
         <div className="w-full">
           <div className="mx-auto flex w-full max-w-[90rem] justify-center px-4 lg:justify-end">
-            <div className="max-w-3xl lg:-mr-6 xl:-mr-12 2xl:-mr-28">
-              <h1 className="mb-6 font-serif text-5xl font-normal lowercase leading-tight tracking-normal text-white md:text-6xl lg:text-7xl">
+            <div className="max-w-3xl lg:-mr-12 xl:-mr-24 2xl:-mr-48 4xl: -mr-64">
+              <h1 className="mb-8 font-serif text-5xl font-normal lowercase leading-tight tracking-normal text-white md:text-6xl lg:text-7xl">
                 {firstPart}
                 {hasTwoParts && (
                   <>
@@ -73,7 +73,7 @@ export default function Hero({
                   </>
                 )}
               </h1>
-              <p className="mb-8 font-lexend text-lg text-white/90 md:text-xl">
+              <p className="mb-12 max-w-[75%] font-lexend text-lg text-white/90 md:text-xl">
                 {subheadline}
               </p>
               <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">

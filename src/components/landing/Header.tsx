@@ -86,7 +86,7 @@ export default function Header() {
               href="/signup"
               className="rounded-[35px] bg-white px-6 py-2 font-lexend text-sm font-medium uppercase tracking-wider text-black transition-colors hover:bg-white/90"
             >
-              Sign up
+              Download
             </Link>
           </div>
         </div>
@@ -162,7 +162,7 @@ export default function Header() {
                     href="/signup"
                     className="block w-full rounded-[35px] bg-white px-6 py-2 text-center font-lexend text-sm font-medium uppercase tracking-wider text-black transition-colors hover:bg-white/90"
                   >
-                    Sign up
+                    Download
                   </Link>
                 </li>
               </ul>
