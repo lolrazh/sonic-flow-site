@@ -10,8 +10,8 @@ import { PillUI } from './index';
  * Hero section component for the landing page
  */
 export default function Hero({
-  headline = "this could be you. but you're still typing.",
-  subheadline = "level up your coding flow. let your voice paint the syntax while you focus on the bigger picture. because real devs don't let their fingers slow down their genius.",
+  headline = "this could be you but you're still typing",
+  subheadline = "level up your coding flow. let your voice paint the syntax while you focus on the bigger picture. because real devs don't let their fingers slow down their genius",
   primaryCta = { text: "Get Started", href: "/signup" },
   secondaryCta = { text: "Explore Features", href: "#features" }
 }: HeroProps = {}) {
@@ -60,7 +60,7 @@ export default function Hero({
       </div>
 
       <div className="container relative z-10 mx-auto flex min-h-screen items-center justify-end px-4">
-        <div className="max-w-2xl">
+        <div className="mr-4 max-w-3xl lg:mr-8">
           <h1 className="mb-6 font-serif text-5xl font-normal lowercase leading-tight tracking-normal text-white md:text-6xl lg:text-7xl">
             {firstPart}
             {hasTwoParts && (
