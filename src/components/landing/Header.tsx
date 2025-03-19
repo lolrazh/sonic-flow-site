@@ -23,9 +23,9 @@ export default function Header() {
   }, []);
 
   const navItems = [
-    { name: 'Features', href: '#features' },
-    { name: 'Pricing', href: '#pricing' },
-    { name: 'Lab', href: '#lab' },
+    { name: 'flow', href: '#for-vibe-coders' },
+    { name: 'pricing', href: '#pricing' },
+    { name: 'faq', href: '#faq' },
   ];
 
   // Smooth scroll function
@@ -41,9 +41,13 @@ export default function Header() {
         setMobileMenuOpen(false);
       }
       
+      const offset = 100; // Offset for header height
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+      
       window.scrollTo({
         behavior: 'smooth',
-        top: element.offsetTop - 100 // Offset for header height
+        top: offsetPosition
       });
       
       // Update URL without page reload
@@ -53,10 +57,10 @@ export default function Header() {
 
   return (
     <header className="fixed left-0 top-0 z-50 w-full bg-transparent">
-      <nav className="container mx-auto flex items-center justify-between px-4 py-6">
+      <nav className="container mx-auto flex items-center justify-between px-8 py-6 max-w-7xl">
         {/* Logo */}
-        <Link href="/" className="font-lexend text-2xl font-medium text-white">
-          sonic flow
+        <Link href="/" className="font-lexend text-2xl lowercase tracking-tight text-white/90">
+          sonic<span className="text-white/40">flow</span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -67,9 +71,10 @@ export default function Header() {
               <a
                 key={item.name}
                 href={item.href}
-                className="font-lexend text-sm text-white/80 transition-colors hover:text-white"
+                onClick={(e) => handleScrollToSection(e, item.href)}
+                className="font-lexend text-sm text-white/40 transition-colors hover:text-white/90"
               >
-                {item.name.toLowerCase()}
+                {item.name}
               </a>
             ))}
           </div>
@@ -78,15 +83,15 @@ export default function Header() {
           <div className="flex items-center space-x-4">
             <Link
               href="/login"
-              className="rounded-[35px] border border-white bg-transparent px-6 py-2 font-lexend text-sm font-medium uppercase tracking-wider text-white transition-colors hover:bg-white/10"
+              className="rounded-full border border-white/10 bg-white/5 px-6 py-2 font-lexend text-sm text-white/90 transition-colors hover:bg-white/10"
             >
-              Sign in
+              sign in
             </Link>
             <Link
               href="/signup"
-              className="rounded-[35px] bg-white px-6 py-2 font-lexend text-sm font-medium uppercase tracking-wider text-black transition-colors hover:bg-white/90"
+              className="rounded-full bg-white px-6 py-2 font-lexend text-sm text-black/90 transition-colors hover:bg-white/90"
             >
-              Download
+              download
             </Link>
           </div>
         </div>
@@ -94,35 +99,10 @@ export default function Header() {
         {/* Mobile menu button */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-black/20 focus:outline-none md:hidden"
+          className="inline-flex items-center justify-center rounded-md p-2 text-white/40 hover:text-white/90 focus:outline-none md:hidden"
         >
           <span className="sr-only">Open main menu</span>
-          <svg
-            className={`h-6 w-6 ${mobileMenuOpen ? 'hidden' : 'block'}`}
-            stroke="currentColor"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
-          <svg
-            className={`h-6 w-6 ${mobileMenuOpen ? 'block' : 'hidden'}`}
-            stroke="currentColor"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
+          {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </nav>
 
@@ -134,35 +114,35 @@ export default function Header() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="overflow-hidden bg-black/80 px-4 pb-4 pt-2 backdrop-blur-sm"
+            className="overflow-hidden bg-[rgb(12,12,12)] px-8 pb-6 pt-2"
           >
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto">
               <ul className="flex flex-col space-y-4">
                 {navItems.map((item) => (
                   <li key={item.name}>
                     <a 
                       href={item.href}
                       onClick={(e) => handleScrollToSection(e, item.href)}
-                      className="block rounded-md px-3 py-2 font-lexend text-base text-white/80 transition-colors hover:text-white"
+                      className="block py-2 font-lexend text-base text-white/40 transition-colors hover:text-white/90"
                     >
-                      {item.name.toLowerCase()}
+                      {item.name}
                     </a>
                   </li>
                 ))}
-                <li>
+                <li className="pt-4">
                   <Link
                     href="/login"
-                    className="block w-full rounded-[35px] border border-white bg-transparent px-6 py-2 text-center font-lexend text-sm font-medium uppercase tracking-wider text-white transition-colors hover:bg-white/10"
+                    className="block w-full rounded-full border border-white/10 bg-white/5 px-6 py-2 text-center font-lexend text-sm text-white/90 transition-colors hover:bg-white/10"
                   >
-                    Sign in
+                    sign in
                   </Link>
                 </li>
                 <li className="pt-2">
                   <Link
                     href="/signup"
-                    className="block w-full rounded-[35px] bg-white px-6 py-2 text-center font-lexend text-sm font-medium uppercase tracking-wider text-black transition-colors hover:bg-white/90"
+                    className="block w-full rounded-full bg-white px-6 py-2 text-center font-lexend text-sm text-black/90 transition-colors hover:bg-white/90"
                   >
-                    Download
+                    download
                   </Link>
                 </li>
               </ul>

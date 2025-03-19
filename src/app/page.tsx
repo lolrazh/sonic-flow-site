@@ -2,7 +2,6 @@ import {
   Hero,
   HowItWorks,
   Pricing,
-  Benefits,
   FAQ,
   Header,
   Footer,
@@ -17,7 +16,6 @@ export default function Home() {
       <ForVibeCoders />
       <HowItWorks />
       <Pricing />
-      <Benefits />
       <FAQ />
       <Footer />
     </main>

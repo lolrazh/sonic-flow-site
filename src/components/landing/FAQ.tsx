@@ -9,28 +9,28 @@ import { type FAQProps } from './types';
  * FAQ component - displays frequently asked questions with expandable answers
  */
 export default function FAQ({
-  title = "Frequently Asked Questions",
-  subtitle = "Everything you need to know about Sonic Flow",
+  title = "questions.",
+  subtitle = "because you're probably wondering.",
   items = [
     {
-      question: "What makes Sonic Flow different from other dictation tools?",
-      answer: "Sonic Flow combines state-of-the-art AI transcription with a uniquely unobtrusive interface. Unlike other dictation tools, our minimalist pill UI stays out of your way until you need it, and works seamlessly with any desktop application without requiring special plugins or integrations."
+      question: "why not just type my prompts?",
+      answer: "because your brain moves faster than your fingers. when you're in flow, typing breaks your rhythm. speaking lets you keep your train of thought while describing what you want the AI to do."
     },
     {
-      question: "How accurate is Sonic Flow's transcription?",
-      answer: "Sonic Flow uses advanced AI models specifically tuned for speech recognition, achieving over 95% accuracy for most speakers in typical environments. Our technology continues to improve with regular updates, and adapts to your voice patterns the more you use it."
+      question: "will this actually make me prompt faster?",
+      answer: "yes. most people think at 150+ words per minute but type at 50-80 wpm. speaking your prompts means you can describe complex ideas to your AI agent without losing context."
     },
     {
-      question: "Can I use Sonic Flow with any application?",
-      answer: "Yes! Sonic Flow works with any desktop application that accepts text input, including word processors, email clients, messaging apps, browsers, and more. No special integrations or plugins are required - if you can type in it, you can dictate to it."
+      question: "what about prompt formatting?",
+      answer: "that's handled automatically. you focus on describing what you want, and we'll format it into an effective prompt for your AI agent. no more worrying about perfect prompt structure."
     },
     {
-      question: "What languages does Sonic Flow support?",
-      answer: "Sonic Flow currently supports English (US, UK, AU, CA), with Spanish, French, and German in beta. We're actively working on adding more languages and improving regional accent recognition across all supported languages."
+      question: "does it work with my AI tools?",
+      answer: "if you can type in it, you can speak to it. works with Cursor, Claude, ChatGPT, Copilot, Bard, whatever AI agent you use."
     },
     {
-      question: "Is there a limit to how much I can dictate?",
-      answer: "No limits! Our unlimited plan gives you unlimited dictation time for a simple, predictable monthly or annual fee. Dictate as much as you need without worrying about hitting usage caps or unexpected charges."
+      question: "what about background noise?",
+      answer: "our noise cancellation is pretty good. works fine in coffee shops, co-working spaces, and open offices. just don't try to prompt next to a construction site."
     }
   ]
 }: FAQProps = {}) {
@@ -57,53 +57,60 @@ export default function FAQ({
   };
 
   return (
-    <section className="bg-dark-900 py-24" id="faq">
-      <div className="container mx-auto px-4">
-        <h2 className="mb-6 text-center text-3xl font-bold text-dark-50 md:text-4xl">
-          {title.split(' ')[0]}{' '}
-          <span className="text-accent-600">{title.split(' ').slice(1).join(' ')}</span>
-        </h2>
-        <p className="mx-auto mb-16 max-w-2xl text-center text-dark-200">
-          {subtitle}
-        </p>
+    <section className="relative overflow-hidden bg-[rgb(12,12,12)]">
+      {/* Top gradient overflow */}
+      <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/50 to-transparent" />
+
+      <div className="container mx-auto px-8 py-24 md:py-32 max-w-7xl">
+        <div className="flex flex-col items-center">
+          {/* Header */}
+          <div className="max-w-xl text-center mb-16">
+            <h2 className="mb-6 font-serif text-4xl lowercase tracking-tight text-white/90 md:text-5xl lg:text-6xl">
+              {title}
+            </h2>
+            <p className="font-lexend text-lg text-white/60">
+              {subtitle}
+            </p>
+          </div>
         
-        <div className="mx-auto max-w-3xl">
-          <div className="space-y-4">
-            {items.map((faq, index) => (
-              <div 
-                key={index} 
-                className="overflow-hidden"
-              >
-                <button
-                  onClick={() => toggleFAQ(index)}
-                  className="flex w-full items-center justify-between rounded-xl p-6 text-left transition-colors bg-dark-800/30 hover:bg-dark-800/50"
+          <div className="w-full max-w-2xl">
+            <div className="space-y-4">
+              {items.map((faq, index) => (
+                <div 
+                  key={index} 
+                  className="overflow-hidden rounded-2xl border border-white/5"
                 >
-                  <h3 className="text-lg font-medium text-dark-100">{faq.question}</h3>
-                  <motion.div
-                    animate={{ rotate: openFAQs.includes(index) ? 180 : 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="ml-4 flex-shrink-0"
+                  <button
+                    onClick={() => toggleFAQ(index)}
+                    className="flex w-full items-center justify-between p-6 text-left transition-colors bg-[rgb(18,18,18)] hover:bg-[rgb(24,24,24)]"
                   >
-                    <ChevronDown className="h-5 w-5 text-accent-500" />
-                  </motion.div>
-                </button>
-                
-                <AnimatePresence>
-                  {openFAQs.includes(index) && (
+                    <h3 className="font-lexend text-lg text-white/90">{faq.question}</h3>
                     <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
+                      animate={{ rotate: openFAQs.includes(index) ? 180 : 0 }}
                       transition={{ duration: 0.3 }}
+                      className="ml-4 flex-shrink-0"
                     >
-                      <div className="px-6 py-4 bg-dark-800/20 rounded-b-xl">
-                        <p className="text-dark-200">{faq.answer}</p>
-                      </div>
+                      <ChevronDown className="h-5 w-5 text-white/40" />
                     </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            ))}
+                  </button>
+                  
+                  <AnimatePresence>
+                    {openFAQs.includes(index) && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <div className="px-6 py-4 bg-[rgb(24,24,24)]">
+                          <p className="font-lexend text-white/70">{faq.answer}</p>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

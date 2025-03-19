@@ -28,7 +28,7 @@ export default function Pricing() {
                 <div className="rounded-2xl bg-[rgb(24,24,24)] p-8 text-center">
                   <h3 className="text-2xl font-serif lowercase text-white/90">flow state</h3>
                   <div className="my-4 flex items-center justify-center gap-2">
-                    <span className="font-serif text-6xl text-white/90">$5</span>
+                    <span className="font-serif text-6xl text-white/90">$3</span>
                     <span className="text-white/60">/month</span>
                   </div>
                   <p className="text-white/60 font-lexend">7-day free trial</p>
