@@ -10,7 +10,9 @@ export default {
   			sans: [
   				'var(--font-geist-sans)',
                     ...fontFamily.sans
-                ]
+                ],
+            serif: ['var(--font-dm-serif)', ...fontFamily.serif],
+            lexend: ['var(--font-lexend)', ...fontFamily.sans]
   		},
   		colors: {
   			dark: {
