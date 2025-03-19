@@ -4,7 +4,6 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { type HeroProps } from './types';
-import { PillUI } from './index';
 
 /**
  * Hero section component for the landing page
@@ -34,10 +33,10 @@ export default function Hero({
   };
 
   // Split headline for styling (first part normal, second part with line break)
-  const headlineParts = headline.split('.');
+  const headlineParts = headline?.split('.') ?? [];
   const firstPart = headlineParts[0] ?? '';
-  const hasTwoParts = headlineParts.length > 1 && headlineParts[1].trim() !== '';
-  const secondPart = hasTwoParts ? headlineParts[1].trim() : '';
+  const hasTwoParts = headlineParts.length > 1 && headlineParts[1]?.trim() !== '';
+  const secondPart = hasTwoParts ? headlineParts[1]?.trim() : '';
   
   // Safe default values to prevent undefined errors
   const primaryCtaText = primaryCta?.text ?? "Get Started";

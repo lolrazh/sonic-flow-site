@@ -1,6 +1,5 @@
 import {
   Hero,
-  UserPersonas,
   CompatibleApps,
   Pricing,
   Benefits,
@@ -16,7 +15,6 @@ export default function Home() {
       <Header />
       <Hero />
       <ForVibeCoders />
-      <UserPersonas />
       <CompatibleApps />
       <Pricing />
       <Benefits />
