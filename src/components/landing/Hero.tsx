@@ -11,8 +11,8 @@ import { type HeroProps } from './types';
 export default function Hero({
   headline = "this could be you but you're still typing",
   subheadline = "level up your coding flow. let your voice paint the syntax while you focus on the bigger picture. because real devs don't let their fingers slow down their genius.",
-  primaryCta = { text: "Get Started", href: "/signup" },
-  secondaryCta = { text: "Explore Features", href: "#features" }
+  primaryCta = { text: "get started", href: "/signup" },
+  secondaryCta = { text: "explore features", href: "#features" }
 }: HeroProps = {}) {
   // Smooth scroll function
   const handleScrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -52,17 +52,17 @@ export default function Hero({
           src="/hero-bg.jpg"
           alt="Hero background"
           fill
-          className="object-cover object-center"
+          className="object-cover object-left"
           priority
         />
-        <div className="absolute inset-0 bg-black/40" /> {/* Overlay for better text readability */}
+        <div className="absolute inset-0 bg-black/40" />
       </div>
 
       <div className="relative z-10 flex min-h-screen w-full items-center">
         <div className="w-full">
-          <div className="mx-auto flex w-full max-w-[90rem] justify-center px-4 lg:justify-end">
-            <div className="max-w-3xl lg:-mr-12 xl:-mr-24 2xl:-mr-48 4xl: -mr-64">
-              <h1 className="mb-8 font-serif text-5xl font-normal lowercase leading-tight tracking-normal text-white md:text-6xl lg:text-7xl">
+          <div className="mx-auto flex w-full max-w-[90rem] justify-center px-8 lg:justify-end">
+            <div className="w-full max-w-3xl lg:-mr-12 xl:-mr-24 2xl:-mr-48">
+              <h1 className="mb-8 font-serif text-4xl font-normal lowercase leading-tight tracking-normal text-white sm:text-5xl md:text-6xl lg:text-7xl">
                 {firstPart}
                 {hasTwoParts && (
                   <>
@@ -72,20 +72,20 @@ export default function Hero({
                   </>
                 )}
               </h1>
-              <p className="mb-12 max-w-[75%] font-lexend text-lg text-white/90 md:text-xl">
+              <p className="mb-12 w-full max-w-[90%] font-lexend text-base text-white/90 sm:max-w-[75%] sm:text-lg md:text-xl">
                 {subheadline}
               </p>
               <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
                 <Link 
                   href={primaryCtaHref}
-                  className="group relative overflow-hidden rounded-[35px] bg-white px-8 py-4 text-center font-lexend text-base font-medium uppercase tracking-wider text-black transition-colors hover:bg-white/90"
+                  className="group relative overflow-hidden rounded-full bg-white px-6 py-3 text-center font-lexend text-sm font-medium text-black/90 transition-colors hover:bg-white/90 sm:px-8 sm:py-4 sm:text-base"
                 >
                   {primaryCtaText}
                 </Link>
                 <a 
                   href={secondaryCtaHref} 
                   onClick={(e) => handleScrollToSection(e, secondaryCtaHref)}
-                  className="rounded-[35px] border border-white bg-transparent px-8 py-4 text-center font-lexend text-base font-medium uppercase tracking-wider text-white transition-colors hover:bg-white/10"
+                  className="rounded-full border border-white/10 bg-white/5 px-6 py-3 text-center font-lexend text-sm font-medium text-white/90 transition-colors hover:bg-white/10 sm:px-8 sm:py-4 sm:text-base"
                 >
                   {secondaryCtaText}
                 </a>

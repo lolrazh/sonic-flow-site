@@ -57,7 +57,7 @@ export default function Header() {
 
   return (
     <header className="fixed left-0 top-0 z-50 w-full bg-transparent">
-      <nav className="container mx-auto flex items-center justify-between px-8 py-6 max-w-7xl">
+      <nav className="container mx-auto flex items-center justify-between px-16 py-6 max-w-7xl">
         {/* Logo */}
         <Link href="/" className="font-lexend text-2xl lowercase tracking-tight text-white/90">
           sonic<span className="text-white/40">flow</span>
