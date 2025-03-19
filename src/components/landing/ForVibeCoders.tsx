@@ -21,13 +21,14 @@ export default function ForVibeCoders() {
           {/* Left Content */}
           <div className="max-w-xl">
             <h2 className="mb-6 font-serif text-4xl lowercase tracking-tight text-white/90 md:text-5xl lg:text-6xl">
-              from vibe coders,<br />
-              for vibe coders.
+              stop typing.<br />
+              start flowing.
             </h2>
             <p className="font-lexend text-lg leading-relaxed text-white/70">
-              embrace the flow state. let your thoughts flow directly into code. 
-              no more context switching between typing and thinking. 
-              just vibe with your code while AI handles the typing.
+              your mind moves faster than your fingers.
+              when you're in the zone, typing just gets in the way.
+              speak your thoughts. stay in flow.
+              this is how code was meant to be written.
             </p>
           </div>
 

@@ -108,13 +108,13 @@ export default function HowItWorks() {
           {/* Left Content - Now on the right */}
           <div className="max-w-xl">
             <h2 className="mb-6 font-serif text-4xl lowercase tracking-tight text-white/90 md:text-5xl lg:text-6xl">
-              what is it?<br />
-              <span className="text-white/60">just a tiny pill.</span>
+              minimal.<br />
+              <span className="text-white/60">like your keyboard.</span>
             </h2>
             <p className="font-lexend text-lg leading-relaxed text-white/70">
-              a minimal interface that stays out of your way.
-              hover to expand, click to start dictating.
-              that's all there is to it.
+              a tiny pill that disappears until you need it.
+              hit the hotkey. speak your mind. watch your thoughts materialize.
+              faster than your fingers could ever type.
             </p>
           </div>
 
