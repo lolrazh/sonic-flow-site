@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export default function ForVibeCoders() {
   return (
-    <section className="relative overflow-hidden bg-[rgb(12,12,12)]">
+    <section className="relative overflow-hidden bg-[rgb(12,12,12)]" id="for-vibe-coders">
       {/* Noise texture overlay */}
       <div 
         className="absolute inset-0 opacity-[0.03]" 

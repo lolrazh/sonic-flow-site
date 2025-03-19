@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export default function Pricing() {
   return (
-    <section className="relative overflow-hidden bg-[rgb(12,12,12)]">
+    <section className="relative overflow-hidden bg-[rgb(12,12,12)]" id="pricing">
       <div className="container mx-auto px-8 py-24 md:py-32 max-w-7xl">
         <div className="flex flex-col items-center">
           {/* Header */}

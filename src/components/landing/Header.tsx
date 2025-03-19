@@ -41,7 +41,7 @@ export default function Header() {
         setMobileMenuOpen(false);
       }
       
-      const offset = 100; // Offset for header height
+      const offset = 80; // Reduced offset to match header height better
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - offset;
       

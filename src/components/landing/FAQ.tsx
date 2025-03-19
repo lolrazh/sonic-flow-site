@@ -57,7 +57,7 @@ export default function FAQ({
   };
 
   return (
-    <section className="relative overflow-hidden bg-[rgb(12,12,12)]">
+    <section className="relative overflow-hidden bg-[rgb(12,12,12)]" id="faq">
       {/* Top gradient overflow */}
       <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/50 to-transparent" />
 
