@@ -6,7 +6,8 @@ import {
   Benefits,
   FAQ,
   Header,
-  Footer
+  Footer,
+  ForVibeCoders
 } from "~/components/landing";
 
 export default function Home() {
@@ -14,6 +15,7 @@ export default function Home() {
     <main className="min-h-screen">
       <Header />
       <Hero />
+      <ForVibeCoders />
       <UserPersonas />
       <CompatibleApps />
       <Pricing />
