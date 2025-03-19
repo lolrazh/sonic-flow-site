@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export default function ForVibeCoders() {
   return (
-    <section className="relative overflow-hidden bg-[rgb(18,18,18)]">
+    <section className="relative overflow-hidden bg-[rgb(22,8,8)]">
       {/* Noise texture overlay */}
       <div 
         className="absolute inset-0 opacity-[0.03]" 
@@ -16,7 +16,7 @@ export default function ForVibeCoders() {
       {/* Top gradient overflow from hero */}
       <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/50 to-transparent" />
 
-      <div className="container mx-auto px-4 py-24 md:py-32">
+      <div className="container mx-auto px-4 py-24 md:py-32 max-w-7xl">
         <div className="flex flex-col items-center gap-16 lg:flex-row lg:items-center lg:justify-between">
           {/* Left Content */}
           <div className="max-w-xl">
