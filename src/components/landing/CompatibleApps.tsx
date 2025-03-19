@@ -1,14 +1,96 @@
 "use client";
 
-import React from 'react';
-import Image from 'next/image';
+import React, { useState, useEffect } from 'react';
+
+interface PillProps {
+  isListening: boolean;
+  isProcessing: boolean;
+  onStartDictation: () => void;
+  onStopDictation: () => void;
+}
+
+const DemoPill: React.FC<PillProps> = ({ 
+  isListening, 
+  isProcessing, 
+  onStartDictation, 
+  onStopDictation 
+}) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const VISUALIZATION_COUNT = 7;
+  
+  // Generate frequency bars for the waveform (active state)
+  const renderFrequencyBars = () => {
+    return Array.from({ length: VISUALIZATION_COUNT }).map((_, index) => (
+      <div 
+        key={`bar-${index}`} 
+        className="waveform-bar"
+        style={{ animationDelay: `${index * 0.15}s` }}
+      />
+    ));
+  };
+
+  // Unified function to render dots with different styles
+  const renderDots = (type: 'static' | 'animated' | 'collapsed') => {
+    return Array.from({ length: VISUALIZATION_COUNT }).map((_, index) => (
+      <div 
+        key={`dot-${type}-${index}`} 
+        className={`dot ${type}`}
+        style={type === 'animated' ? { 
+          animationDelay: `${index * 0.15}s`
+        } : undefined}
+      />
+    ));
+  };
+  
+  // Determine if the pill should be in the expanded state
+  const isExpanded = isHovered || isListening || isProcessing;
+  
+  return (
+    <div 
+      className={`
+        pill-container
+        ${!isExpanded ? 'collapsed' : ''}
+        ${isListening ? 'listening' : ''}
+        ${isProcessing ? 'processing' : ''}
+      `}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onClick={isListening ? onStopDictation : onStartDictation}
+    >
+      <div className="pill-content">
+        <div className="visualization-container">
+          {!isExpanded && renderDots('collapsed')}
+          {isHovered && !isListening && !isProcessing && renderDots('static')}
+          {isListening && renderFrequencyBars()}
+          {isProcessing && !isListening && renderDots('animated')}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 /**
- * CompatibleApps component - displays compatible applications in an icon cloud
+ * HowItWorks component - displays the How It Works section
  */
-export default function CompatibleApps() {
+export default function HowItWorks() {
+  const [isListening, setIsListening] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const handleStartDictation = () => {
+    setIsListening(true);
+  };
+
+  const handleStopDictation = () => {
+    setIsListening(false);
+    setIsProcessing(true);
+    // Simulate processing time
+    setTimeout(() => {
+      setIsProcessing(false);
+    }, 2000);
+  };
+
   return (
-    <section className="relative bg-[rgb(8,8,22)] py-24 md:py-32 overflow-hidden">
+    <section className="relative overflow-hidden bg-[rgb(18,18,18)]">
       {/* Noise texture overlay */}
       <div 
         className="absolute inset-0 opacity-[0.03]" 
@@ -18,73 +100,58 @@ export default function CompatibleApps() {
         }}
       />
 
-      <div className="container mx-auto px-8 max-w-7xl">
-        <div className="flex flex-col-reverse items-center gap-16 lg:flex-row lg:items-center lg:justify-between">
-          {/* Left Side - App Integration Mockup */}
-          <div className="relative w-full lg:w-1/2">
-            <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-white/10 bg-[rgb(12,12,28)] shadow-2xl">
-              {/* VSCode-like mockup */}
-              <div className="absolute inset-0">
-                <div className="h-8 bg-[rgb(30,30,30)] flex items-center px-4">
-                  <div className="flex space-x-2">
-                    <div className="w-3 h-3 rounded-full bg-[#ff5f57]"></div>
-                    <div className="w-3 h-3 rounded-full bg-[#febc2e]"></div>
-                    <div className="w-3 h-3 rounded-full bg-[#28c840]"></div>
-                  </div>
-                </div>
-                
-                {/* Code editor content */}
-                <div className="p-4 text-sm font-mono">
-                  <div className="flex items-center space-x-2 opacity-70">
-                    {/* Sonic Flow Pill */}
-                    <div className="absolute top-16 right-8 bg-accent-600/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg border border-accent-500/20 flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-                      <span className="text-xs text-white font-sans">Listening...</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            {/* Floating elements */}
-            <div className="absolute -left-8 top-1/4 bg-accent-600/20 backdrop-blur-sm p-4 rounded-xl border border-accent-500/10">
-              <Image 
-                src="/vscode-icon.png" 
-                width={40} 
-                height={40} 
-                alt="VS Code"
-                className="rounded-lg"
-              />
-            </div>
-            <div className="absolute -right-4 bottom-1/4 bg-accent-600/20 backdrop-blur-sm p-4 rounded-xl border border-accent-500/10">
-              <Image 
-                src="/slack-icon.png" 
-                width={40} 
-                height={40} 
-                alt="Slack"
-                className="rounded-lg"
-              />
-            </div>
-          </div>
+      {/* Top gradient overflow */}
+      <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/50 to-transparent" />
 
-          {/* Right Side - Content */}
+      <div className="container mx-auto px-8 py-24 md:py-32 max-w-7xl">
+        <div className="flex flex-col items-center gap-16 lg:flex-row-reverse lg:items-center lg:justify-between">
+          {/* Left Content - Now on the right */}
           <div className="max-w-xl">
-            <h2 className="mb-6 font-serif text-4xl lowercase tracking-tight text-white/90 md:text-5xl">
-              works everywhere<br />
-              <span className="text-accent-600">stays out of your way.</span>
+            <h2 className="mb-6 font-serif text-4xl lowercase tracking-tight text-white/90 md:text-5xl lg:text-6xl">
+              what is it?<br />
+              <span className="text-white/60">just a tiny pill.</span>
             </h2>
             <p className="font-lexend text-lg leading-relaxed text-white/70">
-              sonic flow integrates seamlessly with your favorite apps. 
-              the unobtrusive interface appears only when you need it, 
-              then fades away letting you stay in your creative flow.
+              a minimal interface that stays out of your way.
+              hover to expand, click to start dictating.
+              that's all there is to it.
             </p>
-            
-            <div className="mt-8 flex flex-wrap gap-4">
-              <div className="rounded-full bg-white/10 px-4 py-2 text-sm text-white/60">VS Code</div>
-              <div className="rounded-full bg-white/10 px-4 py-2 text-sm text-white/60">Slack</div>
-              <div className="rounded-full bg-white/10 px-4 py-2 text-sm text-white/60">Chrome</div>
-              <div className="rounded-full bg-white/10 px-4 py-2 text-sm text-white/60">Notion</div>
-              <div className="rounded-full bg-white/10 px-4 py-2 text-sm text-white/60">+ more</div>
+          </div>
+
+          {/* Right Content - Now on the left - Windows Terminal Demo */}
+          <div className="relative aspect-[4/3] w-full max-w-xl overflow-hidden rounded-xl lg:w-1/2">
+            {/* Windows Terminal-like interface */}
+            <div className="absolute inset-0 bg-[rgb(12,12,24)] flex flex-col">
+              {/* Terminal Title Bar */}
+              <div className="flex items-center justify-between px-4 py-2 bg-[rgb(30,30,43)] border-b border-white/5">
+                <div className="flex items-center gap-2">
+                  <svg className="w-4 h-4 text-white/60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  <span className="text-sm text-white/80 font-medium">Windows PowerShell</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-3 h-3 rounded-sm bg-white/20"></div>
+                  <div className="w-3 h-3 rounded-sm bg-white/20"></div>
+                  <div className="w-3 h-3 rounded-sm bg-red-500/80"></div>
+                </div>
+              </div>
+              
+              {/* Terminal Content */}
+              <div className="flex-1 p-4 font-mono text-sm text-white/70">
+                <p className="mb-2">PS C:\Users\user&gt; sonic-flow --start</p>
+                <p className="text-green-400/90 mb-4">✓ Sonic Flow is running...</p>
+              </div>
+
+              {/* Pill at the bottom */}
+              <div className="absolute inset-x-0 bottom-4 flex justify-center">
+                <DemoPill 
+                  isListening={isListening}
+                  isProcessing={isProcessing}
+                  onStartDictation={handleStartDictation}
+                  onStopDictation={handleStopDictation}
+                />
+              </div>
             </div>
           </div>
         </div>

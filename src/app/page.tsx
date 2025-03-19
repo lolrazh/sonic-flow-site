@@ -1,6 +1,6 @@
 import {
   Hero,
-  CompatibleApps,
+  HowItWorks,
   Pricing,
   Benefits,
   FAQ,
@@ -15,7 +15,7 @@ export default function Home() {
       <Header />
       <Hero />
       <ForVibeCoders />
-      <CompatibleApps />
+      <HowItWorks />
       <Pricing />
       <Benefits />
       <FAQ />

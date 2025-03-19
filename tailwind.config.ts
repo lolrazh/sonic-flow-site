@@ -109,6 +109,20 @@ export default {
   		boxShadow: {
   			card: '0 4px 20px rgba(0, 0, 0, 0.25)',
   			pill: '0 4px 10px rgba(0, 0, 0, 0.15)'
+  		},
+  		keyframes: {
+  			wave: {
+  				'0%, 100%': { transform: 'translateY(0)' },
+  				'50%': { transform: 'translateY(-3px)' }
+  			},
+  			frequency: {
+  				'0%, 100%': { height: '3px' },
+  				'50%': { height: '12px' }
+  			}
+  		},
+  		animation: {
+  			wave: 'wave 1s ease-in-out infinite',
+  			frequency: 'frequency 0.5s ease-in-out infinite'
   		}
   	}
   },
