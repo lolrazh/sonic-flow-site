@@ -11,7 +11,7 @@ import { PillUI } from './index';
  */
 export default function Hero({
   headline = "this could be you but you're still typing",
-  subheadline = "level up your coding flow. let your voice paint the syntax while you focus on the bigger picture. because real devs don't let their fingers slow down their genius",
+  subheadline = "level up your coding flow. let your voice paint the syntax while you focus on the bigger picture. because real devs don't let their fingers slow down their genius.",
   primaryCta = { text: "Get Started", href: "/signup" },
   secondaryCta = { text: "Explore Features", href: "#features" }
 }: HeroProps = {}) {
@@ -59,35 +59,39 @@ export default function Hero({
         <div className="absolute inset-0 bg-black/40" /> {/* Overlay for better text readability */}
       </div>
 
-      <div className="container relative z-10 mx-auto flex min-h-screen items-center justify-end px-4">
-        <div className="mr-4 max-w-3xl lg:mr-8">
-          <h1 className="mb-6 font-serif text-5xl font-normal lowercase leading-tight tracking-normal text-white md:text-6xl lg:text-7xl">
-            {firstPart}
-            {hasTwoParts && (
-              <>
-                <span className="text-accent-600">.</span> 
-                <br />
-                {secondPart}
-              </>
-            )}
-          </h1>
-          <p className="mb-8 font-lexend text-lg text-white/90 md:text-xl">
-            {subheadline}
-          </p>
-          <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-            <Link 
-              href={primaryCtaHref}
-              className="group relative overflow-hidden rounded-[35px] bg-white px-8 py-4 text-center font-lexend text-base font-medium uppercase tracking-wider text-black transition-colors hover:bg-white/90"
-            >
-              {primaryCtaText}
-            </Link>
-            <a 
-              href={secondaryCtaHref} 
-              onClick={(e) => handleScrollToSection(e, secondaryCtaHref)}
-              className="rounded-[35px] border border-white bg-transparent px-8 py-4 text-center font-lexend text-base font-medium uppercase tracking-wider text-white transition-colors hover:bg-white/10"
-            >
-              {secondaryCtaText}
-            </a>
+      <div className="relative z-10 flex min-h-screen w-full items-center">
+        <div className="w-full">
+          <div className="mx-auto flex w-full max-w-[90rem] justify-center px-4 lg:justify-end">
+            <div className="max-w-3xl lg:-mr-6 xl:-mr-12 2xl:-mr-28">
+              <h1 className="mb-6 font-serif text-5xl font-normal lowercase leading-tight tracking-normal text-white md:text-6xl lg:text-7xl">
+                {firstPart}
+                {hasTwoParts && (
+                  <>
+                    <span className="text-accent-600">.</span> 
+                    <br />
+                    {secondPart}
+                  </>
+                )}
+              </h1>
+              <p className="mb-8 font-lexend text-lg text-white/90 md:text-xl">
+                {subheadline}
+              </p>
+              <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
+                <Link 
+                  href={primaryCtaHref}
+                  className="group relative overflow-hidden rounded-[35px] bg-white px-8 py-4 text-center font-lexend text-base font-medium uppercase tracking-wider text-black transition-colors hover:bg-white/90"
+                >
+                  {primaryCtaText}
+                </Link>
+                <a 
+                  href={secondaryCtaHref} 
+                  onClick={(e) => handleScrollToSection(e, secondaryCtaHref)}
+                  className="rounded-[35px] border border-white bg-transparent px-8 py-4 text-center font-lexend text-base font-medium uppercase tracking-wider text-white transition-colors hover:bg-white/10"
+                >
+                  {secondaryCtaText}
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
