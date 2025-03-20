@@ -1,64 +1,51 @@
 import "server-only";
 
-import { createTRPCProxyClient, loggerLink } from "@trpc/client";
-import { callProcedure } from "@trpc/server";
-import { observable } from "@trpc/server/observable";
-import { type TRPCErrorResponse } from "@trpc/server/rpc";
+import { experimental_createTRPCNextAppDirClient } from "@trpc/next/app-dir/client";
+import { httpBatchLink } from "@trpc/client";
 import { headers } from "next/headers";
-import { cache } from "react";
 import SuperJSON from "superjson";
 
-import { appRouter, type AppRouter } from "@/server/api/root";
-import { createTRPCContext } from "@/server/api/trpc";
+import { type AppRouter } from "@/server/api/root";
 
-/**
- * This wraps the `createTRPCContext` helper and provides the required context for the tRPC API when
- * handling a tRPC call from a React Server Component.
- */
-const createContext = cache(async () => {
-  const heads = new Headers(headers());
-  heads.set("x-trpc-source", "rsc");
+function getBaseUrl() {
+  if (typeof window !== "undefined") {
+    // browser should use relative path
+    return "";
+  }
 
-  return createTRPCContext({
-    headers: heads,
-  });
-});
+  if (process.env.VERCEL_URL) {
+    // reference for vercel.com
+    return `https://${process.env.VERCEL_URL}`;
+  }
 
-export const api = createTRPCProxyClient<AppRouter>({
-  transformer: SuperJSON,
-  links: [
-    loggerLink({
-      enabled: (op) =>
-        process.env.NODE_ENV === "development" ||
-        (op.direction === "down" && op.result instanceof Error),
-    }),
-    /**
-     * Custom RSC link that calls the procedures directly in the server without the need for HTTP.
-     *
-     * @see https://trpc.io/docs/client/links
-     */
-    () =>
-      ({ op }) =>
-        observable((observer) => {
-          void createContext()
-            .then((ctx) => {
-              return callProcedure({
-                procedures: appRouter._def.procedures,
-                path: op.path,
-                rawInput: op.input,
-                ctx,
-                type: op.type,
-              });
-            })
-            .then((data) => {
-              observer.next({ result: { data } });
-              observer.complete();
-            })
-            .catch((cause) => {
-              // Using 'as' to assert the type since we know this is a valid usage pattern
-              // from TRPC but TypeScript doesn't recognize it correctly
-              observer.error(TRPCErrorResponse.from(cause as Error));
-            });
+  // assume localhost
+  return `http://localhost:${process.env.PORT ?? 3000}`;
+}
+
+export const api = experimental_createTRPCNextAppDirClient<AppRouter>({
+  config() {
+    return {
+      links: [
+        httpBatchLink({
+          url: `${getBaseUrl()}/api/trpc`,
+          transformer: SuperJSON,
+          headers: async () => {
+            try {
+              const headersList = await headers();
+              return {
+                "x-trpc-source": "rsc",
+                cookie: headersList.get("cookie") ?? "",
+                "user-agent": headersList.get("user-agent") ?? "",
+              };
+            } catch {
+              // If headers() fails (e.g., during static generation), return minimal headers
+              return {
+                "x-trpc-source": "rsc",
+              };
+            }
+          },
         }),
-  ],
+      ],
+    };
+  },
 });
