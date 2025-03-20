@@ -62,11 +62,11 @@ export default function SubscriptionStatus() {
     void initPaddle();
   }, [user]);
 
-  const handleManageSubscription = () => {
+  const handleManageSubscription = async () => {
     if (!subscription) {
       // No subscription - open checkout
-      openCheckout({
-        email: user?.email,
+      await openCheckout({
+        customerEmail: user?.email,
         customerId: user?.id,
         successCallback: () => {
           window.location.reload();
@@ -75,11 +75,11 @@ export default function SubscriptionStatus() {
     } else {
       // Open Paddle's customer portal
       if (typeof window !== "undefined" && window.Paddle) {
-        window.Paddle.Checkout.open({
+        await window.Paddle.Checkout.open({
           items: [{ priceId: process.env.NEXT_PUBLIC_PADDLE_PLAN_ID }],
           customer: {
-            email: user?.email,
-            id: user?.id
+            email: user?.email ?? undefined,
+            id: user?.id ?? undefined
           },
           settings: {
             displayMode: 'overlay',

@@ -13,29 +13,33 @@ export default function SubscribePage() {
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   
   useEffect(() => {
-    if (!sessionLoading && !user) {
-      void router.push("/login");
-    }
-    
-    void initPaddle();
+    const init = async () => {
+      if (!sessionLoading && !user) {
+        await router.push("/login");
+      }
+      await initPaddle();
+    };
+    void init();
   }, [sessionLoading, user, router]);
   
-  const handleStartTrial = () => {
+  const handleStartTrial = async () => {
     if (!user) return;
     
     setCheckoutLoading(true);
     
-    openCheckout({
-      email: user.email,
-      customerId: user.id,
-      successCallback: () => {
-        setCheckoutLoading(false);
-        router.push("/dashboard");
-      },
-      closeCallback: () => {
-        setCheckoutLoading(false);
-      }
-    });
+    try {
+      await openCheckout({
+        customerEmail: user.email,
+        customerId: user.id,
+        successUrl: `${window.location.origin}/dashboard`,
+        closeCallback: () => {
+          setCheckoutLoading(false);
+        }
+      });
+    } catch (error) {
+      console.error('Failed to open checkout:', error);
+      setCheckoutLoading(false);
+    }
   };
   
   if (sessionLoading) {
