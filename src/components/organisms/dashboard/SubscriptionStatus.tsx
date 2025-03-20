@@ -7,6 +7,7 @@ import { useSession } from "@/lib/auth";
 import { initPaddle, openCheckout } from "@/lib/paddle";
 import type { Paddle } from '@paddle/paddle-js';
 import type { Database } from '@/types/database.types';
+import type { PostgrestSingleResponse } from '@supabase/supabase-js';
 
 type Subscription = Database['public']['Tables']['subscriptions']['Row'];
 
@@ -27,14 +28,14 @@ export default function SubscriptionStatus() {
     const loadSubscription = async () => {
       const supabase = createClientClient();
       try {
-        const { data, error } = await supabase
+        const result: PostgrestSingleResponse<Subscription> = await supabase
           .from("subscriptions")
           .select("*")
           .eq("user_id", user.id)
           .single();
 
-        if (!error && data) {
-          setSubscription(data);
+        if (!result.error && result.data) {
+          setSubscription(result.data);
         }
       } catch (err) {
         console.error("Error loading subscription:", err);
@@ -49,7 +50,7 @@ export default function SubscriptionStatus() {
   const handleManageSubscription = async () => {
     if (!subscription) {
       // No subscription - open checkout
-      await openCheckout({
+      void openCheckout({
         priceId: process.env.NEXT_PUBLIC_PADDLE_PRICE_ID!,
         customerEmail: user?.email,
         customerId: user?.id,
@@ -58,7 +59,7 @@ export default function SubscriptionStatus() {
     } else {
       // Open Paddle's customer portal
       if (typeof window !== "undefined" && window.Paddle?.Checkout) {
-        await window.Paddle.Checkout.open({
+        void window.Paddle.Checkout.open({
           items: [{ priceId: process.env.NEXT_PUBLIC_PADDLE_PLAN_ID! }],
           customer: user?.email ? { email: user.email } : undefined,
           settings: {
