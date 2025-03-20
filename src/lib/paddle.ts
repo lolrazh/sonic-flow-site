@@ -1,5 +1,5 @@
-import { initializePaddle, Paddle, InitializePaddleOptions } from '@paddle/paddle-js';
-import { Database } from '@/types/database.types';
+import type { Paddle, InitializePaddleOptions } from '@paddle/paddle-js';
+import type { Database } from '@/types/database.types';
 
 export type PriceWithProduct = Database['public']['Tables']['prices']['Row'] & {
   product: Database['public']['Tables']['products']['Row'];
@@ -20,10 +20,11 @@ export const initPaddle = async () => {
   if (paddleInstance) return paddleInstance;
 
   const settings: InitializePaddleOptions = {
-    environment: process.env.NEXT_PUBLIC_PADDLE_ENVIRONMENT === 'sandbox' ? 'sandbox' : 'production' as const,
+    environment: process.env.NEXT_PUBLIC_PADDLE_ENVIRONMENT === 'sandbox' ? 'sandbox' : 'production',
     token: process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN!,
   };
 
+  const { initializePaddle } = await import('@paddle/paddle-js');
   const instance = await initializePaddle(settings);
   if (!instance) throw new Error('Failed to initialize Paddle');
   paddleInstance = instance;
@@ -77,7 +78,7 @@ export const openCheckout = async ({
   const checkoutOptions = {
     items: [{ priceId }],
     customData: { customer_id: customerId },
-    customerEmail,
+    customer: customerEmail ? { email: customerEmail } : undefined,
     successUrl,
     displayMode: 'overlay' as const,
     settings: {
@@ -111,7 +112,7 @@ export const openCustomerPortal = async ({
     }),
   });
 
-  const data = await response.json();
+  const data = await response.json() as { url?: string };
   
   if (data.url) {
     window.location.href = data.url;

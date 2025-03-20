@@ -15,7 +15,8 @@ export default function SubscribePage() {
   useEffect(() => {
     const init = async () => {
       if (!sessionLoading && !user) {
-        await router.push("/login");
+        router.push("/login");
+        return;
       }
       await initPaddle();
     };
@@ -28,16 +29,17 @@ export default function SubscribePage() {
     setCheckoutLoading(true);
     
     try {
-      await openCheckout({
+      const checkoutPromise = openCheckout({
+        priceId: process.env.NEXT_PUBLIC_PADDLE_PRICE_ID!,
         customerEmail: user.email,
         customerId: user.id,
         successUrl: `${window.location.origin}/dashboard`,
-        closeCallback: () => {
-          setCheckoutLoading(false);
-        }
       });
+
+      await checkoutPromise;
     } catch (error) {
       console.error('Failed to open checkout:', error);
+    } finally {
       setCheckoutLoading(false);
     }
   };

@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Verify webhook signature
-    const isValid = await verifyPaddleWebhook(rawBody, signature);
+    const isValid = verifyPaddleWebhook(rawBody, signature);
     if (!isValid) {
       return new NextResponse('Invalid signature', { status: 400 });
     }

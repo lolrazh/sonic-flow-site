@@ -2,9 +2,6 @@
 
 import React, { useState } from "react";
 import { api } from "@/trpc/react";
-import type { RouterOutputs } from "@/trpc/react";
-
-type Post = RouterOutputs["post"]["getLatestPost"];
 
 /**
  * LatestPost component - displays and creates posts

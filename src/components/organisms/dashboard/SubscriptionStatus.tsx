@@ -5,30 +5,14 @@ import { BiRightArrowAlt } from "react-icons/bi";
 import { createClientClient } from "@/lib/supabase/client";
 import { useSession } from "@/lib/auth";
 import { initPaddle, openCheckout } from "@/lib/paddle";
+import type { Paddle } from '@paddle/paddle-js';
+import type { Database } from '@/types/database.types';
 
-interface Subscription {
-  status: string;
-  trial_ends: string | null;
-  paddle_subscription_id: string;
-  current_period_end: string;
-}
+type Subscription = Database['public']['Tables']['subscriptions']['Row'];
 
 declare global {
   interface Window {
-    Paddle: {
-      Checkout: {
-        open: (options: {
-          items: Array<{ priceId?: string }>;
-          customer: { email?: string; id?: string };
-          settings: {
-            displayMode: string;
-            theme: string;
-            frameTarget: string;
-            successUrl: string;
-          };
-        }) => void;
-      };
-    };
+    Paddle?: Paddle;
   }
 }
 
@@ -50,7 +34,7 @@ export default function SubscriptionStatus() {
           .single();
 
         if (!error && data) {
-          setSubscription(data as Subscription);
+          setSubscription(data);
         }
       } catch (err) {
         console.error("Error loading subscription:", err);
@@ -59,28 +43,24 @@ export default function SubscriptionStatus() {
     };
 
     void loadSubscription();
-    void initPaddle();
+    void initPaddle().catch(console.error);
   }, [user]);
 
   const handleManageSubscription = async () => {
     if (!subscription) {
       // No subscription - open checkout
       await openCheckout({
+        priceId: process.env.NEXT_PUBLIC_PADDLE_PRICE_ID!,
         customerEmail: user?.email,
         customerId: user?.id,
-        successCallback: () => {
-          window.location.reload();
-        },
+        successUrl: window.location.href,
       });
     } else {
       // Open Paddle's customer portal
-      if (typeof window !== "undefined" && window.Paddle) {
+      if (typeof window !== "undefined" && window.Paddle?.Checkout) {
         await window.Paddle.Checkout.open({
-          items: [{ priceId: process.env.NEXT_PUBLIC_PADDLE_PLAN_ID }],
-          customer: {
-            email: user?.email ?? undefined,
-            id: user?.id ?? undefined
-          },
+          items: [{ priceId: process.env.NEXT_PUBLIC_PADDLE_PLAN_ID! }],
+          customer: user?.email ? { email: user.email } : undefined,
           settings: {
             displayMode: 'overlay',
             theme: 'dark',
@@ -105,8 +85,8 @@ export default function SubscriptionStatus() {
   }
 
   const isOnTrial = subscription?.status === 'trialing';
-  const trialDaysLeft = subscription?.trial_ends
-    ? Math.max(0, Math.ceil((new Date(subscription.trial_ends).getTime() - Date.now()) / (1000 * 60 * 60 * 24)))
+  const trialDaysLeft = subscription?.trial_end
+    ? Math.max(0, Math.ceil((new Date(subscription.trial_end).getTime() - Date.now()) / (1000 * 60 * 60 * 24)))
     : 0;
 
   return (
