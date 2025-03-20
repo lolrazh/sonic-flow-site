@@ -99,11 +99,12 @@ export default function SignUp() {
                   default: {
                     colors: {
                       brand: '#ffffff',
-                      brandAccent: '#f9fafb',
-                      brandButtonText: '#000000',
-                      defaultButtonBackground: '#000000',
-                      defaultButtonBackgroundHover: '#111111',
-                      defaultButtonText: '#ffffff',
+                      brandAccent: '#ffffff',
+                      brandButtonText: 'rgba(0,0,0,0.9)',
+                      defaultButtonBackground: 'rgba(255,255,255,0.05)',
+                      defaultButtonBackgroundHover: 'rgba(255,255,255,0.1)',
+                      defaultButtonText: 'rgba(255,255,255,0.9)',
+                      defaultButtonBorder: 'rgba(255,255,255,0.1)',
                       inputBackground: 'rgb(18,18,18)',
                       inputText: 'rgba(255,255,255,0.9)',
                       inputBorder: 'rgba(255,255,255,0.1)',
@@ -123,21 +124,24 @@ export default function SignUp() {
                     radii: {
                       borderRadiusButton: '9999px',
                       buttonBorderRadius: '9999px',
-                      inputBorderRadius: '16px',
+                      inputBorderRadius: '9999px',
                     },
                   },
                 },
                 className: {
-                  button: 'font-lexend text-sm lowercase !text-black !font-semibold',
-                  anchor: 'font-lexend text-sm text-white/40 hover:text-white/90 lowercase',
-                  message: 'font-lexend text-sm text-white/40',
-                  label: 'font-lexend text-sm text-white/60 lowercase',
-                  input: 'font-lexend text-sm',
+                  button: 'text-sm lowercase font-medium !important',
+                  anchor: 'text-sm text-white/40 hover:text-white/90 lowercase',
+                  message: 'text-sm text-white/40',
+                  label: 'text-sm text-white/60 lowercase pl-4',
+                  input: 'text-sm',
                 },
                 style: {
                   button: {
-                    fontWeight: '600',
+                    fontWeight: '500',
                     textTransform: 'lowercase',
+                  },
+                  label: {
+                    textAlign: 'left',
                   },
                 },
               }}
@@ -147,15 +151,6 @@ export default function SignUp() {
               view="sign_up"
             />
           )}
-
-          <div className="mt-8 text-center">
-            <p className="font-lexend text-sm text-white/40">
-              already have an account?{" "}
-              <Link href="/login" className="text-white/90 transition-colors hover:text-white">
-                sign in
-              </Link>
-            </p>
-          </div>
         </div>
       </div>
     </div>
