@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
-import { SiteName, LoadingSpinner } from "~/components/ui";
+import { LoadingSpinner } from "~/components/atoms/ui";
 import { clientSupabase } from "~/lib/supabase/client";
 import { useSession } from "~/lib/auth";
 import type { AuthChangeEvent } from "@supabase/supabase-js";

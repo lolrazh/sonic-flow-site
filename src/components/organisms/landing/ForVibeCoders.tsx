@@ -26,7 +26,7 @@ export default function ForVibeCoders() {
             </h2>
             <p className="font-lexend text-lg leading-relaxed text-white/70">
               your mind moves faster than your fingers.
-              when you're in the zone, typing just gets in the way.
+              when you&apos;re in the zone, typing just gets in the way.
               speak your thoughts. stay in flow.
               this is how code was meant to be written.
             </p>
