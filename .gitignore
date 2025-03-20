@@ -44,3 +44,12 @@ yarn-error.log*
 
 # idea files
 .idea
+
+# local files
+pill.png
+architecture.md 
+implementation.md
+improvements.md
+
+# cursor files
+.cursor
