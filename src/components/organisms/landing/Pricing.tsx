@@ -38,20 +38,17 @@ export default function Pricing() {
           throw new Error('No price information available');
         }
 
-        const parts = subtotal.split(' ');
-        if (parts.length !== 2) {
+        // Extract numeric amount and currency using regex
+        const priceMatch = subtotal.match(/([^\d]*)([\d,.]+)([^\d]*)(\w{3})?/);
+        if (!priceMatch?.[2]) {
           throw new Error('Invalid price format');
         }
 
-        const formattedAmount = parts[0];
-        const currency = parts[1];
+        const numericPart = priceMatch[2].replace(/,/g, '');
+        // Default to USD if no currency code found
+        const currencyCode = priceMatch[4] ?? 'USD';
 
-        if (!formattedAmount || !currency) {
-          throw new Error('Invalid price format');
-        }
-
-        // Remove currency symbol and convert to cents
-        const numericAmount = parseFloat(formattedAmount.replace(/[^0-9.]/g, '')) * 100;
+        const numericAmount = parseFloat(numericPart) * 100;
 
         if (isNaN(numericAmount)) {
           throw new Error('Invalid price amount');
@@ -59,7 +56,7 @@ export default function Pricing() {
 
         setPrice({
           amount: numericAmount.toString(),
-          currency
+          currency: currencyCode
         });
       } catch (err) {
         console.error('Failed to load price:', err);
