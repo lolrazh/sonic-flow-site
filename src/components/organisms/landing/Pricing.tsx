@@ -1,19 +1,89 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSession } from '@/lib/auth';
 import { initPaddle, openCheckout } from '@/lib/paddle';
+import type { Paddle } from '@paddle/paddle-js';
 
 export default function Pricing() {
   const { user } = useSession();
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [price, setPrice] = useState<{ amount: string; currency: string } | null>(null);
+  const [priceLoading, setPriceLoading] = useState(true);
+
+  useEffect(() => {
+    const loadPrice = async () => {
+      try {
+        const paddle = await initPaddle();
+        const priceId = process.env.NEXT_PUBLIC_PADDLE_PRICE_ID;
+        if (!priceId) throw new Error('Price ID not configured');
+
+        const preview = await paddle.PricePreview({
+          items: [{
+            priceId,
+            quantity: 1
+          }],
+          currencyCode: 'USD'
+        });
+
+        if (!preview?.data?.details?.lineItems?.[0]) {
+          throw new Error('Invalid price preview response');
+        }
+
+        const lineItem = preview.data.details.lineItems[0];
+        const subtotal = lineItem.formattedTotals?.subtotal;
+        
+        if (!subtotal) {
+          throw new Error('No price information available');
+        }
+
+        const parts = subtotal.split(' ');
+        if (parts.length !== 2) {
+          throw new Error('Invalid price format');
+        }
+
+        const formattedAmount = parts[0];
+        const currency = parts[1];
+
+        if (!formattedAmount || !currency) {
+          throw new Error('Invalid price format');
+        }
+
+        // Remove currency symbol and convert to cents
+        const numericAmount = parseFloat(formattedAmount.replace(/[^0-9.]/g, '')) * 100;
+
+        if (isNaN(numericAmount)) {
+          throw new Error('Invalid price amount');
+        }
+
+        setPrice({
+          amount: numericAmount.toString(),
+          currency
+        });
+      } catch (err) {
+        console.error('Failed to load price:', err);
+        setError('Failed to load price information');
+      } finally {
+        setPriceLoading(false);
+      }
+    };
+
+    void loadPrice();
+  }, []);
 
   const handleStartTrial = async (e: React.MouseEvent) => {
     e.preventDefault();
+    setError(null);
     
     if (!user) {
       // If not logged in, redirect to signup
       window.location.href = '/signup';
+      return;
+    }
+
+    if (!process.env.NEXT_PUBLIC_PADDLE_PRICE_ID) {
+      setError('Configuration error. Please contact support.');
       return;
     }
 
@@ -23,16 +93,27 @@ export default function Pricing() {
       // Initialize Paddle and open checkout
       await initPaddle();
       await openCheckout({
-        priceId: 'pri_01hq7n2j8q8q8q8q8q8q8q8q8',
+        priceId: process.env.NEXT_PUBLIC_PADDLE_PRICE_ID,
         customerId: user.id,
         customerEmail: user.email,
-        successUrl: '/dashboard',
+        successUrl: `${window.location.origin}/dashboard`,
         customerLocale: 'en',
       });
     } catch (error) {
       console.error('Failed to start trial:', error);
+      setError('Something went wrong. Please try again later or contact support.');
+    } finally {
       setIsLoading(false);
     }
+  };
+
+  const formatPrice = (amount: string, currency: string) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: currency,
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(Number(amount));
   };
 
   return (
@@ -58,8 +139,16 @@ export default function Pricing() {
               
               <div className="text-center mb-8">
                 <div className="font-lexend text-6xl tracking-tight text-white/90">
-                  $5
-                  <span className="ml-1 text-xl text-white/40">/month</span>
+                  {priceLoading ? (
+                    <span className="text-white/40">...</span>
+                  ) : price ? (
+                    <>
+                      {formatPrice(price.amount, price.currency)}
+                      <span className="ml-1 text-xl text-white/40">/month</span>
+                    </>
+                  ) : (
+                    <span className="text-white/40">Error loading price</span>
+                  )}
                 </div>
               </div>
               
@@ -86,6 +175,11 @@ export default function Pricing() {
                 >
                   {isLoading ? "loading..." : "start free trial"}
                 </button>
+                {error && (
+                  <p className="text-sm text-center font-lexend text-red-400">
+                    {error}
+                  </p>
+                )}
                 <p className="text-sm text-center font-lexend text-white/40">
                   no credit card required
                 </p>
