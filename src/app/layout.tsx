@@ -1,9 +1,9 @@
-import "~/styles/globals.css";
+import "@/styles/globals.css";
 
 import { DM_Serif_Display, Lexend_Deca } from "next/font/google";
 import { type Metadata } from "next";
-import { ClientWrapper } from "~/components/client/ClientWrapper";
-import { Polyfills } from "~/components/client/Polyfills";
+import { ClientWrapper } from "@/components/client/ClientWrapper";
+import { Polyfills } from "@/components/client/Polyfills";
 
 const dmSerif = DM_Serif_Display({
   subsets: ["latin"],

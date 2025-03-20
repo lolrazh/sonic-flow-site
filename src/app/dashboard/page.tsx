@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { BiCog, BiRightArrowAlt, BiUser, BiSlider } from "react-icons/bi";
-import DashboardHeader from "~/components/organisms/dashboard/DashboardHeader";
-import SubscriptionStatus from "~/components/organisms/dashboard/SubscriptionStatus";
+import DashboardHeader from "@/components/organisms/dashboard/DashboardHeader";
+import SubscriptionStatus from "@/components/organisms/dashboard/SubscriptionStatus";
 import Image from "next/image";
-import { useSession } from "~/lib/auth";
+import { useSession } from "@/lib/auth";
 import { useRouter } from "next/navigation";
 
 // Shadcn-style Switch component

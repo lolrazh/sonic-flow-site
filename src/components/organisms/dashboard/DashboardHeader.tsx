@@ -2,7 +2,7 @@
 
 import { BiLogOut } from "react-icons/bi";
 import Link from "next/link";
-import { supabase } from "~/lib/auth";
+import { supabase } from "@/lib/auth";
 
 export default function DashboardHeader() {
   const handleSignOut = async () => {

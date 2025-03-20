@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, type ReactNode } from "react";
-import { TRPCReactProvider } from "~/trpc/react";
+import { TRPCReactProvider } from "@/trpc/react";
 
 export default function ClientOnly({ children }: { children: ReactNode }) {
   const [mounted, setMounted] = useState(false);

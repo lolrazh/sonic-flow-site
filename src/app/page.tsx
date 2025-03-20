@@ -6,7 +6,7 @@ import {
   Header,
   Footer,
   ForVibeCoders
-} from "~/components/organisms/landing";
+} from "@/components/organisms/landing";
 
 export default function Home() {
   return (

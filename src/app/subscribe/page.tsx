@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useSession } from "~/lib/auth";
-import { initPaddle, openCheckout } from "~/lib/paddle";
-import { LoadingSpinner } from "~/components/atoms/ui";
+import { useSession } from "@/lib/auth";
+import { initPaddle, openCheckout } from "@/lib/paddle";
+import { LoadingSpinner } from "@/components/atoms/ui";
 
 export default function SubscribePage() {
   const router = useRouter();

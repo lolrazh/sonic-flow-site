@@ -2,8 +2,8 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { LoadingSpinner } from "~/components/atoms/ui";
-import { useSession } from "~/lib/auth";
+import { LoadingSpinner } from "@/components/atoms/ui";
+import { useSession } from "@/lib/auth";
 
 export default function DashboardLayout({
   children,

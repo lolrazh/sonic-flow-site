@@ -1,163 +1,156 @@
-export interface PaddleEventData {
-  checkout?: {
-    id: string;
-    completed: boolean;
-    prices: Array<{
-      product: { id: string; name: string };
-      billing: { interval: string; frequency: number };
-      unit_price: { amount: string; currency_code: string };
-    }>;
-    customer: { email: string; id: string };
-  };
-  subscription?: {
-    id: string;
-    status: 'active' | 'trialing' | 'paused' | 'canceled';
-    next_billed_at: string;
-    current_period_end: string;
-  };
-  transaction?: {
-    id: string;
-    status: 'completed' | 'failed' | 'refunded';
-    amount: string;
-    currency_code: string;
-  };
-}
+import { PaddleSDK } from '@paddle/paddle-js';
+import { Database } from '@/types/database.types';
 
-interface PaddleCheckoutOptions {
-  items: Array<{ priceId: string }>;
-  customer?: { email?: string; id?: string };
-  settings: {
-    displayMode: 'overlay' | 'inline';
-    theme: 'light' | 'dark';
-  };
-  successCallback?: () => void;
-  closeCallback?: () => void;
-}
-
-interface PaddleWindow {
-  Paddle?: {
-    Environment: {
-      set: (env: string) => void;
-    };
-    Setup: (options: { vendor: number | string; eventCallback?: (data: PaddleEventData) => void }) => void;
-    Checkout: {
-      open: (options: PaddleCheckoutOptions) => void;
-    };
-  };
-}
-
-declare global {
-  interface Window extends PaddleWindow {}
-}
-
-let paddleInitialized = false;
-let paddleInitializing = false;
-const paddleCallbacks: ((data: PaddleEventData) => void)[] = [];
-
-export const waitForPaddle = (): Promise<void> => {
-  return new Promise((resolve) => {
-    if (window.Paddle) {
-      resolve();
-      return;
-    }
-
-    const checkPaddle = () => {
-      if (window.Paddle) {
-        resolve();
-      } else {
-        setTimeout(checkPaddle, 100);
-      }
-    };
-
-    checkPaddle();
-  });
+export type PriceWithProduct = Database['public']['Tables']['prices']['Row'] & {
+  product: Database['public']['Tables']['products']['Row'];
 };
 
-export const initPaddle = async (callback?: (data: PaddleEventData) => void) => {
-  if (typeof window === 'undefined') return;
+export type SubscriptionWithDetails = Database['public']['Tables']['subscriptions']['Row'] & {
+  transactions: Database['public']['Tables']['transactions']['Row'][];
+  price: PriceWithProduct;
+};
+
+export type CustomerWithSubscriptions = Database['public']['Tables']['customers']['Row'] & {
+  subscriptions: SubscriptionWithDetails[];
+};
+
+let paddleInstance: PaddleSDK | null = null;
+
+export const initPaddle = async () => {
+  if (paddleInstance) return paddleInstance;
+
+  const settings = {
+    environment: process.env.NEXT_PUBLIC_PADDLE_ENVIRONMENT === 'sandbox' ? 'sandbox' : 'production',
+    token: process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN!,
+  };
+
+  paddleInstance = await PaddleSDK.init(settings.token, {
+    environment: settings.environment,
+  });
+
+  return paddleInstance;
+};
+
+export const getPaddleInstance = () => {
+  if (!paddleInstance) {
+    throw new Error('Paddle not initialized');
+  }
+  return paddleInstance;
+};
+
+export const formatPrice = (amount: number, currency: string, locale = 'en-US') => {
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency: currency,
+  }).format(amount);
+};
+
+export const getBillingPeriodInWords = (billingPeriod: string, locale = 'en-US') => {
+  const formatter = new Intl.RelativeTimeFormat(locale, { numeric: 'auto' });
   
-  if (callback) {
-    paddleCallbacks.push(callback);
+  switch (billingPeriod.toLowerCase()) {
+    case 'month':
+      return formatter.format(1, 'month');
+    case 'year':
+      return formatter.format(1, 'year');
+    case 'week':
+      return formatter.format(1, 'week');
+    default:
+      return billingPeriod;
   }
-
-  // If already initialized, just call the callback
-  if (paddleInitialized && window.Paddle) {
-    callback?.(undefined as any);
-    return;
-  }
-
-  // If initialization is in progress, wait for it
-  if (paddleInitializing) {
-    return;
-  }
-
-  paddleInitializing = true;
-
-  try {
-    await waitForPaddle();
-    setupPaddle();
-    paddleInitialized = true;
-    paddleInitializing = false;
-    // Call all registered callbacks
-    paddleCallbacks.forEach(cb => cb(undefined as any));
-    paddleCallbacks.length = 0; // Clear the callbacks
-  } catch (error) {
-    console.error('Failed to initialize Paddle:', error);
-    paddleInitializing = false;
-  }
-};
-
-const setupPaddle = () => {
-  if (!window.Paddle) return;
-
-  // Set environment based on NODE_ENV
-  if (process.env.NODE_ENV === 'development') {
-    window.Paddle.Environment.set('sandbox');
-  }
-
-  // Initialize Paddle
-  window.Paddle.Setup({
-    vendor: Number(process.env.NEXT_PUBLIC_PADDLE_VENDOR_ID),
-    eventCallback: (data: PaddleEventData) => {
-      // Call all registered callbacks
-      paddleCallbacks.forEach(callback => callback(data));
-    },
-  });
 };
 
 export const openCheckout = async ({
-  email,
+  priceId,
   customerId,
-  successCallback,
-  closeCallback,
+  customerEmail,
+  successUrl,
+  customerLocale = 'en',
 }: {
-  email?: string;
+  priceId: string;
   customerId?: string;
-  successCallback?: () => void;
-  closeCallback?: () => void;
+  customerEmail?: string;
+  successUrl?: string;
+  customerLocale?: string;
 }) => {
-  if (!window.Paddle) {
-    try {
-      await waitForPaddle();
-    } catch (error) {
-      console.error('Failed to load Paddle:', error);
-      return;
-    }
-  }
+  const paddle = getPaddleInstance();
 
-  window.Paddle?.Checkout.open({
-    items: [{ 
-      priceId: process.env.NEXT_PUBLIC_PADDLE_PLAN_ID as string
-    }],
-    customer: {
-      email,
-      id: customerId
-    },
+  const checkoutOptions = {
+    items: [{ priceId }],
+    customData: { customer_id: customerId },
+    customerEmail,
+    successUrl,
+    displayMode: 'overlay' as const,
     settings: {
-      displayMode: 'overlay',
-      theme: 'dark'
+      locale: customerLocale,
+      theme: 'light' as const,
     },
-    successCallback,
-    closeCallback,
+  };
+
+  return paddle.Checkout.open(checkoutOptions);
+};
+
+export const openCustomerPortal = async ({
+  customerId,
+  customerEmail,
+  locale = 'en',
+}: {
+  customerId: string;
+  customerEmail: string;
+  locale?: string;
+}) => {
+  const paddle = getPaddleInstance();
+
+  return paddle.CustomerPortal.open({
+    customerId,
+    customerEmail,
+    settings: {
+      locale,
+      theme: 'light' as const,
+    },
+  });
+};
+
+export const getTrialDaysRemaining = (subscription: Database['public']['Tables']['subscriptions']['Row']) => {
+  if (!subscription.trial_end) return 0;
+  
+  const trialEnd = new Date(subscription.trial_end);
+  const now = new Date();
+  
+  if (now > trialEnd) return 0;
+  
+  const diffTime = Math.abs(trialEnd.getTime() - now.getTime());
+  return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+};
+
+export const getSubscriptionStatus = (subscription: Database['public']['Tables']['subscriptions']['Row']) => {
+  if (!subscription) return 'inactive';
+
+  switch (subscription.status.toLowerCase()) {
+    case 'active':
+      return subscription.trial_end ? 'trialing' : 'active';
+    case 'canceled':
+      return new Date(subscription.current_period_end) > new Date() ? 'canceled_but_active' : 'canceled';
+    default:
+      return subscription.status.toLowerCase();
+  }
+};
+
+export const canManageSubscription = (subscription: Database['public']['Tables']['subscriptions']['Row']) => {
+  const status = getSubscriptionStatus(subscription);
+  return ['active', 'trialing', 'canceled_but_active'].includes(status);
+};
+
+export const getNextBillingDate = (subscription: Database['public']['Tables']['subscriptions']['Row']) => {
+  if (!subscription) return null;
+  return new Date(subscription.current_period_end);
+};
+
+export const formatNextBillingDate = (date: Date | null, locale = 'en-US') => {
+  if (!date) return '';
+  return date.toLocaleDateString(locale, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
   });
 }; 

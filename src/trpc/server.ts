@@ -8,8 +8,8 @@ import { headers } from "next/headers";
 import { cache } from "react";
 import SuperJSON from "superjson";
 
-import { appRouter, type AppRouter } from "~/server/api/root";
-import { createTRPCContext } from "~/server/api/trpc";
+import { appRouter, type AppRouter } from "@/server/api/root";
+import { createTRPCContext } from "@/server/api/trpc";
 
 /**
  * This wraps the `createTRPCContext` helper and provides the required context for the tRPC API when

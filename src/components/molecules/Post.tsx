@@ -1,17 +1,20 @@
 "use client";
 
 import React, { useState } from "react";
-import { api } from "~/trpc/react";
+import { api } from "@/trpc/react";
+import type { RouterOutputs } from "@/trpc/react";
+
+type Post = RouterOutputs["post"]["getLatestPost"];
 
 /**
  * LatestPost component - displays and creates posts
  */
 export function LatestPost() {
-  const [latestPost] = api.post.getLatest.useSuspenseQuery();
+  const [latestPost] = api.post.getLatestPost.useSuspenseQuery();
 
-  const utils = api.useUtils();
+  const utils = api.useContext();
   const [name, setName] = useState("");
-  const createPost = api.post.create.useMutation({
+  const createPost = api.post.createPost.useMutation({
     onSuccess: async () => {
       await utils.post.invalidate();
       setName("");

@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { BiRightArrowAlt } from "react-icons/bi";
-import { createClientClient } from "~/lib/supabase/client";
-import { useSession } from "~/lib/auth";
-import { initPaddle, openCheckout } from "~/lib/paddle";
+import { createClientClient } from "@/lib/supabase/client";
+import { useSession } from "@/lib/auth";
+import { initPaddle, openCheckout } from "@/lib/paddle";
 
 interface Subscription {
   status: string;

@@ -11,6 +11,13 @@ export function createServerClient() {
   return createClient<Database>(supabaseUrl, supabaseServiceKey, {
     auth: {
       persistSession: false,
+      autoRefreshToken: true,
+      detectSessionInUrl: false,
+    },
+    global: {
+      headers: {
+        Authorization: `Bearer ${supabaseServiceKey}`,
+      },
     },
   });
 }
