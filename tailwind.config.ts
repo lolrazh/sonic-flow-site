@@ -8,7 +8,7 @@ export default {
   	extend: {
   		fontFamily: {
   			sans: [
-  				'var(--font-geist-sans)',
+  				'var(--font-lexend)',
                     ...fontFamily.sans
                 ],
             serif: ['var(--font-dm-serif)', ...fontFamily.serif],

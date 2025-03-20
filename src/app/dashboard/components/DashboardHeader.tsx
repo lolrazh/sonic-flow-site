@@ -1,7 +1,7 @@
 "use client";
 
 import { BiLogOut } from "react-icons/bi";
-import { SiteName } from "~/components/ui";
+import Link from "next/link";
 import { supabase } from "~/lib/auth";
 
 export default function DashboardHeader() {
@@ -18,7 +18,9 @@ export default function DashboardHeader() {
     <header className="border-b border-white/5 bg-[rgb(18,18,18)]">
       <div className="container mx-auto flex max-w-7xl flex-col items-center justify-between px-8 py-4 md:flex-row">
         <div className="mb-4 flex items-center md:mb-0">
-          <SiteName />
+          <Link href="/" className="font-lexend text-2xl lowercase tracking-tight text-white/90">
+            sonic<span className="text-white/40">flow</span>
+          </Link>
         </div>
 
         <button 

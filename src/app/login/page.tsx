@@ -51,11 +51,13 @@ export default function Login() {
   return (
     <div className="flex min-h-screen flex-col bg-[rgb(12,12,12)]">
       {/* Header */}
-      <header className="py-6">
-        <div className="container mx-auto px-16 max-w-7xl">
-          <Link href="/" className="font-lexend text-2xl lowercase tracking-tight text-white/90">
-            sonic<span className="text-white/40">flow</span>
-          </Link>
+      <header className="border-b border-white/5 bg-[rgb(18,18,18)]">
+        <div className="container mx-auto flex max-w-7xl flex-col items-center justify-between px-8 py-4 md:flex-row">
+          <div className="mb-4 flex items-center md:mb-0">
+            <Link href="/" className="font-lexend text-2xl lowercase tracking-tight text-white/90">
+              sonic<span className="text-white/40">flow</span>
+            </Link>
+          </div>
         </div>
       </header>
 
@@ -98,12 +100,21 @@ export default function Login() {
                     colors: {
                       brand: '#ffffff',
                       brandAccent: '#f9fafb',
-                      brandButtonText: 'rgba(0,0,0,0.9)',
+                      brandButtonText: '#000000',
+                      defaultButtonBackground: '#000000',
+                      defaultButtonBackgroundHover: '#111111',
+                      defaultButtonText: '#ffffff',
                       inputBackground: 'rgb(18,18,18)',
                       inputText: 'rgba(255,255,255,0.9)',
                       inputBorder: 'rgba(255,255,255,0.1)',
                       inputBorderFocus: 'rgba(255,255,255,0.2)',
                       inputBorderHover: 'rgba(255,255,255,0.1)',
+                    },
+                    fonts: {
+                      bodyFontFamily: `'Lexend', sans-serif`,
+                      buttonFontFamily: `'Lexend', sans-serif`,
+                      inputFontFamily: `'Lexend', sans-serif`,
+                      labelFontFamily: `'Lexend', sans-serif`,
                     },
                     borderWidths: {
                       buttonBorderWidth: '1px',
@@ -117,11 +128,17 @@ export default function Login() {
                   },
                 },
                 className: {
-                  button: 'font-lexend text-sm lowercase',
-                  anchor: 'font-lexend text-sm text-white/40 hover:text-white/90 lowercase',
-                  message: 'font-lexend text-sm text-white/40',
-                  label: 'font-lexend text-sm text-white/60 lowercase',
-                  input: 'font-lexend text-sm',
+                  button: 'text-sm lowercase !text-black !font-semibold',
+                  anchor: 'text-sm text-white/40 hover:text-white/90 lowercase',
+                  message: 'text-sm text-white/40',
+                  label: 'text-sm text-white/60 lowercase',
+                  input: 'text-sm',
+                },
+                style: {
+                  button: {
+                    fontWeight: '600',
+                    textTransform: 'lowercase',
+                  },
                 },
               }}
               theme="dark"
