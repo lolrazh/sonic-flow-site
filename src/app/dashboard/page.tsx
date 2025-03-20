@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { BiCog, BiRightArrowAlt, BiUser, BiSlider } from "react-icons/bi";
+import { BiCog, BiUser, BiSlider } from "react-icons/bi";
 import DashboardHeader from "@/components/organisms/dashboard/DashboardHeader";
 import SubscriptionStatus from "@/components/organisms/dashboard/SubscriptionStatus";
 import Image from "next/image";

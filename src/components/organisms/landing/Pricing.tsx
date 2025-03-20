@@ -1,12 +1,11 @@
 "use client";
 
 import React, { useState } from 'react';
-import Link from 'next/link';
 import { useSession } from '@/lib/auth';
 import { initPaddle, openCheckout } from '@/lib/paddle';
 
 export default function Pricing() {
-  const { user, loading } = useSession();
+  const { user } = useSession();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleStartTrial = async (e: React.MouseEvent) => {

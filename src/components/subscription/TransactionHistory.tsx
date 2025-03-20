@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Database } from '@/types/database.types';
+import type { Database } from '@/types/database.types';
 import { formatPrice } from '@/lib/paddle';
 
 type Transaction = Database['public']['Tables']['transactions']['Row'];

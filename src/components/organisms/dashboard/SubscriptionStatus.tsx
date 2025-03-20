@@ -42,20 +42,24 @@ export default function SubscriptionStatus() {
 
     const loadSubscription = async () => {
       const supabase = createClientClient();
-      const { data, error } = await supabase
-        .from("subscriptions")
-        .select("*")
-        .eq("user_id", user.id)
-        .single();
+      try {
+        const { data, error } = await supabase
+          .from("subscriptions")
+          .select("*")
+          .eq("user_id", user.id)
+          .single();
 
-      if (!error && data) {
-        setSubscription(data);
+        if (!error && data) {
+          setSubscription(data as Subscription);
+        }
+      } catch (err) {
+        console.error("Error loading subscription:", err);
       }
       setLoading(false);
     };
 
-    loadSubscription();
-    initPaddle();
+    void loadSubscription();
+    void initPaddle();
   }, [user]);
 
   const handleManageSubscription = () => {

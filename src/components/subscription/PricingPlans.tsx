@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Database } from '@/types/database.types';
+import type { Database } from '@/types/database.types';
 import { formatPrice, getBillingPeriodInWords, openCheckout } from '@/lib/paddle';
 
 type PriceWithProduct = Database['public']['Tables']['prices']['Row'] & {

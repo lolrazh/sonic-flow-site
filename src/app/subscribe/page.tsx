@@ -14,10 +14,10 @@ export default function SubscribePage() {
   
   useEffect(() => {
     if (!sessionLoading && !user) {
-      router.push("/login");
+      void router.push("/login");
     }
     
-    initPaddle();
+    void initPaddle();
   }, [sessionLoading, user, router]);
   
   const handleStartTrial = () => {
