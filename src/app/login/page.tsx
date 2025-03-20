@@ -139,6 +139,7 @@ export default function Login() {
                   button: {
                     fontWeight: '500',
                     textTransform: 'lowercase',
+                    padding: '0.75rem 1.5rem',
                   },
                   label: {
                     textAlign: 'left',
