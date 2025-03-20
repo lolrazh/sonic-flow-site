@@ -144,7 +144,11 @@ export default function SignUp() {
                   button: {
                     fontWeight: '500',
                     textTransform: 'lowercase',
+<<<<<<< HEAD
                     opacity: '1 !important',
+=======
+                    padding: '0.75rem 1.5rem',
+>>>>>>> hotfix-branch
                   },
                   label: {
                     textAlign: 'left',

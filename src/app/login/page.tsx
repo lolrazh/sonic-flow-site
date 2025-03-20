@@ -144,7 +144,6 @@ export default function Login() {
                   button: {
                     fontWeight: '500',
                     textTransform: 'lowercase',
-                    opacity: '1 !important',
                   },
                   label: {
                     textAlign: 'left',
