@@ -1,15 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { createClient } from "@supabase/supabase-js";
 import { BiCog, BiRightArrowAlt, BiUser, BiSlider } from "react-icons/bi";
-import DashboardHeader from "./components/DashboardHeader";
+import DashboardHeader from "~/components/organisms/dashboard/DashboardHeader";
+import SubscriptionStatus from "~/components/organisms/dashboard/SubscriptionStatus";
 import Image from "next/image";
-
-// Create Supabase client
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? '';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '';
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+import { useSession } from "~/lib/auth";
+import { useRouter } from "next/navigation";
 
 // Shadcn-style Switch component
 const Switch = ({ checked, onChange, id }: { checked: boolean; onChange: (checked: boolean) => void; id: string }) => {
@@ -34,11 +31,10 @@ const Switch = ({ checked, onChange, id }: { checked: boolean; onChange: (checke
   );
 };
 
-export default function Dashboard() {
-  const [user, setUser] = useState<object | null>(null);
+export default function DashboardPage() {
+  const { user, loading } = useSession();
+  const router = useRouter();
   const [userDetails, setUserDetails] = useState<{ name?: string; avatar_url?: string }>({});
-  const [trialDaysLeft] = useState(14); // Mock data
-  const [isOnTrial] = useState(true); // Mock data
   const [appSettings, setAppSettings] = useState({
     darkMode: true,
     notifications: false,
@@ -47,32 +43,29 @@ export default function Dashboard() {
   });
 
   useEffect(() => {
-    const getUserData = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      setUser(user);
-      
-      // Extract user details from Google provider
-      if (user) {
-        interface UserMetadata {
-          full_name?: string;
-          name?: string;
-          avatar_url?: string;
-        }
-        
-        // Try to get name and avatar from user metadata (OAuth providers store this)
-        const metadata = user.user_metadata as UserMetadata | undefined;
-        const name = metadata?.full_name ?? metadata?.name;
-        const avatarUrl = metadata?.avatar_url;
+    if (!loading && !user) {
+      router.push("/login");
+      return;
+    }
 
-        setUserDetails({
-          name: name ?? (user.email?.split('@')[0]),
-          avatar_url: avatarUrl
-        });
+    if (user) {
+      // Extract user details from metadata
+      interface UserMetadata {
+        full_name?: string;
+        name?: string;
+        avatar_url?: string;
       }
-    };
+      
+      const metadata = user.user_metadata as UserMetadata | undefined;
+      const name = metadata?.full_name ?? metadata?.name;
+      const avatarUrl = metadata?.avatar_url;
 
-    void getUserData();
-  }, []);
+      setUserDetails({
+        name: name ?? (user.email?.split('@')[0]),
+        avatar_url: avatarUrl
+      });
+    }
+  }, [user, loading, router]);
 
   const handleSettingChange = (setting: string, value: boolean) => {
     setAppSettings(prev => ({
@@ -81,7 +74,13 @@ export default function Dashboard() {
     }));
   };
 
-  if (!user) return null;
+  if (loading || !user) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/90 border-t-transparent"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[rgb(12,12,12)]">
@@ -117,10 +116,8 @@ export default function Dashboard() {
                 </div>
               )}
               <div>
-                <div className="font-lexend text-white/90">{userDetails.name ?? (user && 'email' in user && typeof user.email === 'string' ? user.email.split('@')[0] : 'user')}</div>
-                {user && 'email' in user && typeof user.email === 'string' && (
-                  <div className="font-lexend text-sm text-white/40">{user.email}</div>
-                )}
+                <div className="font-lexend text-white/90">{userDetails.name ?? (user.email?.split('@')[0])}</div>
+                <div className="font-lexend text-sm text-white/40">{user.email}</div>
               </div>
             </div>
             
@@ -130,9 +127,7 @@ export default function Dashboard() {
                   <BiUser className="mr-2 text-white/40" size={20} />
                   <span className="font-lexend text-white/60">email</span>
                 </div>
-                {user && 'email' in user && typeof user.email === 'string' && (
-                  <span className="font-lexend text-white/90">{user.email}</span>
-                )}
+                <span className="font-lexend text-white/90">{user.email}</span>
               </div>
             </div>
             
@@ -200,39 +195,8 @@ export default function Dashboard() {
           </div>
 
           {/* Subscription Settings Card */}
-          <div className="col-span-1 md:col-span-2 overflow-hidden rounded-2xl border border-white/5 bg-[rgb(18,18,18)] p-8">
-            <h2 className="mb-8 font-lexend text-xl lowercase tracking-tight text-white/90">subscription settings</h2>
-            
-            <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-              <div>
-                <div className="mb-4 flex items-center">
-                  <span className={`mr-2 inline-block h-2 w-2 rounded-full ${
-                    isOnTrial ? "bg-white/40" : "bg-white"
-                  }`}></span>
-                  <span className="font-lexend text-white/90">
-                    {isOnTrial ? "trial period" : "active subscription"}
-                  </span>
-                </div>
-                
-                {isOnTrial ? (
-                  <p className="font-lexend text-white/40">
-                    <span className="text-white/90">{trialDaysLeft} days</span> left in your trial. upgrade to pro for unlimited access.
-                  </p>
-                ) : (
-                  <p className="font-lexend text-white/40">
-                    you are currently on the <span className="text-white/90">pro plan</span> with unlimited access.
-                  </p>
-                )}
-              </div>
-              
-              <button 
-                className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 font-lexend text-sm text-black/90 transition-colors hover:bg-white/90"
-                onClick={() => window.open('https://paddle.com', '_blank')}
-              >
-                {isOnTrial ? "upgrade plan" : "manage subscription"}
-                <BiRightArrowAlt className="ml-1" size={18} />
-              </button>
-            </div>
+          <div className="col-span-1 md:col-span-2">
+            <SubscriptionStatus />
           </div>
         </div>
       </div>

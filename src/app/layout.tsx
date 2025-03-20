@@ -26,7 +26,10 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${dmSerif.variable} ${lexendDeca.variable}`}>
+    <html lang="en" className={`${dmSerif.variable} ${lexendDeca.variable} dark`}>
+      <head>
+        <script src="https://cdn.paddle.com/paddle/v2/paddle.js" defer />
+      </head>
       <body className="font-sans">
         <Polyfills />
         <ClientWrapper>
