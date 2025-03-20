@@ -99,18 +99,17 @@ export default function Login() {
                   default: {
                     colors: {
                       brand: '#ffffff',
-                      brandAccent: 'rgba(255,255,255,0.9)',
-                      brandButtonText: 'rgba(255,255,255,0.9)',
-                      defaultButtonBackground: '#ffffff',
-                      defaultButtonBackgroundHover: 'rgba(255,255,255,0.9)',
-                      defaultButtonText: 'rgba(0,0,0,0.9)',
+                      brandAccent: '#ffffff',
+                      brandButtonText: 'rgba(0,0,0,0.9)',
+                      defaultButtonBackground: 'rgba(255,255,255,0.05)',
+                      defaultButtonBackgroundHover: 'rgba(255,255,255,0.1)',
+                      defaultButtonText: 'rgba(255,255,255,0.9)',
                       defaultButtonBorder: 'rgba(255,255,255,0.1)',
                       inputBackground: 'rgb(18,18,18)',
                       inputText: 'rgba(255,255,255,0.9)',
                       inputBorder: 'rgba(255,255,255,0.1)',
                       inputBorderFocus: 'rgba(255,255,255,0.2)',
                       inputBorderHover: 'rgba(255,255,255,0.1)',
-                      dividerBackground: 'rgba(255,255,255,0.1)',
                     },
                     fonts: {
                       bodyFontFamily: `'Lexend', sans-serif`,
@@ -127,14 +126,10 @@ export default function Login() {
                       buttonBorderRadius: '9999px',
                       inputBorderRadius: '9999px',
                     },
-                    space: {
-                      buttonPadding: '12px 32px',
-                      inputPadding: '8px 24px',
-                    },
                   },
                 },
                 className: {
-                  button: 'text-sm font-medium lowercase transition-colors sm:text-base [&:not(:empty)]:opacity-100 relative overflow-hidden text-center',
+                  button: 'text-sm lowercase font-medium !important',
                   anchor: 'text-sm text-white/40 hover:text-white/90 lowercase',
                   message: 'text-sm text-white/40',
                   label: 'text-sm text-white/60 lowercase pl-4',
@@ -144,12 +139,10 @@ export default function Login() {
                   button: {
                     fontWeight: '500',
                     textTransform: 'lowercase',
+                    padding: '0.75rem 1.5rem',
                   },
                   label: {
                     textAlign: 'left',
-                  },
-                  anchor: {
-                    opacity: '1 !important',
                   },
                 },
               }}
