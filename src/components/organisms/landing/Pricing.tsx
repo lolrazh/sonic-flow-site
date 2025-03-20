@@ -9,7 +9,7 @@ export default function Pricing() {
   const { user } = useSession();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [price, setPrice] = useState<{ amount: string; currency: string } | null>(null);
+  const [formattedPrice, setFormattedPrice] = useState<string | null>(null);
   const [priceLoading, setPriceLoading] = useState(true);
 
   useEffect(() => {
@@ -32,32 +32,14 @@ export default function Pricing() {
         }
 
         const lineItem = preview.data.details.lineItems[0];
+        // Use the formatted subtotal directly from Paddle
         const subtotal = lineItem.formattedTotals?.subtotal;
         
         if (!subtotal) {
           throw new Error('No price information available');
         }
 
-        // Extract numeric amount and currency using regex
-        const priceMatch = subtotal.match(/([^\d]*)([\d,.]+)([^\d]*)(\w{3})?/);
-        if (!priceMatch?.[2]) {
-          throw new Error('Invalid price format');
-        }
-
-        const numericPart = priceMatch[2].replace(/,/g, '');
-        // Default to USD if no currency code found
-        const currencyCode = priceMatch[4] ?? 'USD';
-
-        const numericAmount = parseFloat(numericPart) * 100;
-
-        if (isNaN(numericAmount)) {
-          throw new Error('Invalid price amount');
-        }
-
-        setPrice({
-          amount: numericAmount.toString(),
-          currency: currencyCode
-        });
+        setFormattedPrice(subtotal);
       } catch (err) {
         console.error('Failed to load price:', err);
         setError('Failed to load price information');
@@ -138,9 +120,9 @@ export default function Pricing() {
                 <div className="font-lexend text-6xl tracking-tight text-white/90">
                   {priceLoading ? (
                     <span className="text-white/40">...</span>
-                  ) : price ? (
+                  ) : formattedPrice ? (
                     <>
-                      {formatPrice(price.amount, price.currency)}
+                      {formattedPrice}
                       <span className="ml-1 text-xl text-white/40">/month</span>
                     </>
                   ) : (
