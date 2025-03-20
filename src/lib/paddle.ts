@@ -1,4 +1,4 @@
-import { PaddleSDK } from '@paddle/paddle-js';
+import { initializePaddle, Paddle, InitializePaddleOptions } from '@paddle/paddle-js';
 import { Database } from '@/types/database.types';
 
 export type PriceWithProduct = Database['public']['Tables']['prices']['Row'] & {
@@ -14,20 +14,19 @@ export type CustomerWithSubscriptions = Database['public']['Tables']['customers'
   subscriptions: SubscriptionWithDetails[];
 };
 
-let paddleInstance: PaddleSDK | null = null;
+let paddleInstance: Paddle | null = null;
 
 export const initPaddle = async () => {
   if (paddleInstance) return paddleInstance;
 
-  const settings = {
-    environment: process.env.NEXT_PUBLIC_PADDLE_ENVIRONMENT === 'sandbox' ? 'sandbox' : 'production',
+  const settings: InitializePaddleOptions = {
+    environment: process.env.NEXT_PUBLIC_PADDLE_ENVIRONMENT === 'sandbox' ? 'sandbox' : 'production' as const,
     token: process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN!,
   };
 
-  paddleInstance = await PaddleSDK.init(settings.token, {
-    environment: settings.environment,
-  });
-
+  const instance = await initializePaddle(settings);
+  if (!instance) throw new Error('Failed to initialize Paddle');
+  paddleInstance = instance;
   return paddleInstance;
 };
 
@@ -99,16 +98,26 @@ export const openCustomerPortal = async ({
   customerEmail: string;
   locale?: string;
 }) => {
-  const paddle = getPaddleInstance();
-
-  return paddle.CustomerPortal.open({
-    customerId,
-    customerEmail,
-    settings: {
-      locale,
-      theme: 'light' as const,
+  // We need to create a portal session through our server API
+  const response = await fetch('/api/paddle/create-portal-session', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
     },
+    body: JSON.stringify({
+      customerId,
+      customerEmail,
+      locale,
+    }),
   });
+
+  const data = await response.json();
+  
+  if (data.url) {
+    window.location.href = data.url;
+  } else {
+    throw new Error('Failed to create customer portal session');
+  }
 };
 
 export const getTrialDaysRemaining = (subscription: Database['public']['Tables']['subscriptions']['Row']) => {
