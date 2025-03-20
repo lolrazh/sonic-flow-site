@@ -17,12 +17,12 @@ export default function LoadingSpinner({
   };
 
   const spinnerElement = (
-    <div className={`animate-spin rounded-full border-4 border-dark-600 border-t-accent-600 ${sizeClasses[size]} ${className}`}></div>
+    <div className={`animate-spin rounded-full border-2 border-white/5 border-t-white ${sizeClasses[size]} ${className}`}></div>
   );
 
   if (fullScreen) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-dark-900">
+      <div className="flex min-h-screen items-center justify-center bg-[rgb(12,12,12)]">
         {spinnerElement}
       </div>
     );

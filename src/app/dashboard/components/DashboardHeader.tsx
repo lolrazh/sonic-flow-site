@@ -15,18 +15,18 @@ export default function DashboardHeader() {
   };
 
   return (
-    <header className="border-b border-dark-700 bg-dark-800">
-      <div className="container mx-auto flex max-w-6xl flex-col items-center justify-between px-4 py-4 md:flex-row">
+    <header className="border-b border-white/5 bg-[rgb(18,18,18)]">
+      <div className="container mx-auto flex max-w-7xl flex-col items-center justify-between px-8 py-4 md:flex-row">
         <div className="mb-4 flex items-center md:mb-0">
           <SiteName />
         </div>
 
         <button 
           onClick={handleSignOut}
-          className="flex items-center rounded-lg px-3 py-2 text-sm text-dark-200 hover:bg-dark-700 hover:text-dark-50"
+          className="flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-2 font-lexend text-sm text-white/90 transition-colors hover:bg-white/10"
         >
           <BiLogOut className="mr-2" size={18} />
-          Sign Out
+          sign out
         </button>
       </div>
     </header>

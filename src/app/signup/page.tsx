@@ -49,42 +49,44 @@ export default function SignUp() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-dark-900">
+    <div className="flex min-h-screen flex-col bg-[rgb(12,12,12)]">
       {/* Header */}
-      <header className="border-b border-dark-800 py-4">
-        <div className="container mx-auto px-4">
-          <SiteName />
+      <header className="py-6">
+        <div className="container mx-auto px-16 max-w-7xl">
+          <Link href="/" className="font-lexend text-2xl lowercase tracking-tight text-white/90">
+            sonic<span className="text-white/40">flow</span>
+          </Link>
         </div>
       </header>
 
       {/* Auth UI */}
-      <div className="container mx-auto flex flex-1 flex-col items-center justify-center px-4 py-12">
+      <div className="container mx-auto flex flex-1 flex-col items-center justify-center px-8 py-12 max-w-7xl">
         <div className="w-full max-w-md">
           {authError && (
-            <div className="mb-4 rounded-lg bg-red-900/20 p-4 text-red-400">
-              <p>{authError}</p>
+            <div className="mb-8 rounded-2xl border border-red-500/10 bg-red-500/5 p-6">
+              <p className="font-lexend text-sm text-red-400">{authError}</p>
               <button 
                 onClick={() => setAuthError(null)}
-                className="mt-2 text-sm text-red-400 hover:text-red-300"
+                className="mt-2 font-lexend text-xs text-red-400/60 transition-colors hover:text-red-400/90"
               >
-                Dismiss
+                dismiss
               </button>
             </div>
           )}
           
-          <div className="mb-8 text-center">
-            <h1 className="mb-2 text-3xl font-bold text-dark-50">
-              Create your account
+          <div className="mb-12 text-center">
+            <h1 className="mb-4 font-lexend text-3xl lowercase tracking-tight text-white/90">
+              create your account
             </h1>
-            <p className="text-dark-300">
-              Sign up to start using Sonic Flow
+            <p className="font-lexend text-base text-white/40">
+              sign up to start using sonic flow
             </p>
           </div>
 
           {authLoading ? (
             <div className="flex justify-center py-8">
               <LoadingSpinner />
-              <span className="ml-3 text-dark-300">Authenticating...</span>
+              <span className="ml-3 font-lexend text-sm text-white/40">authenticating...</span>
             </div>
           ) : (
             <Auth
@@ -94,19 +96,32 @@ export default function SignUp() {
                 variables: {
                   default: {
                     colors: {
-                      brand: '#f97316', // accent-600 (orange)
-                      brandAccent: '#ea580c', // accent-700
-                      inputBackground: '#1f2937', // dark-700
-                      inputText: '#f9fafb', // dark-50
-                      inputBorder: '#374151', // dark-600
+                      brand: '#ffffff',
+                      brandAccent: '#f9fafb',
+                      brandButtonText: 'rgba(0,0,0,0.9)',
+                      inputBackground: 'rgb(18,18,18)',
+                      inputText: 'rgba(255,255,255,0.9)',
+                      inputBorder: 'rgba(255,255,255,0.1)',
+                      inputBorderFocus: 'rgba(255,255,255,0.2)',
+                      inputBorderHover: 'rgba(255,255,255,0.1)',
+                    },
+                    borderWidths: {
+                      buttonBorderWidth: '1px',
+                      inputBorderWidth: '1px',
+                    },
+                    radii: {
+                      borderRadiusButton: '9999px',
+                      buttonBorderRadius: '9999px',
+                      inputBorderRadius: '16px',
                     },
                   },
                 },
                 className: {
-                  button: 'text-dark-50 font-medium',
-                  anchor: 'text-accent-500 hover:text-accent-400',
-                  message: 'text-dark-300',
-                  label: 'text-dark-200',
+                  button: 'font-lexend text-sm lowercase',
+                  anchor: 'font-lexend text-sm text-white/40 hover:text-white/90 lowercase',
+                  message: 'font-lexend text-sm text-white/40',
+                  label: 'font-lexend text-sm text-white/60 lowercase',
+                  input: 'font-lexend text-sm',
                 },
               }}
               theme="dark"
@@ -116,11 +131,13 @@ export default function SignUp() {
             />
           )}
 
-          <div className="mt-6 text-center text-sm text-dark-400">
-            Already have an account?{" "}
-            <Link href="/login" className="font-medium text-accent-500 hover:text-accent-400">
-              Sign in
-            </Link>
+          <div className="mt-8 text-center">
+            <p className="font-lexend text-sm text-white/40">
+              already have an account?{" "}
+              <Link href="/login" className="text-white/90 transition-colors hover:text-white">
+                sign in
+              </Link>
+            </p>
           </div>
         </div>
       </div>

@@ -20,13 +20,13 @@ const Switch = ({ checked, onChange, id }: { checked: boolean; onChange: (checke
       role="switch"
       aria-checked={checked}
       onClick={() => onChange(!checked)}
-      className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-accent-600 focus:ring-offset-2 ${
-        checked ? 'bg-accent-600' : 'bg-dark-600'
+      className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border border-white/10 transition-colors duration-200 ease-in-out focus:outline-none ${
+        checked ? 'bg-white' : 'bg-white/5'
       }`}
     >
       <span className="sr-only">Toggle</span>
       <span
-        className={`pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-dark-50 shadow ring-0 transition duration-200 ease-in-out ${
+        className={`pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-[rgb(12,12,12)] shadow ring-0 transition duration-200 ease-in-out ${
           checked ? 'translate-x-5' : 'translate-x-0'
         }`}
       />
@@ -84,26 +84,26 @@ export default function Dashboard() {
   if (!user) return null;
 
   return (
-    <>
+    <div className="min-h-screen bg-[rgb(12,12,12)]">
       <DashboardHeader />
-      <div className="container mx-auto max-w-6xl px-4 py-12">
-        <header className="mb-12">
-          <h1 className="text-3xl font-bold text-dark-50">
-            Welcome to Sonic Flow, <span className="text-accent-500">{userDetails.name ?? 'User'}</span>
+      <div className="container mx-auto max-w-7xl px-8 py-16">
+        <header className="mb-16">
+          <h1 className="font-lexend text-3xl lowercase tracking-tight text-white/90">
+            welcome back, <span className="text-white/40">{userDetails.name ?? 'user'}</span>
           </h1>
-          <p className="mt-2 text-dark-300">
-            Manage your account and settings here
+          <p className="mt-4 font-lexend text-base text-white/40">
+            manage your account and settings here
           </p>
         </header>
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           {/* Basic Information Card */}
-          <div className="overflow-hidden rounded-2xl border border-accent-600/20 bg-dark-800 p-6">
-            <h2 className="mb-4 text-xl font-semibold text-dark-50">Basic Information</h2>
+          <div className="overflow-hidden rounded-2xl border border-white/5 bg-[rgb(18,18,18)] p-8">
+            <h2 className="mb-8 font-lexend text-xl lowercase tracking-tight text-white/90">basic information</h2>
             
-            <div className="flex items-center space-x-4 mb-4">
+            <div className="flex items-center space-x-4 mb-8">
               {userDetails.avatar_url ? (
-                <div className="relative h-14 w-14 overflow-hidden rounded-full border-2 border-accent-600/30">
+                <div className="relative h-14 w-14 overflow-hidden rounded-full border border-white/10">
                   <Image 
                     src={userDetails.avatar_url} 
                     alt="Profile picture" 
@@ -112,47 +112,47 @@ export default function Dashboard() {
                   />
                 </div>
               ) : (
-                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-accent-600/20 text-accent-500">
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white/5 text-white/40">
                   <BiUser size={28} />
                 </div>
               )}
               <div>
-                <div className="font-medium text-dark-100">{userDetails.name ?? (user && 'email' in user && typeof user.email === 'string' ? user.email.split('@')[0] : 'User')}</div>
+                <div className="font-lexend text-white/90">{userDetails.name ?? (user && 'email' in user && typeof user.email === 'string' ? user.email.split('@')[0] : 'user')}</div>
                 {user && 'email' in user && typeof user.email === 'string' && (
-                  <div className="text-sm text-dark-300">{user.email}</div>
+                  <div className="font-lexend text-sm text-white/40">{user.email}</div>
                 )}
               </div>
             </div>
             
-            <div className="space-y-4 mt-6">
+            <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <BiUser className="mr-2 text-accent-500" size={20} />
-                  <span className="text-dark-200">Email</span>
+                  <BiUser className="mr-2 text-white/40" size={20} />
+                  <span className="font-lexend text-white/60">email</span>
                 </div>
                 {user && 'email' in user && typeof user.email === 'string' && (
-                  <span className="font-medium text-dark-100">{user.email}</span>
+                  <span className="font-lexend text-white/90">{user.email}</span>
                 )}
               </div>
             </div>
             
             <button 
-              className="mt-4 inline-flex w-full items-center justify-center rounded-lg border border-dark-600 bg-dark-700 px-4 py-2 text-sm font-medium text-dark-100 transition-colors hover:bg-dark-600"
+              className="mt-8 inline-flex w-full items-center justify-center rounded-full border border-white/10 bg-white/5 px-6 py-3 font-lexend text-sm text-white/90 transition-colors hover:bg-white/10"
             >
               <BiCog className="mr-2" size={18} />
-              Account Settings
+              account settings
             </button>
           </div>
 
           {/* App Settings Card */}
-          <div className="overflow-hidden rounded-2xl border border-accent-600/20 bg-dark-800 p-6">
-            <h2 className="mb-4 text-xl font-semibold text-dark-50">App Settings</h2>
+          <div className="overflow-hidden rounded-2xl border border-white/5 bg-[rgb(18,18,18)] p-8">
+            <h2 className="mb-8 font-lexend text-xl lowercase tracking-tight text-white/90">app settings</h2>
             
-            <div className="space-y-5">
+            <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <BiSlider className="mr-2 text-accent-500" size={20} />
-                  <span className="text-dark-200">Dark Mode</span>
+                  <BiSlider className="mr-2 text-white/40" size={20} />
+                  <span className="font-lexend text-white/60">dark mode</span>
                 </div>
                 <Switch 
                   checked={appSettings.darkMode} 
@@ -163,8 +163,8 @@ export default function Dashboard() {
               
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <BiSlider className="mr-2 text-accent-500" size={20} />
-                  <span className="text-dark-200">Notifications</span>
+                  <BiSlider className="mr-2 text-white/40" size={20} />
+                  <span className="font-lexend text-white/60">notifications</span>
                 </div>
                 <Switch 
                   checked={appSettings.notifications} 
@@ -175,8 +175,8 @@ export default function Dashboard() {
               
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <BiSlider className="mr-2 text-accent-500" size={20} />
-                  <span className="text-dark-200">Auto-start</span>
+                  <BiSlider className="mr-2 text-white/40" size={20} />
+                  <span className="font-lexend text-white/60">auto-start</span>
                 </div>
                 <Switch 
                   checked={appSettings.autoStart} 
@@ -187,8 +187,8 @@ export default function Dashboard() {
               
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <BiSlider className="mr-2 text-accent-500" size={20} />
-                  <span className="text-dark-200">Auto-save</span>
+                  <BiSlider className="mr-2 text-white/40" size={20} />
+                  <span className="font-lexend text-white/60">auto-save</span>
                 </div>
                 <Switch 
                   checked={appSettings.autoSave} 
@@ -200,42 +200,42 @@ export default function Dashboard() {
           </div>
 
           {/* Subscription Settings Card */}
-          <div className="col-span-1 md:col-span-2 overflow-hidden rounded-2xl border border-accent-600/20 bg-dark-800 p-6">
-            <h2 className="mb-4 text-xl font-semibold text-dark-50">Subscription Settings</h2>
+          <div className="col-span-1 md:col-span-2 overflow-hidden rounded-2xl border border-white/5 bg-[rgb(18,18,18)] p-8">
+            <h2 className="mb-8 font-lexend text-xl lowercase tracking-tight text-white/90">subscription settings</h2>
             
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
               <div>
-                <div className="mb-2 flex items-center">
-                  <span className={`mr-2 inline-block h-3 w-3 rounded-full ${
-                    isOnTrial ? "bg-yellow-500" : "bg-green-500"
+                <div className="mb-4 flex items-center">
+                  <span className={`mr-2 inline-block h-2 w-2 rounded-full ${
+                    isOnTrial ? "bg-white/40" : "bg-white"
                   }`}></span>
-                  <span className="font-medium text-dark-100">
-                    {isOnTrial ? "Trial Period" : "Active Subscription"}
+                  <span className="font-lexend text-white/90">
+                    {isOnTrial ? "trial period" : "active subscription"}
                   </span>
                 </div>
                 
                 {isOnTrial ? (
-                  <p className="text-dark-300">
-                    <span className="font-medium text-accent-400">{trialDaysLeft} days</span> left in your trial. Upgrade to Pro for unlimited access.
+                  <p className="font-lexend text-white/40">
+                    <span className="text-white/90">{trialDaysLeft} days</span> left in your trial. upgrade to pro for unlimited access.
                   </p>
                 ) : (
-                  <p className="text-dark-300">
-                    You are currently on the <span className="font-medium text-accent-400">Pro Plan</span> with unlimited access.
+                  <p className="font-lexend text-white/40">
+                    you are currently on the <span className="text-white/90">pro plan</span> with unlimited access.
                   </p>
                 )}
               </div>
               
               <button 
-                className="inline-flex items-center justify-center rounded-lg bg-accent-600 px-4 py-2 text-sm font-medium text-dark-50 transition-colors hover:bg-accent-700"
+                className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 font-lexend text-sm text-black/90 transition-colors hover:bg-white/90"
                 onClick={() => window.open('https://paddle.com', '_blank')}
               >
-                {isOnTrial ? "Upgrade Plan" : "Manage Subscription"}
+                {isOnTrial ? "upgrade plan" : "manage subscription"}
                 <BiRightArrowAlt className="ml-1" size={18} />
               </button>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 } 
