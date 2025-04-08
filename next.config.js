@@ -13,6 +13,15 @@ const config = {
     "@supabase/supabase-js",
     "@supabase/node-fetch"
   ],
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+        pathname: '/a/**',
+      },
+    ],
+  },
   webpack: (config) => {
     // Handle node-fetch polyfill properly
     config.resolve.fallback = {
