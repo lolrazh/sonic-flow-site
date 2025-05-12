@@ -13,24 +13,24 @@ export default function FAQ({
   subtitle = "because you're probably wondering.",
   items = [
     {
-      question: "why not just type my prompts?",
-      answer: "because your brain moves faster than your fingers. when you're in flow, typing breaks your rhythm. speaking lets you keep your train of thought while describing what you want the AI to do."
+      question: "why not just type my prompts or code?",
+      answer: "typing is slow, breaks your flow, and pulls you out of the zone. with vibe coding, you speak your intent, stay in the creative groove, and let ai handle the rest."
     },
     {
-      question: "will this actually make me prompt faster?",
-      answer: "yes. most people think at 150+ words per minute but type at 50-80 wpm. speaking your prompts means you can describe complex ideas to your AI agent without losing context."
+      question: "how accurate is it?",
+      answer: "sonic flow uses state-of-the-art local transcription, tuned for coding and natural language. for those 5–45 second bursts, it’s impressively accurate, even with technical terms. and since it’s local, it’s fast and private."
     },
     {
-      question: "what about prompt formatting?",
-      answer: "that's handled automatically. you focus on describing what you want, and we'll format it into an effective prompt for your AI agent. no more worrying about perfect prompt structure."
+      question: "will it work with my editor/ide/browser?",
+      answer: "yes! if you can type in it, you can use sonic flow in it. vs code, cursor, notion, your terminal. anywhere you type, sonic flow fits right in."
     },
     {
-      question: "does it work with my AI tools?",
-      answer: "if you can type in it, you can speak to it. works with Cursor, Claude, ChatGPT, Copilot, Bard, whatever AI agent you use."
+      question: "is my data secure?",
+      answer: "100% local processing. nothing is ever sent to the cloud. your words remain yours, always."
     },
     {
-      question: "what about background noise?",
-      answer: "our noise cancellation is pretty good. works fine in coffee shops, co-working spaces, and open offices. just don't try to prompt next to a construction site."
+      question: 'what is "vibe coding" anyway?',
+      answer: "vibe coding is the new way to build software: you describe what you want, ai (or your tools) handle the syntax. it’s about staying in flow, riffing on ideas, and letting the machine do the heavy lifting. coined by karpathy, it’s how the best devs are working now."
     }
   ]
 }: FAQProps = {}) {

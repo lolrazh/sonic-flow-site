@@ -108,13 +108,15 @@ export default function HowItWorks() {
           {/* Left Content - Now on the right */}
           <div className="max-w-xl">
             <h2 className="mb-6 font-serif text-4xl lowercase tracking-tight text-white/90 md:text-5xl lg:text-6xl">
-              minimal.<br />
-              <span className="text-white/60">like your keyboard.</span>
+            dead simple.<br />
+              <span className="text-white/60">blazing fast.</span>
             </h2>
             <p className="font-lexend text-lg leading-relaxed text-white/70">
-              a tiny pill that disappears until you need it.
-              hit the hotkey. speak your mind. watch your thoughts materialize.
-              faster than your fingers could ever type.
+              1. press hotkey to start<br />
+              2. speak your code, prompt, or brilliant idea<br />
+              3. press hotkey to stop<br />
+              4. watch it print. instantly.<br /><br />
+              fully local processing means total privacy, fast processing and no internet required. your words stay yours.
             </p>
           </div>
 

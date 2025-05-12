@@ -138,11 +138,15 @@ export default function Pricing() {
                 </li>
                 <li className="flex items-start">
                   <span className="text-white/60 mr-2 text-sm leading-6">—</span>
-                  <span className="font-lexend text-white/60">all compatible apps</span>
+                  <span className="font-lexend text-white/60">works in all your apps</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-white/60 mr-2 text-sm leading-6">—</span>
-                  <span className="font-lexend text-white/60">priority support</span>
+                  <span className="font-lexend text-white/60">fully local & private</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-white/60 mr-2 text-sm leading-6">—</span>
+                  <span className="font-lexend text-white/60">priority support for beta users</span>
                 </li>
               </ul>
 

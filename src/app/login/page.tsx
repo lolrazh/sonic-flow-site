@@ -26,15 +26,47 @@ export default function Login() {
   // Setup auth state listener
   useEffect(() => {
     const { data: { subscription } } = clientSupabase.auth.onAuthStateChange(
-      (event: AuthChangeEvent) => {
+      async (event: AuthChangeEvent) => {
         if (event === 'SIGNED_IN') {
           setAuthLoading(true);
-          router.push("/dashboard");
+          console.log('Auth event: SIGNED_IN detected. Fetching session...');
+          // Get the session object containing tokens
+          const { data: sessionData, error: sessionError } = await clientSupabase.auth.getSession();
+          
+          if (sessionError) {
+            console.error('Error fetching session after SIGNED_IN:', sessionError);
+            setAuthError('Failed to retrieve session details. Please try logging in again.');
+            setAuthLoading(false);
+            return; // Stop processing
+          }
+
+          const session = sessionData.session;
+          if (session?.access_token && session?.refresh_token) {
+            const { access_token, refresh_token } = session;
+            const redirectUrl = `sonicflow://auth#access_token=${encodeURIComponent(access_token)}&refresh_token=${encodeURIComponent(refresh_token)}`;
+            console.log(`Redirecting to Electron app: ${redirectUrl.split('#')[0]}#...tokens...`); // Don't log tokens
+            window.location.href = redirectUrl; // Perform the redirect
+            // Keep authLoading true as we are navigating away
+          } else {
+            console.error('SIGNED_IN event, but tokens missing in session:', session);
+            setAuthError('Authentication succeeded but failed to get tokens for app redirect.');
+            setAuthLoading(false); // Allow user interaction
+            // Maybe redirect to dashboard as fallback? Or just show error.
+            // router.push("/dashboard"); 
+          }
         } else if (event === 'SIGNED_OUT') {
+          console.log('Auth event: SIGNED_OUT');
           setAuthLoading(false);
+        } else if (event === 'TOKEN_REFRESHED') {
+          console.log('Auth event: TOKEN_REFRESHED');
+          // Usually no UI action needed here for login page
         } else if (event.includes('ERROR')) {
-          setAuthError("Authentication failed. Please try again.");
-          setAuthLoading(false);
+           console.error('Auth event contains error:', event);
+           // Extract specific error if available in future library versions
+           setAuthError("Authentication failed. Please check your credentials or try again.");
+           setAuthLoading(false);
+        } else {
+          console.log('Other auth event:', event);
         }
       }
     );

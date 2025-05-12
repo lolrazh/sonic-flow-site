@@ -10,7 +10,7 @@ import { type HeroProps } from './types';
  */
 export default function Hero({
   headline = "this could be you but you're still typing",
-  subheadline = "level up your coding flow. let your voice paint the syntax while you focus on the bigger picture. because real devs don't let their fingers slow down their genius.",
+  subheadline = "sonic flow is a lightweight, lightning-fast, fully local dictation app built for vibe coders. hit a hotkey, speak your mind, hit it again. done.",
   primaryCta = { text: "get started", href: "/signup" },
   secondaryCta = { text: "explore features", href: "#features" }
 }: HeroProps = {}) {
