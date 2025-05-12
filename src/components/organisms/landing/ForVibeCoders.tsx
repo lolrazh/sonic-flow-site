@@ -25,11 +25,11 @@ export default function ForVibeCoders() {
               start flowing.
             </h2>
             <p className="font-lexend text-lg leading-relaxed text-white/70">
-              you're in the zone. ideas are firing. logic is connecting.<br />
+              you&apos;re in the zone. ideas are firing. logic is connecting.<br />
               then comes the typing. clack. clack. delete. clack.<br />
               <b><em>flow shattered.</em></b>
               <br /><br />
-              vibe coding is about staying in that creative torrent, letting your thoughts materialize without the friction of the keyboard. it's about coding at the speed of thought.
+              vibe coding is about staying in that creative torrent, letting your thoughts materialize without the friction of the keyboard. it&apos;s about coding at the speed of thought.
             </p>
           </div>
 

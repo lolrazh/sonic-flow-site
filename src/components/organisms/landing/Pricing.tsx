@@ -6,9 +6,6 @@ import { initPaddle, openCheckout } from '@/lib/paddle';
 import type { Paddle } from '@paddle/paddle-js';
 
 export default function Pricing() {
-  const { user } = useSession();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [formattedPrice, setFormattedPrice] = useState<string | null>(null);
   const [priceLoading, setPriceLoading] = useState(true);
 
@@ -42,7 +39,6 @@ export default function Pricing() {
         setFormattedPrice(subtotal);
       } catch (err) {
         console.error('Failed to load price:', err);
-        setError('Failed to load price information');
       } finally {
         setPriceLoading(false);
       }
@@ -50,50 +46,6 @@ export default function Pricing() {
 
     void loadPrice();
   }, []);
-
-  const handleStartTrial = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    setError(null);
-    
-    if (!user) {
-      // If not logged in, redirect to signup
-      window.location.href = '/signup';
-      return;
-    }
-
-    if (!process.env.NEXT_PUBLIC_PADDLE_PRICE_ID) {
-      setError('Configuration error. Please contact support.');
-      return;
-    }
-
-    setIsLoading(true);
-
-    try {
-      // Initialize Paddle and open checkout
-      await initPaddle();
-      await openCheckout({
-        priceId: process.env.NEXT_PUBLIC_PADDLE_PRICE_ID,
-        customerId: user.id,
-        customerEmail: user.email,
-        successUrl: `${window.location.origin}/dashboard`,
-        customerLocale: 'en',
-      });
-    } catch (error) {
-      console.error('Failed to start trial:', error);
-      setError('Something went wrong. Please try again later or contact support.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const formatPrice = (amount: string, currency: string) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: currency,
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(Number(amount));
-  };
 
   return (
     <section className="relative overflow-hidden bg-[rgb(12,12,12)]" id="pricing">
@@ -151,21 +103,7 @@ export default function Pricing() {
               </ul>
 
               <div className="space-y-2">
-                <button
-                  onClick={handleStartTrial}
-                  disabled={isLoading}
-                  className="block w-full rounded-full bg-white px-8 py-4 text-center font-lexend text-base font-medium text-black/90 transition-colors hover:bg-white/90 disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                  {isLoading ? "loading..." : "start free trial"}
-                </button>
-                {error && (
-                  <p className="text-sm text-center font-lexend text-red-400">
-                    {error}
-                  </p>
-                )}
-                <p className="text-sm text-center font-lexend text-white/40">
-                  no credit card required
-                </p>
+                {/* Removed payments button and related messages */}
               </div>
             </div>
           </div>
