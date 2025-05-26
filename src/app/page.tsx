@@ -5,15 +5,15 @@ import {
   FAQ,
   Header,
   Footer,
-  ForVibeCoders
-} from "@/components/organisms/landing";
+  Features
+} from "@/components";
 
 export default function Home() {
   return (
     <main className="min-h-screen">
       <Header />
       <Hero />
-      <ForVibeCoders />
+      <Features />
       <HowItWorks />
       <Pricing />
       <FAQ />

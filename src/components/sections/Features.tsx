@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 
-export default function ForVibeCoders() {
+export default function Features() {
   return (
     <section className="relative overflow-hidden bg-[rgb(12,12,12)]" id="for-vibe-coders">
       {/* Noise texture overlay */}
