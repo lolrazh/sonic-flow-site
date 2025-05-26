@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 
 import { DM_Serif_Display, Lexend_Deca } from "next/font/google";
 import { type Metadata } from "next";
+import MouseAwareGradient from "@/components/layout/MouseAwareGradient";
 
 const dmSerif = DM_Serif_Display({
   subsets: ["latin"],
@@ -25,8 +26,12 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${dmSerif.variable} ${lexendDeca.variable} dark`}>
-      <body className="font-sans">
-        {children}
+      <body className="font-sans relative">
+        <MouseAwareGradient />
+        <div className="mouse-gradient-bg"></div>
+        <div className="relative z-10">
+          {children}
+        </div>
       </body>
     </html>
   );

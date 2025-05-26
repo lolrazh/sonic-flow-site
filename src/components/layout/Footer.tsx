@@ -9,8 +9,8 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
   
   return (
-    <footer className="relative overflow-hidden bg-black section-separator">
-      <div className="container mx-auto px-8 py-16 max-w-7xl">
+    <footer className="relative overflow-hidden section-separator">
+      <div className="container mx-auto px-8 py-12 max-w-7xl">
         <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-12">
           <div className="flex items-center mb-8 md:mb-0">
             <h3 className="font-lexend text-2xl lowercase tracking-tight text-white/90">sonic<span className="text-dimmed">flow</span></h3>

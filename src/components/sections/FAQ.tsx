@@ -67,8 +67,8 @@ export default function FAQ({
   };
 
   return (
-    <section className="relative overflow-hidden bg-black section-separator" id="faq">
-      <div className="container mx-auto px-8 py-24 md:py-32 max-w-7xl">
+    <section className="relative overflow-hidden section-separator" id="faq">
+      <div className="container mx-auto px-8 py-20 md:py-28 max-w-7xl">
         <div className="flex flex-col items-center">
           {/* Header */}
           <div className="max-w-xl text-center mb-16">

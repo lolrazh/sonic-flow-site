@@ -4,8 +4,8 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
+    --background: 0 0% 3.9%; /* Default dark background for fallback */
+    --foreground: 0 0% 98%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
     --popover: 0 0% 100%;
@@ -28,7 +28,9 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --radius: 0.5rem
+    --radius: 0.5rem;
+    --mouse-x: 0px;
+    --mouse-y: 0px;
   }
   .dark {
     --background: 0 0% 3.9%;
@@ -63,8 +65,23 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
-    background: #000000;
+    @apply text-foreground; /* Keep text color, remove explicit bg-background */
+    /* The .mouse-gradient-bg div will now handle the visual background */
+  }
+  .mouse-gradient-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: hsl(var(--background)); /* Fallback solid dark background */
+    background-image: radial-gradient(
+      600px circle at var(--mouse-x) var(--mouse-y),
+      rgba(255, 255, 255, 0.08),  /* Brighter center as suggested */
+      transparent 80%
+    );
+    background-repeat: no-repeat;
+    z-index: -1; /* Ensure it's behind all content */
   }
 }
 

@@ -3,8 +3,8 @@ import Image from 'next/image';
 
 export default function Features() {
   return (
-    <section className="relative overflow-hidden bg-black section-separator" id="for-vibe-coders">
-      <div className="container mx-auto px-4 py-24 md:py-32 max-w-7xl">
+    <section className="relative overflow-hidden section-separator" id="for-vibe-coders">
+      <div className="container mx-auto px-4 py-20 md:py-28 max-w-7xl">
         <div className="flex flex-col items-center gap-16 lg:flex-row lg:items-center lg:justify-between">
           {/* Left Content */}
           <div className="max-w-xl">

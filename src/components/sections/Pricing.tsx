@@ -4,8 +4,8 @@ import React from 'react';
 
 export default function Pricing() {
   return (
-    <section className="relative overflow-hidden bg-black section-separator" id="pricing">
-      <div className="container mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
+    <section className="relative overflow-hidden section-separator" id="pricing">
+      <div className="container mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 md:py-28">
         <div className="text-center">
           <h2 className="font-serif text-5xl lowercase tracking-tight heading-gradient sm:text-6xl">
             simple, transparent pricing
