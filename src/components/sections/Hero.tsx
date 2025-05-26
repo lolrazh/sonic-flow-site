@@ -51,7 +51,7 @@ export default function Hero({
   
   // Safe default values to prevent undefined errors
   const primaryCtaText = primaryCta?.text ?? "Get Started";
-  const primaryCtaHref = primaryCta?.href ?? "/signup";
+  const primaryCtaHref = primaryCta?.href ?? "#pricing";
   const secondaryCtaText = secondaryCta?.text ?? "Explore Features";
   const secondaryCtaHref = secondaryCta?.href ?? "#features";
 
@@ -88,12 +88,13 @@ export default function Hero({
                 {subheadline}
               </p>
               <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-                <Link 
+                <a 
                   href={primaryCtaHref}
+                  onClick={(e) => handleScrollToSection(e, primaryCtaHref)}
                   className="btn-primary rounded-full px-6 py-3 text-center font-lexend text-sm font-medium sm:px-8 sm:py-4 sm:text-base"
                 >
                   {primaryCtaText}
-                </Link>
+                </a>
                 <a 
                   href={secondaryCtaHref} 
                   onClick={(e) => handleScrollToSection(e, secondaryCtaHref)}

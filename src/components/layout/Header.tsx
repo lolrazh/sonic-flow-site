@@ -105,22 +105,6 @@ export default function Header() {
                     </a>
                   </li>
                 ))}
-                <li className="pt-4">
-                  <Link
-                    href="/login"
-                    className="block w-full rounded-full border border-white/10 bg-white/5 px-6 py-2 text-center font-lexend text-sm text-white/90 transition-colors hover:bg-white/10"
-                  >
-                    sign in
-                  </Link>
-                </li>
-                <li className="pt-2">
-                  <Link
-                    href="/signup"
-                    className="block w-full rounded-full bg-white px-6 py-2 text-center font-lexend text-sm text-black/90 transition-colors hover:bg-white/90"
-                  >
-                    download
-                  </Link>
-                </li>
               </ul>
             </div>
           </motion.div>
