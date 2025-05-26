@@ -3,7 +3,17 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
-import { type FAQProps } from './types';
+
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+interface FAQProps {
+  title?: string;
+  subtitle?: string;
+  items?: FAQItem[];
+}
 
 /**
  * FAQ component - displays frequently asked questions with expandable answers
@@ -18,7 +28,7 @@ export default function FAQ({
     },
     {
       question: "how accurate is it?",
-      answer: "sonic flow uses state-of-the-art local transcription, tuned for coding and natural language. for those 5–45 second bursts, it’s impressively accurate, even with technical terms. and since it’s local, it’s fast and private."
+      answer: "sonic flow uses state-of-the-art local transcription, tuned for coding and natural language. for those 5–45 second bursts, it's impressively accurate, even with technical terms. and since it's local, it's fast and private."
     },
     {
       question: "will it work with my editor/ide/browser?",
@@ -30,7 +40,7 @@ export default function FAQ({
     },
     {
       question: 'what is "vibe coding" anyway?',
-      answer: "vibe coding is the new way to build software: you describe what you want, ai (or your tools) handle the syntax. it’s about staying in flow, riffing on ideas, and letting the machine do the heavy lifting. coined by karpathy, it’s how the best devs are working now."
+      answer: "vibe coding is the new way to build software: you describe what you want, ai (or your tools) handle the syntax. it's about staying in flow, riffing on ideas, and letting the machine do the heavy lifting. coined by karpathy, it's how the best devs are working now."
     }
   ]
 }: FAQProps = {}) {

@@ -1,52 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { useSession } from '@/lib/auth';
-import { initPaddle, openCheckout } from '@/lib/paddle';
-import type { Paddle } from '@paddle/paddle-js';
+import React from 'react';
 
 export default function Pricing() {
-  const [formattedPrice, setFormattedPrice] = useState<string | null>(null);
-  const [priceLoading, setPriceLoading] = useState(true);
-
-  useEffect(() => {
-    const loadPrice = async () => {
-      try {
-        const paddle = await initPaddle();
-        const priceId = process.env.NEXT_PUBLIC_PADDLE_PRICE_ID;
-        if (!priceId) throw new Error('Price ID not configured');
-
-        const preview = await paddle.PricePreview({
-          items: [{
-            priceId,
-            quantity: 1
-          }],
-          currencyCode: 'USD'
-        });
-
-        if (!preview?.data?.details?.lineItems?.[0]) {
-          throw new Error('Invalid price preview response');
-        }
-
-        const lineItem = preview.data.details.lineItems[0];
-        // Use the formatted subtotal directly from Paddle
-        const subtotal = lineItem.formattedTotals?.subtotal;
-        
-        if (!subtotal) {
-          throw new Error('No price information available');
-        }
-
-        setFormattedPrice(subtotal);
-      } catch (err) {
-        console.error('Failed to load price:', err);
-      } finally {
-        setPriceLoading(false);
-      }
-    };
-
-    void loadPrice();
-  }, []);
-
   return (
     <section className="relative overflow-hidden bg-[rgb(12,12,12)]" id="pricing">
       <div className="container mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
@@ -70,16 +26,8 @@ export default function Pricing() {
               
               <div className="text-center mb-8">
                 <div className="font-lexend text-6xl tracking-tight text-white/90">
-                  {priceLoading ? (
-                    <span className="text-white/40">...</span>
-                  ) : formattedPrice ? (
-                    <>
-                      {formattedPrice}
-                      <span className="ml-1 text-xl text-white/40">/month</span>
-                    </>
-                  ) : (
-                    <span className="text-white/40">Error loading price</span>
-                  )}
+                  $9
+                  <span className="ml-1 text-xl text-white/40">/month</span>
                 </div>
               </div>
               
@@ -103,7 +51,12 @@ export default function Pricing() {
               </ul>
 
               <div className="space-y-2">
-                {/* Removed payments button and related messages */}
+                <button className="w-full rounded-lg bg-white px-4 py-3 font-lexend text-sm font-medium text-black transition-colors hover:bg-white/90">
+                  Get Started
+                </button>
+                <p className="text-center text-xs text-white/40">
+                  7-day free trial • No credit card required
+                </p>
               </div>
             </div>
           </div>

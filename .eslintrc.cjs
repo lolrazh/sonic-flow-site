@@ -1,5 +1,5 @@
 /** @type {import("eslint").Linter.Config} */
-const config = {
+module.exports = {
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": true
@@ -9,45 +9,21 @@ const config = {
   ],
   "extends": [
     "next/core-web-vitals",
-    "plugin:@typescript-eslint/recommended-type-checked",
-    "plugin:@typescript-eslint/stylistic-type-checked"
+    "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
-    "@typescript-eslint/array-type": "off",
-    "@typescript-eslint/consistent-type-definitions": "off",
-    "@typescript-eslint/consistent-type-imports": [
-      "warn",
-      {
-        "prefer": "type-imports",
-        "fixStyle": "inline-type-imports"
-      }
-    ],
     "@typescript-eslint/no-unused-vars": [
       "warn",
       {
         "argsIgnorePattern": "^_"
       }
     ],
-    "@typescript-eslint/require-await": "off",
-    "@typescript-eslint/no-misused-promises": [
-      "error",
+    "@typescript-eslint/consistent-type-imports": [
+      "warn",
       {
-        "checksVoidReturn": {
-          "attributes": false
-        }
+        "prefer": "type-imports",
+        "fixStyle": "inline-type-imports"
       }
     ]
-  },
-  "overrides": [
-    {
-      "files": ["src/trpc/server.ts"],
-      "rules": {
-        "@typescript-eslint/no-unsafe-return": "off",
-        "@typescript-eslint/no-unsafe-call": "off",
-        "@typescript-eslint/no-unsafe-argument": "off",
-        "@typescript-eslint/no-unsafe-member-access": "off"
-      }
-    }
-  ]
-}
-module.exports = config;
+  }
+};
