@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
@@ -10,6 +10,15 @@ import { Menu, X } from 'lucide-react';
  */
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navItems = [
     { name: 'flow', href: '#for-vibe-coders' },
@@ -30,7 +39,7 @@ export default function Header() {
         setMobileMenuOpen(false);
       }
       
-      const offset = 80; // Reduced offset to match header height better
+      const offset = 64; // Adjusted offset for thinner header
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - offset;
       
@@ -45,23 +54,25 @@ export default function Header() {
   };
 
   return (
-    <header className="fixed left-0 top-0 z-50 w-full bg-transparent">
-      <nav className="container mx-auto flex items-center justify-between px-16 py-6 max-w-7xl">
+    <header 
+      className={`fixed left-0 top-0 z-50 w-full transition-all duration-300 ease-in-out ${isScrolled ? 'bg-[rgba(12,12,12,0.8)] backdrop-blur-md shadow-lg' : 'bg-transparent'}`}
+    >
+      <nav className="container mx-auto flex items-center justify-between px-32 py-4 max-w-full">
         {/* Logo */}
         <Link href="/" className="font-lexend text-2xl lowercase tracking-tight text-white/90">
           sonic<span className="text-white/40">flow</span>
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden items-center space-x-8 md:flex">
+        <div className="hidden items-center space-x-12 md:flex">
           {/* Main Navigation */}
-          <div className="flex space-x-8">
+          <div className="flex space-x-10">
             {navItems.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
                 onClick={(e) => handleScrollToSection(e, item.href)}
-                className="font-lexend text-sm text-white/40 transition-colors hover:text-white/90"
+                className="font-lexend text-lg text-white/60 transition-colors hover:text-white/90"
               >
                 {item.name}
               </a>
@@ -82,6 +93,11 @@ export default function Header() {
         </button>
       </nav>
 
+      {/* Separator */}
+      <div 
+        className="h-px bg-white/5"
+      />
+
       {/* Mobile menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
@@ -90,7 +106,7 @@ export default function Header() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="overflow-hidden bg-[rgb(12,12,12)] px-8 pb-6 pt-2"
+            className="overflow-hidden bg-[rgb(12,12,12)] px-8 pb-6 pt-2 md:hidden"
           >
             <div className="container mx-auto">
               <ul className="flex flex-col space-y-4">
@@ -99,7 +115,7 @@ export default function Header() {
                     <a 
                       href={item.href}
                       onClick={(e) => handleScrollToSection(e, item.href)}
-                      className="block py-2 font-lexend text-base text-white/40 transition-colors hover:text-white/90"
+                      className="block py-2 font-lexend text-lg text-white/60 transition-colors hover:text-white/90"
                     >
                       {item.name}
                     </a>
