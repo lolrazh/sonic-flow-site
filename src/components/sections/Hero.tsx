@@ -22,8 +22,8 @@ interface HeroProps {
 export default function Hero({
   headline = "this could be you but you're still typing",
   subheadline = "sonic flow is a lightweight, lightning-fast, fully local dictation app built for vibe coders. hit a hotkey, speak your mind, hit it again. done.",
-  primaryCta = { text: "get started", href: "/signup" },
-  secondaryCta = { text: "explore features", href: "#features" }
+  primaryCta = { text: "try for free", href: "#pricing" },
+  secondaryCta = { text: "explore features", href: "#for-vibe-coders" }
 }: HeroProps = {}) {
   // Smooth scroll function
   const handleScrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {

@@ -52,10 +52,10 @@ export default function Pricing() {
 
               <div className="space-y-2">
                 <button className="w-full rounded-full btn-primary px-4 py-3 font-lexend text-sm font-medium">
-                  Get Started
+                  start your 7-day free trial
                 </button>
                 <p className="text-center text-xs text-dimmed">
-                  7-day free trial • No credit card required
+                  no credit card required
                 </p>
               </div>
             </div>
