@@ -26,7 +26,7 @@ export default function Pricing() {
               
               <div className="text-center mb-8">
                 <div className="font-lexend text-6xl tracking-tight heading-gradient">
-                  $9
+                  $7
                   <span className="ml-1 text-xl text-dimmed">/month</span>
                 </div>
               </div>
