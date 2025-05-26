@@ -66,14 +66,21 @@ export default function Hero({
           className="object-cover object-left"
           priority
         />
-        <div className="absolute inset-0 bg-black/40" />
+        {/* Enhanced gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-black/50" />
+        
+        {/* Ambient gradient overlay */}
+        <div className="absolute inset-0 ambient-gradient-1" />
       </div>
+
+      {/* Bottom gradient transition */}
+      <div className="absolute inset-x-0 bottom-0 h-32 section-transition-bottom z-10" />
 
       <div className="relative z-10 flex min-h-screen w-full items-center">
         <div className="w-full">
           <div className="mx-auto flex w-full max-w-[90rem] justify-center px-8 lg:justify-end">
             <div className="w-full max-w-3xl lg:-mr-12 xl:-mr-24 2xl:-mr-48">
-              <h1 className="mb-8 font-serif text-4xl font-normal lowercase leading-tight tracking-normal text-white sm:text-5xl md:text-6xl lg:text-7xl">
+              <h1 className="mb-8 font-serif text-4xl font-normal lowercase leading-tight tracking-normal heading-gradient sm:text-5xl md:text-6xl lg:text-7xl">
                 {firstPart}
                 {hasTwoParts && (
                   <>
@@ -83,20 +90,20 @@ export default function Hero({
                   </>
                 )}
               </h1>
-              <p className="mb-12 w-full max-w-[90%] font-lexend text-base text-white/90 sm:max-w-[75%] sm:text-lg md:text-xl">
+              <p className="mb-12 w-full max-w-[90%] font-lexend text-base text-subtle sm:max-w-[75%] sm:text-lg md:text-xl">
                 {subheadline}
               </p>
               <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
                 <Link 
                   href={primaryCtaHref}
-                  className="group relative overflow-hidden rounded-full bg-white px-6 py-3 text-center font-lexend text-sm font-medium text-black/90 transition-colors hover:bg-white/90 sm:px-8 sm:py-4 sm:text-base"
+                  className="btn-primary rounded-full px-6 py-3 text-center font-lexend text-sm font-medium sm:px-8 sm:py-4 sm:text-base"
                 >
                   {primaryCtaText}
                 </Link>
                 <a 
                   href={secondaryCtaHref} 
                   onClick={(e) => handleScrollToSection(e, secondaryCtaHref)}
-                  className="rounded-full border border-white/10 bg-white/5 px-6 py-3 text-center font-lexend text-sm font-medium text-white/90 transition-colors hover:bg-white/10 sm:px-8 sm:py-4 sm:text-base"
+                  className="btn-secondary rounded-full px-6 py-3 text-center font-lexend text-sm font-medium sm:px-8 sm:py-4 sm:text-base"
                 >
                   {secondaryCtaText}
                 </a>

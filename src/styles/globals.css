@@ -64,20 +64,89 @@
   }
   body {
     @apply bg-background text-foreground;
+    background: rgb(10, 10, 10);
   }
 }
 
 @layer components {
+  /* Linear-inspired elevation system */
+  .card-elevated {
+    background: rgba(18, 18, 18, 0.8);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 
+      0 1px 3px rgba(0, 0, 0, 0.12),
+      0 8px 24px rgba(0, 0, 0, 0.12),
+      0 16px 48px rgba(0, 0, 0, 0.08);
+  }
+  
+  .card-floating {
+    background: rgba(18, 18, 18, 0.9);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 
+      0 4px 16px rgba(0, 0, 0, 0.16),
+      0 12px 32px rgba(0, 0, 0, 0.12),
+      0 24px 64px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Ambient gradient backgrounds */
+  .ambient-gradient-1 {
+    background: radial-gradient(
+      ellipse 800px 600px at 50% 0%,
+      rgba(255, 95, 31, 0.03),
+      transparent 50%
+    );
+  }
+  
+  .ambient-gradient-2 {
+    background: radial-gradient(
+      ellipse 600px 400px at 80% 20%,
+      rgba(255, 120, 70, 0.02),
+      transparent 70%
+    );
+  }
+  
+  .ambient-gradient-3 {
+    background: radial-gradient(
+      ellipse 500px 300px at 20% 80%,
+      rgba(255, 95, 31, 0.025),
+      transparent 60%
+    );
+  }
+
+  /* Section transition gradients */
+  .section-transition-top {
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.8) 0%,
+      rgba(0, 0, 0, 0.4) 50%,
+      transparent 100%
+    );
+  }
+  
+  .section-transition-bottom {
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.8) 0%,
+      rgba(0, 0, 0, 0.4) 50%,
+      transparent 100%
+    );
+  }
+
+  /* Enhanced pill component */
   .pill-container {
     position: relative;
-    background: rgba(18, 18, 18, 0.98);
+    background: rgba(18, 18, 18, 0.95);
+    backdrop-filter: blur(16px);
     border-radius: 14px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.03);
-    transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     cursor: pointer;
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 95, 31, 0.25);
-    opacity: 1;
+    border: 1px solid rgba(255, 95, 31, 0.2);
+    box-shadow: 
+      0 2px 8px rgba(0, 0, 0, 0.15),
+      0 4px 16px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
   }
 
   .pill-container.collapsed {
@@ -85,15 +154,18 @@
     height: 16px;
   }
 
-  .pill-container.expanded, 
+  .pill-container:hover,
   .pill-container.listening, 
   .pill-container.processing {
     width: 70px;
     height: 22px;
-    background: rgba(18, 18, 18, 0.98);
-    border: 1px solid rgba(255, 95, 31, 0.3);
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12), 0 0 8px rgba(0, 0, 0, 0.1), inset 0 1px 1px rgba(255, 255, 255, 0.03);
-    opacity: 1;
+    border: 1px solid rgba(255, 95, 31, 0.4);
+    box-shadow: 
+      0 4px 12px rgba(0, 0, 0, 0.2),
+      0 8px 24px rgba(0, 0, 0, 0.15),
+      0 0 0 1px rgba(255, 95, 31, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
   }
 
   .pill-content {
@@ -105,7 +177,6 @@
     color: #FF5F1F;
   }
 
-  /* Common container for dots and bars */
   .visualization-container {
     width: 75%;
     height: 12px;
@@ -115,70 +186,106 @@
     align-items: center;
   }
 
-  /* Dot styling - used in all states */
   .dot {
     width: 3px;
     height: 3px;
     border-radius: 50%;
     background: linear-gradient(to top, #FF5F1F, #FFA07A);
     opacity: 1;
-    transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 0 4px rgba(255, 95, 31, 0.3);
   }
 
-  /* Animated dots for processing state */
   .dot.animated {
     animation: wave 1.5s infinite ease-in-out;
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.15);
   }
 
-  .dot.animated:nth-child(2n) {
-    animation-delay: 0.15s;
-  }
+  .dot.animated:nth-child(2n) { animation-delay: 0.15s; }
+  .dot.animated:nth-child(3n) { animation-delay: 0.3s; }
+  .dot.animated:nth-child(4n) { animation-delay: 0.45s; }
+  .dot.animated:nth-child(5n) { animation-delay: 0.6s; }
 
-  .dot.animated:nth-child(3n) {
-    animation-delay: 0.3s;
-  }
-
-  .dot.animated:nth-child(4n) {
-    animation-delay: 0.45s;
-  }
-
-  .dot.animated:nth-child(5n) {
-    animation-delay: 0.6s;
-  }
-
-  /* Frequency bars for active state */
   .waveform-bar {
     width: 3px;
     border-radius: 1px;
     animation: pulse 1.5s infinite;
     background: linear-gradient(to top, #FF5F1F, #FFA07A);
     opacity: 1;
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 4px rgba(255, 95, 31, 0.3);
   }
 
-  /* Collapsed state dots - smaller size but maintain the same spacing */
   .dot.collapsed {
     width: 2px;
     height: 2px;
     opacity: 0.95;
     background: linear-gradient(to top, #FF5F1F, #FFA07A);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 0 2px rgba(255, 95, 31, 0.2);
   }
 
-  /* Adjust collapsed container to maintain proportions */
   .pill-container.collapsed .visualization-container {
     gap: 3px;
   }
 
   @keyframes wave {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-3px); }
+    0%, 100% { transform: translateY(0); opacity: 1; }
+    50% { transform: translateY(-4px); opacity: 0.8; }
   }
 
   @keyframes pulse {
-    0%, 100% { height: 3px; }
-    50% { height: 8px; }
+    0%, 100% { height: 3px; opacity: 1; }
+    50% { height: 8px; opacity: 0.9; }
+  }
+
+  /* Typography enhancements */
+  .heading-gradient {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(255, 255, 255, 0.7) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-subtle {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .text-dimmed {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  /* Button enhancements */
+  .btn-primary {
+    background: rgba(255, 255, 255, 0.95);
+    color: rgba(0, 0, 0, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 
+      0 1px 3px rgba(0, 0, 0, 0.12),
+      0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  .btn-primary:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: translateY(-1px);
+    box-shadow: 
+      0 2px 6px rgba(0, 0, 0, 0.15),
+      0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
   }
 }

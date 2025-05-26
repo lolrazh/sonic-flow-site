@@ -67,18 +67,21 @@ export default function FAQ({
   };
 
   return (
-    <section className="relative overflow-hidden bg-[rgb(12,12,12)]" id="faq">
-      {/* Top gradient overflow */}
-      <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/50 to-transparent" />
+    <section className="relative overflow-hidden bg-gradient-to-b from-[rgb(10,10,10)] to-[rgb(12,12,12)]" id="faq">
+      {/* Ambient background elements */}
+      <div className="absolute inset-0 ambient-gradient-2" />
+      
+      {/* Top gradient transition */}
+      <div className="absolute inset-x-0 top-0 h-32 section-transition-top" />
 
       <div className="container mx-auto px-8 py-24 md:py-32 max-w-7xl">
         <div className="flex flex-col items-center">
           {/* Header */}
           <div className="max-w-xl text-center mb-16">
-            <h2 className="mb-6 font-serif text-4xl lowercase tracking-tight text-white/90 md:text-5xl lg:text-6xl">
+            <h2 className="mb-6 font-serif text-4xl lowercase tracking-tight heading-gradient md:text-5xl lg:text-6xl">
               {title}
             </h2>
-            <p className="font-lexend text-lg text-white/60">
+            <p className="font-lexend text-lg text-subtle">
               {subtitle}
             </p>
           </div>
@@ -88,19 +91,19 @@ export default function FAQ({
               {items.map((faq, index) => (
                 <div 
                   key={index} 
-                  className="overflow-hidden rounded-2xl border border-white/5"
+                  className="overflow-hidden rounded-2xl card-elevated"
                 >
                   <button
                     onClick={() => toggleFAQ(index)}
-                    className="flex w-full items-center justify-between p-6 text-left transition-colors bg-[rgb(18,18,18)] hover:bg-[rgb(24,24,24)]"
+                    className="flex w-full items-center justify-between p-6 text-left transition-all duration-300 hover:bg-white/[0.02]"
                   >
-                    <h3 className="font-lexend text-lg text-white/90">{faq.question}</h3>
+                    <h3 className="font-lexend text-lg text-white/90 font-medium">{faq.question}</h3>
                     <motion.div
                       animate={{ rotate: openFAQs.includes(index) ? 180 : 0 }}
-                      transition={{ duration: 0.3 }}
+                      transition={{ duration: 0.3, ease: [0.25, 0.8, 0.25, 1] }}
                       className="ml-4 flex-shrink-0"
                     >
-                      <ChevronDown className="h-5 w-5 text-white/40" />
+                      <ChevronDown className="h-5 w-5 text-dimmed" />
                     </motion.div>
                   </button>
                   
@@ -110,10 +113,10 @@ export default function FAQ({
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3 }}
+                        transition={{ duration: 0.3, ease: [0.25, 0.8, 0.25, 1] }}
                       >
-                        <div className="px-6 py-4 bg-[rgb(24,24,24)]">
-                          <p className="font-lexend text-white/70">{faq.answer}</p>
+                        <div className="px-6 py-4 border-t border-white/5 bg-gradient-to-b from-transparent to-black/10">
+                          <p className="font-lexend text-subtle leading-relaxed">{faq.answer}</p>
                         </div>
                       </motion.div>
                     )}

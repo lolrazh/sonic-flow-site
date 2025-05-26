@@ -90,28 +90,22 @@ export default function HowItWorks() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-[rgb(18,18,18)]">
-      {/* Noise texture overlay */}
-      <div 
-        className="absolute inset-0 opacity-[0.03]" 
-        style={{ 
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-          transform: 'translate3d(0, 0, 0)'
-        }}
-      />
+    <section className="relative overflow-hidden bg-gradient-to-b from-[rgb(12,12,12)] to-[rgb(14,14,14)]">
+      {/* Ambient background elements */}
+      <div className="absolute inset-0 ambient-gradient-3" />
 
-      {/* Top gradient overflow */}
-      <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/50 to-transparent" />
+      {/* Top gradient transition */}
+      <div className="absolute inset-x-0 top-0 h-32 section-transition-top" />
 
       <div className="container mx-auto px-8 py-24 md:py-32 max-w-7xl">
         <div className="flex flex-col items-center gap-16 lg:flex-row-reverse lg:items-center lg:justify-between">
           {/* Left Content - Now on the right */}
           <div className="max-w-xl">
-            <h2 className="mb-6 font-serif text-4xl lowercase tracking-tight text-white/90 md:text-5xl lg:text-6xl">
+            <h2 className="mb-6 font-serif text-4xl lowercase tracking-tight heading-gradient md:text-5xl lg:text-6xl">
             dead simple.<br />
-              <span className="text-white/60">blazing fast.</span>
+              <span className="text-dimmed">blazing fast.</span>
             </h2>
-            <p className="font-lexend text-lg leading-relaxed text-white/70">
+            <p className="font-lexend text-lg leading-relaxed text-subtle">
               1. press hotkey to start<br />
               2. speak your code, prompt, or brilliant idea<br />
               3. press hotkey to stop<br />
@@ -121,11 +115,11 @@ export default function HowItWorks() {
           </div>
 
           {/* Right Content - Now on the left - Windows Terminal Demo */}
-          <div className="relative aspect-[4/3] w-full max-w-xl overflow-hidden rounded-xl lg:w-1/2">
+          <div className="relative aspect-[4/3] w-full max-w-xl overflow-hidden rounded-xl lg:w-1/2 card-floating">
             {/* Windows Terminal-like interface */}
-            <div className="absolute inset-0 bg-[rgb(12,12,24)] flex flex-col">
+            <div className="absolute inset-0 bg-gradient-to-b from-[rgb(12,12,24)] to-[rgb(8,8,16)] flex flex-col">
               {/* Terminal Title Bar */}
-              <div className="flex items-center justify-between px-4 py-2 bg-[rgb(30,30,43)] border-b border-white/5">
+              <div className="flex items-center justify-between px-4 py-2 bg-gradient-to-r from-[rgb(30,30,43)] to-[rgb(28,28,40)] border-b border-white/5">
                 <div className="flex items-center gap-2">
                   <svg className="w-4 h-4 text-white/60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -133,16 +127,19 @@ export default function HowItWorks() {
                   <span className="text-sm text-white/80 font-medium">Windows PowerShell</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="w-3 h-3 rounded-sm bg-white/20"></div>
-                  <div className="w-3 h-3 rounded-sm bg-white/20"></div>
-                  <div className="w-3 h-3 rounded-sm bg-red-500/80"></div>
+                  <div className="w-3 h-3 rounded-sm bg-white/10 hover:bg-white/20 transition-colors"></div>
+                  <div className="w-3 h-3 rounded-sm bg-white/10 hover:bg-white/20 transition-colors"></div>
+                  <div className="w-3 h-3 rounded-sm bg-red-500/60 hover:bg-red-500/80 transition-colors"></div>
                 </div>
               </div>
               
               {/* Terminal Content */}
-              <div className="flex-1 p-4 font-mono text-sm text-white/70">
+              <div className="flex-1 p-4 font-mono text-sm text-white/70 bg-gradient-to-b from-transparent to-black/10">
                 <p className="mb-2">PS C:\Users\user&gt; sonic-flow --start</p>
-                <p className="text-green-400/90 mb-4">✓ Sonic Flow is running...</p>
+                <p className="text-green-400/90 mb-4 flex items-center gap-2">
+                  <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                  Sonic Flow is running...
+                </p>
               </div>
 
               {/* Pill at the bottom */}
@@ -155,6 +152,9 @@ export default function HowItWorks() {
                 />
               </div>
             </div>
+            
+            {/* Terminal glow effect */}
+            <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-blue-500/5 via-transparent to-transparent pointer-events-none" />
           </div>
         </div>
       </div>
