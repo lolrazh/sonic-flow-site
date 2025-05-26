@@ -1,5 +1,5 @@
-export * from './atoms';
-export * from './molecules';
-export * from './organisms';
-export * from './templates';
-export * from './client'; 
+// Layout components
+export * from './layout';
+
+// Section components  
+export * from './sections'; 

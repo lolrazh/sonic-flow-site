@@ -4,8 +4,8 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
+    --background: 0 0% 3.9%; /* Default dark background for fallback */
+    --foreground: 0 0% 98%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
     --popover: 0 0% 100%;
@@ -28,7 +28,9 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --radius: 0.5rem
+    --radius: 0.5rem;
+    --mouse-x: 0px;
+    --mouse-y: 0px;
   }
   .dark {
     --background: 0 0% 3.9%;
@@ -63,21 +65,72 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground; /* Keep text color, remove explicit bg-background */
+    /* The .mouse-gradient-bg div will now handle the visual background */
+  }
+  .mouse-gradient-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: hsl(var(--background)); /* Fallback solid dark background */
+    background-image: radial-gradient(
+      600px circle at var(--mouse-x) var(--mouse-y),
+      rgba(255, 165, 0, 0.06),  /* Subtle orange gradient */
+      transparent 80%
+    );
+    background-repeat: no-repeat;
+    z-index: -1; /* Ensure it's behind all content */
   }
 }
 
 @layer components {
+  /* Clean section separators */
+  .section-separator {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  /* Frosted Glass with Noise elevation system */
+  .card-elevated { /* Used by FAQ cards */
+    background-color: rgba(15, 15, 15, 0.4); /* Adjusted opacity back down */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+    backdrop-filter: blur(20px); /* Readjusted blur */
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 
+      0 5px 15px rgba(0, 0, 0, 0.3),
+      0 18px 45px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card-floating { /* Used by Pricing card and Terminal demo */
+    background-color: rgba(15, 15, 15, 0.4); /* Adjusted opacity back down */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+    backdrop-filter: blur(24px); /* Readjusted blur */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 
+      0 8px 22px rgba(0, 0, 0, 0.35),
+      0 25px 60px rgba(0, 0, 0, 0.25);
+  }
+
+  .terminal-screen-frosted { /* For the inner screen of the terminal demo */
+    background-color: rgba(15, 15, 15, 0.4); /* Dark, semi-transparent base */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E"); /* Standard noise */
+    backdrop-filter: blur(16px); /* Slightly less blur for an inner surface */
+  }
+
+  /* Enhanced pill component */
   .pill-container {
     position: relative;
-    background: rgba(18, 18, 18, 0.98);
+    background: rgba(18, 18, 18, 0.95);
+    backdrop-filter: blur(16px);
     border-radius: 14px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.03);
-    transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     cursor: pointer;
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 95, 31, 0.25);
-    opacity: 1;
+    border: 1px solid rgba(255, 95, 31, 0.2);
+    box-shadow: 
+      0 2px 8px rgba(0, 0, 0, 0.15),
+      0 4px 16px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
   }
 
   .pill-container.collapsed {
@@ -85,15 +138,18 @@
     height: 16px;
   }
 
-  .pill-container.expanded, 
+  .pill-container:hover,
   .pill-container.listening, 
   .pill-container.processing {
     width: 70px;
     height: 22px;
-    background: rgba(18, 18, 18, 0.98);
-    border: 1px solid rgba(255, 95, 31, 0.3);
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12), 0 0 8px rgba(0, 0, 0, 0.1), inset 0 1px 1px rgba(255, 255, 255, 0.03);
-    opacity: 1;
+    border: 1px solid rgba(255, 95, 31, 0.4);
+    box-shadow: 
+      0 4px 12px rgba(0, 0, 0, 0.2),
+      0 8px 24px rgba(0, 0, 0, 0.15),
+      0 0 0 1px rgba(255, 95, 31, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
   }
 
   .pill-content {
@@ -105,7 +161,6 @@
     color: #FF5F1F;
   }
 
-  /* Common container for dots and bars */
   .visualization-container {
     width: 75%;
     height: 12px;
@@ -115,70 +170,106 @@
     align-items: center;
   }
 
-  /* Dot styling - used in all states */
   .dot {
     width: 3px;
     height: 3px;
     border-radius: 50%;
     background: linear-gradient(to top, #FF5F1F, #FFA07A);
     opacity: 1;
-    transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 0 4px rgba(255, 95, 31, 0.3);
   }
 
-  /* Animated dots for processing state */
   .dot.animated {
     animation: wave 1.5s infinite ease-in-out;
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.15);
   }
 
-  .dot.animated:nth-child(2n) {
-    animation-delay: 0.15s;
-  }
+  .dot.animated:nth-child(2n) { animation-delay: 0.15s; }
+  .dot.animated:nth-child(3n) { animation-delay: 0.3s; }
+  .dot.animated:nth-child(4n) { animation-delay: 0.45s; }
+  .dot.animated:nth-child(5n) { animation-delay: 0.6s; }
 
-  .dot.animated:nth-child(3n) {
-    animation-delay: 0.3s;
-  }
-
-  .dot.animated:nth-child(4n) {
-    animation-delay: 0.45s;
-  }
-
-  .dot.animated:nth-child(5n) {
-    animation-delay: 0.6s;
-  }
-
-  /* Frequency bars for active state */
   .waveform-bar {
     width: 3px;
     border-radius: 1px;
     animation: pulse 1.5s infinite;
     background: linear-gradient(to top, #FF5F1F, #FFA07A);
     opacity: 1;
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 4px rgba(255, 95, 31, 0.3);
   }
 
-  /* Collapsed state dots - smaller size but maintain the same spacing */
   .dot.collapsed {
     width: 2px;
     height: 2px;
     opacity: 0.95;
     background: linear-gradient(to top, #FF5F1F, #FFA07A);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 0 2px rgba(255, 95, 31, 0.2);
   }
 
-  /* Adjust collapsed container to maintain proportions */
   .pill-container.collapsed .visualization-container {
     gap: 3px;
   }
 
   @keyframes wave {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-3px); }
+    0%, 100% { transform: translateY(0); opacity: 1; }
+    50% { transform: translateY(-4px); opacity: 0.8; }
   }
 
   @keyframes pulse {
-    0%, 100% { height: 3px; }
-    50% { height: 8px; }
+    0%, 100% { height: 3px; opacity: 1; }
+    50% { height: 8px; opacity: 0.9; }
+  }
+
+  /* Typography enhancements */
+  .heading-gradient {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(255, 255, 255, 0.7) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-subtle {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .text-dimmed {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  /* Button enhancements */
+  .btn-primary {
+    background: rgba(255, 255, 255, 0.95);
+    color: rgba(0, 0, 0, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 
+      0 1px 3px rgba(0, 0, 0, 0.12),
+      0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  .btn-primary:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: translateY(-1px);
+    box-shadow: 
+      0 2px 6px rgba(0, 0, 0, 0.15),
+      0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
   }
 }
