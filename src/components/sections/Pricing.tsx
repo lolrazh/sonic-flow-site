@@ -4,13 +4,7 @@ import React from 'react';
 
 export default function Pricing() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-[rgb(14,14,14)] to-[rgb(10,10,10)]" id="pricing">
-      {/* Ambient background elements */}
-      <div className="absolute inset-0 ambient-gradient-1" />
-      
-      {/* Top gradient transition */}
-      <div className="absolute inset-x-0 top-0 h-32 section-transition-top" />
-      
+    <section className="relative overflow-hidden bg-black section-separator" id="pricing">
       <div className="container mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
         <div className="text-center">
           <h2 className="font-serif text-5xl lowercase tracking-tight heading-gradient sm:text-6xl">

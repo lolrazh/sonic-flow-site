@@ -66,15 +66,9 @@ export default function Hero({
           className="object-cover object-left"
           priority
         />
-        {/* Enhanced gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-black/50" />
-        
-        {/* Ambient gradient overlay */}
-        <div className="absolute inset-0 ambient-gradient-1" />
+        {/* Simple dark overlay */}
+        <div className="absolute inset-0 bg-black/40" />
       </div>
-
-      {/* Bottom gradient transition */}
-      <div className="absolute inset-x-0 bottom-0 h-32 section-transition-bottom z-10" />
 
       <div className="relative z-10 flex min-h-screen w-full items-center">
         <div className="w-full">

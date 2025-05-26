@@ -90,13 +90,7 @@ export default function HowItWorks() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-[rgb(12,12,12)] to-[rgb(14,14,14)]">
-      {/* Ambient background elements */}
-      <div className="absolute inset-0 ambient-gradient-3" />
-
-      {/* Top gradient transition */}
-      <div className="absolute inset-x-0 top-0 h-32 section-transition-top" />
-
+    <section className="relative overflow-hidden bg-black section-separator">
       <div className="container mx-auto px-8 py-24 md:py-32 max-w-7xl">
         <div className="flex flex-col items-center gap-16 lg:flex-row-reverse lg:items-center lg:justify-between">
           {/* Left Content - Now on the right */}

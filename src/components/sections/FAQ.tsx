@@ -67,13 +67,7 @@ export default function FAQ({
   };
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-[rgb(10,10,10)] to-[rgb(12,12,12)]" id="faq">
-      {/* Ambient background elements */}
-      <div className="absolute inset-0 ambient-gradient-2" />
-      
-      {/* Top gradient transition */}
-      <div className="absolute inset-x-0 top-0 h-32 section-transition-top" />
-
+    <section className="relative overflow-hidden bg-black section-separator" id="faq">
       <div className="container mx-auto px-8 py-24 md:py-32 max-w-7xl">
         <div className="flex flex-col items-center">
           {/* Header */}

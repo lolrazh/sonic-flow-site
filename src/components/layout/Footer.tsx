@@ -9,13 +9,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
   
   return (
-    <footer className="relative overflow-hidden bg-gradient-to-b from-[rgb(12,12,12)] to-[rgb(8,8,8)]">
-      {/* Ambient background elements */}
-      <div className="absolute inset-0 ambient-gradient-3" />
-      
-      {/* Top gradient transition */}
-      <div className="absolute inset-x-0 top-0 h-32 section-transition-top" />
-
+    <footer className="relative overflow-hidden bg-black section-separator">
       <div className="container mx-auto px-8 py-16 max-w-7xl">
         <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-12">
           <div className="flex items-center mb-8 md:mb-0">
