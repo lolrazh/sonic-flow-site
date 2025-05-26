@@ -11,7 +11,7 @@ export default function Footer() {
   return (
     <footer className="relative overflow-hidden section-separator">
       <div className="container mx-auto px-8 py-12 max-w-7xl">
-        <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-12">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-8">
           <div className="flex items-center mb-8 md:mb-0">
             <h3 className="font-lexend text-2xl lowercase tracking-tight text-white/90">sonic<span className="text-dimmed">flow</span></h3>
           </div>
@@ -29,10 +29,7 @@ export default function Footer() {
           </div>
         </div>
         
-        {/* Enhanced divider */}
-        <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent mb-8"></div>
-        
-        <div className="flex flex-col items-center justify-between md:flex-row">
+        <div className="flex flex-col items-center justify-between pt-8 md:flex-row border-t border-white/10">
           <span className="font-lexend text-sm text-dimmed mb-6 md:mb-0">
             © {currentYear} sonic flow. all rights reserved.
           </span>

@@ -33,25 +33,25 @@ export default function Pricing() {
               
               <ul className="space-y-3 mb-8">
                 <li className="flex items-start">
-                  <span className="text-accent-600 mr-3 text-sm leading-6 font-medium">—</span>
+                  <span className="text-white/70 mr-3 text-sm leading-6 font-medium">—</span>
                   <span className="font-lexend text-subtle">unlimited dictation</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-accent-600 mr-3 text-sm leading-6 font-medium">—</span>
+                  <span className="text-white/70 mr-3 text-sm leading-6 font-medium">—</span>
                   <span className="font-lexend text-subtle">works in all your apps</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-accent-600 mr-3 text-sm leading-6 font-medium">—</span>
+                  <span className="text-white/70 mr-3 text-sm leading-6 font-medium">—</span>
                   <span className="font-lexend text-subtle">fully local & private</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-accent-600 mr-3 text-sm leading-6 font-medium">—</span>
+                  <span className="text-white/70 mr-3 text-sm leading-6 font-medium">—</span>
                   <span className="font-lexend text-subtle">priority support for beta users</span>
                 </li>
               </ul>
 
               <div className="space-y-2">
-                <button className="w-full rounded-lg btn-primary px-4 py-3 font-lexend text-sm font-medium">
+                <button className="w-full rounded-full btn-primary px-4 py-3 font-lexend text-sm font-medium">
                   Get Started
                 </button>
                 <p className="text-center text-xs text-dimmed">

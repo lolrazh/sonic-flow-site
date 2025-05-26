@@ -92,7 +92,7 @@ export default function HowItWorks() {
   return (
     <section className="relative overflow-hidden section-separator">
       <div className="container mx-auto px-8 py-20 md:py-28 max-w-7xl">
-        <div className="flex flex-col items-center gap-16 lg:flex-row-reverse lg:items-center lg:justify-between">
+        <div className="flex flex-col items-center gap-24 lg:flex-row-reverse lg:items-center lg:justify-between">
           {/* Left Content - Now on the right */}
           <div className="max-w-xl">
             <h2 className="mb-6 font-serif text-4xl lowercase tracking-tight heading-gradient md:text-5xl lg:text-6xl">
@@ -111,9 +111,9 @@ export default function HowItWorks() {
           {/* Right Content - Now on the left - Windows Terminal Demo */}
           <div className="relative aspect-[4/3] w-full max-w-xl overflow-hidden rounded-xl lg:w-1/2 card-floating">
             {/* Windows Terminal-like interface */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[rgb(12,12,24)] to-[rgb(8,8,16)] flex flex-col">
+            <div className="absolute inset-0 bg-gradient-to-b from-neutral-900 to-neutral-950 flex flex-col">
               {/* Terminal Title Bar */}
-              <div className="flex items-center justify-between px-4 py-2 bg-gradient-to-r from-[rgb(30,30,43)] to-[rgb(28,28,40)] border-b border-white/5">
+              <div className="flex items-center justify-between px-4 py-2 bg-gradient-to-r from-neutral-800 to-neutral-800/90 border-b border-white/10">
                 <div className="flex items-center gap-2">
                   <svg className="w-4 h-4 text-white/60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -128,7 +128,7 @@ export default function HowItWorks() {
               </div>
               
               {/* Terminal Content */}
-              <div className="flex-1 p-4 font-mono text-sm text-white/70 bg-gradient-to-b from-transparent to-black/10">
+              <div className="flex-1 p-4 font-mono text-sm text-white/70 bg-gradient-to-b from-transparent to-black/20">
                 <p className="mb-2">PS C:\Users\user&gt; sonic-flow --start</p>
                 <p className="text-green-400/90 mb-4 flex items-center gap-2">
                   <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
