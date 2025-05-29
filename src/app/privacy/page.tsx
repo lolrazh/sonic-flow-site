@@ -22,7 +22,7 @@ export default function PrivacyPage() {
           <div className="card-elevated rounded-2xl p-8 md:p-12">
             <div className="prose prose-invert max-w-none">
               <p className="font-lexend text-lg text-subtle mb-8">
-                This Policy explains how Sonic Flow ("<strong>we</strong>", "<strong>our</strong>") collects, uses and shares your information when you visit <strong className="text-white/90">sonicflow.app</strong>, install our desktop application or otherwise interact with the Service.
+                This Policy explains how Sonic Flow (&quot;<strong>we</strong>&quot;, &quot;<strong>our</strong>&quot;) collects, uses and shares your information when you visit <strong className="text-white/90">sonicflow.app</strong>, install our desktop application or otherwise interact with the Service.
               </p>
 
               <div className="space-y-8">
@@ -172,7 +172,7 @@ export default function PrivacyPage() {
                     9. changes
                   </h2>
                   <p className="font-lexend text-subtle leading-relaxed">
-                    We'll post any privacy updates here and, if major, notify you by email.
+                    We&apos;ll post any privacy updates here and, if major, notify you by email.
                   </p>
                 </section>
 

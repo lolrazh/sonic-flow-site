@@ -2,18 +2,18 @@
 
 import React, { useEffect, useState } from 'react';
 
-const MouseAwareGradient: React.FC = () => {
+const MouseAwareGradient = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    const handleMouseMove = (event: MouseEvent) => {
+    const updateMousePosition = (event: MouseEvent) => {
       setMousePosition({ x: event.clientX, y: event.clientY });
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', updateMousePosition);
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mousemove', updateMousePosition);
     };
   }, []);
 
@@ -22,7 +22,14 @@ const MouseAwareGradient: React.FC = () => {
     document.documentElement.style.setProperty('--mouse-y', `${mousePosition.y}px`);
   }, [mousePosition]);
 
-  return null; // This component only handles side effects
+  return (
+    <div
+      className="pointer-events-none fixed inset-0 z-[-2] opacity-50 transition duration-300 mouse-aware-gradient"
+      style={{
+        background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(255,165,0,0.06), transparent 80%)`,
+      }}
+    />
+  );
 };
 
 export default MouseAwareGradient; 

@@ -22,7 +22,7 @@ export default function TermsPage() {
           <div className="card-elevated rounded-2xl p-8 md:p-12">
             <div className="prose prose-invert max-w-none">
               <p className="font-lexend text-lg text-subtle mb-8">
-                <strong className="text-white/90">Welcome to Sonic Flow!</strong> These Terms govern your use of the Sonic Flow website, desktop applications, and any related services (collectively, the "<strong>Service</strong>"). By using the Service you agree to these Terms. If you do not agree, do not use the Service.
+                <strong className="text-white/90">Welcome to Sonic Flow!</strong> These Terms govern your use of the Sonic Flow website, desktop applications, and any related services (collectively, the &quot;<strong>Service</strong>&quot;). By using the Service you agree to these Terms. If you do not agree, do not use the Service.
               </p>
 
               <div className="space-y-8">
@@ -31,7 +31,7 @@ export default function TermsPage() {
                     1. who we are
                   </h2>
                   <p className="font-lexend text-subtle leading-relaxed">
-                    Sonic Flow is operated by <strong className="text-white/90">Sonic Flow, Hyderabad, Telangana, India</strong> ("<strong>we</strong>", "<strong>our</strong>", "<strong>us</strong>"). Contact — <strong><a href="mailto:sandheep@sonicflow.app" className="text-white/90 hover:text-white transition-colors">sandheep@sonicflow.app</a></strong>.
+                    Sonic Flow is operated by <strong className="text-white/90">Sonic Flow, Hyderabad, Telangana, India</strong> (&quot;<strong>we</strong>&quot;, &quot;<strong>our</strong>&quot;, &quot;<strong>us</strong>&quot;). Contact — <strong><a href="mailto:sandheep@sonicflow.app" className="text-white/90 hover:text-white transition-colors">sandheep@sonicflow.app</a></strong>.
                   </p>
                 </section>
 
@@ -49,7 +49,7 @@ export default function TermsPage() {
                     3. your account
                   </h2>
                   <p className="font-lexend text-subtle leading-relaxed">
-                    You must provide accurate information (name, email). You're responsible for activity that happens under your login. Keep your password secure.
+                    You must provide accurate information (name, email). You&apos;re responsible for activity that happens under your login. Keep your password secure.
                   </p>
                 </section>
 
@@ -63,7 +63,7 @@ export default function TermsPage() {
                     <li><strong className="text-white/90">Refunds</strong>: 30-day money-back guarantee, no questions asked. Email us to claim.</li>
                   </ul>
                   <p className="font-lexend text-subtle leading-relaxed mt-3">
-                    Prices may change; we'll give at least 30 days' notice.
+                    Prices may change; we&apos;ll give at least 30 days&apos; notice.
                   </p>
                 </section>
 
@@ -105,7 +105,7 @@ export default function TermsPage() {
                     8. disclaimer
                   </h2>
                   <p className="font-lexend text-subtle leading-relaxed">
-                    Sonic Flow is provided "as is". We do not promise it will be error-free or fit for any particular purpose. To the maximum extent allowed by law we disclaim all warranties.
+                    Sonic Flow is provided &quot;as is&quot;. We do not promise it will be error-free or fit for any particular purpose. To the maximum extent allowed by law we disclaim all warranties.
                   </p>
                 </section>
 
@@ -132,7 +132,7 @@ export default function TermsPage() {
                     11. changes
                   </h2>
                   <p className="font-lexend text-subtle leading-relaxed">
-                    We can update these Terms. If we make material changes we'll email you or post a notice 14 days in advance. Continued use after that means you accept the new Terms.
+                    We can update these Terms. If we make material changes we&apos;ll email you or post a notice 14 days in advance. Continued use after that means you accept the new Terms.
                   </p>
                 </section>
               </div>

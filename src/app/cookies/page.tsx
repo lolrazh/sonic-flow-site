@@ -22,7 +22,7 @@ export default function CookiesPage() {
           <div className="card-elevated rounded-2xl p-8 md:p-12">
             <div className="prose prose-invert max-w-none">
               <p className="font-lexend text-lg text-subtle mb-8">
-                Sonic Flow's marketing site currently sets <strong className="text-white/90">only essential cookies</strong> (session and CSRF tokens). We do <strong className="text-white/90">not</strong> use analytics, ads or behavioural tracking cookies at this time.
+                Sonic Flow&apos;s marketing site currently sets <strong className="text-white/90">only essential cookies</strong> (session and CSRF tokens). We do <strong className="text-white/90">not</strong> use analytics, ads or behavioural tracking cookies at this time.
               </p>
 
               <div className="space-y-8">
@@ -55,7 +55,7 @@ export default function CookiesPage() {
 
                 <section>
                   <h2 className="font-serif text-2xl lowercase tracking-tight heading-gradient mb-4">
-                    what we don't use
+                    what we don&apos;t use
                   </h2>
                   <p className="font-lexend text-subtle leading-relaxed mb-4">
                     Unlike many websites, we keep things simple and privacy-focused:
@@ -74,7 +74,7 @@ export default function CookiesPage() {
                     managing cookies
                   </h2>
                   <p className="font-lexend text-subtle leading-relaxed mb-4">
-                    Since we only use essential cookies, there's nothing to manage or opt out of. However, you can always:
+                    Since we only use essential cookies, there&apos;s nothing to manage or opt out of. However, you can always:
                   </p>
                   <ul className="font-lexend text-subtle leading-relaxed space-y-2 list-disc list-inside">
                     <li>Clear cookies through your browser settings</li>
@@ -88,7 +88,7 @@ export default function CookiesPage() {
                     future changes
                   </h2>
                   <p className="font-lexend text-subtle leading-relaxed">
-                    If we ever decide to add analytics or other cookies in the future, we'll update this policy and implement a proper cookie consent banner. For now, we're committed to keeping things minimal and privacy-first.
+                    If we ever decide to add analytics or other cookies in the future, we&apos;ll update this policy and implement a proper cookie consent banner. For now, we&apos;re committed to keeping things minimal and privacy-first.
                   </p>
                 </section>
 
