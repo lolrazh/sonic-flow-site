@@ -3,6 +3,7 @@ import "@/styles/globals.css";
 import { DM_Serif_Display, Lexend_Deca } from "next/font/google";
 import { type Metadata } from "next";
 import MouseAwareGradient from "@/components/layout/MouseAwareGradient";
+import { CookieBanner } from "@/components/layout";
 
 const dmSerif = DM_Serif_Display({
   subsets: ["latin"],
@@ -32,6 +33,7 @@ export default function RootLayout({
         <div className="relative z-10">
           {children}
         </div>
+        <CookieBanner />
       </body>
     </html>
   );
