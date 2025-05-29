@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import Link from 'next/link';
 
 /**
  * Footer component for the landing page
@@ -17,15 +18,15 @@ export default function Footer() {
           </div>
           
           <div className="flex flex-wrap justify-start md:justify-end gap-8">
-            <a href="/terms" target="_blank" rel="noopener noreferrer" className="font-lexend text-sm text-dimmed transition-all duration-200 hover:text-white/90 hover:transform hover:-translate-y-0.5">
+            <Link href="/terms" className="font-lexend text-sm text-dimmed transition-all duration-200 hover:text-white/90 hover:transform hover:-translate-y-0.5">
               terms
-            </a>
-            <a href="/privacy" target="_blank" rel="noopener noreferrer" className="font-lexend text-sm text-dimmed transition-all duration-200 hover:text-white/90 hover:transform hover:-translate-y-0.5">
+            </Link>
+            <Link href="/privacy" className="font-lexend text-sm text-dimmed transition-all duration-200 hover:text-white/90 hover:transform hover:-translate-y-0.5">
               privacy
-            </a>
-            <a href="/cookies" target="_blank" rel="noopener noreferrer" className="font-lexend text-sm text-dimmed transition-all duration-200 hover:text-white/90 hover:transform hover:-translate-y-0.5">
+            </Link>
+            <Link href="/cookies" className="font-lexend text-sm text-dimmed transition-all duration-200 hover:text-white/90 hover:transform hover:-translate-y-0.5">
               cookies
-            </a>
+            </Link>
           </div>
         </div>
         
