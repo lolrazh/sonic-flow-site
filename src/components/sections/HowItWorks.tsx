@@ -90,7 +90,7 @@ export default function HowItWorks() {
   };
 
   return (
-    <section className="relative overflow-hidden section-separator">
+    <section className="relative overflow-hidden section-separator" id="how-it-works">
       <div className="container mx-auto px-8 py-20 md:py-28 max-w-7xl">
         <div className="flex flex-col items-center gap-24 lg:flex-row-reverse lg:items-center lg:justify-between">
           {/* Left Content - Now on the right */}

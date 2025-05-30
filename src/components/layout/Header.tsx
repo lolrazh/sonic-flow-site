@@ -11,12 +11,35 @@ import { Menu, X } from 'lucide-react';
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>('');
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
+
+      // Get all sections with IDs
+      const sections = ['for-vibe-coders', 'how-it-works', 'pricing', 'faq'];
+      const scrollPosition = window.scrollY + 100; // Offset for header
+
+      let currentSection = '';
+      
+      for (const sectionId of sections) {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          const { offsetTop, offsetHeight } = element;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            currentSection = sectionId;
+            break;
+          }
+        }
+      }
+
+      setActiveSection(currentSection);
     };
+
     window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Call once to set initial state
+    
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -25,6 +48,17 @@ export default function Header() {
     { name: 'pricing', href: '#pricing' },
     { name: 'faq', href: '#faq' },
   ];
+
+  // Determine if a nav item should be active
+  const isNavItemActive = (navItem: { name: string; href: string }) => {
+    if (navItem.name === 'flow') {
+      // "flow" is active when either Features or HowItWorks is in view
+      return activeSection === 'for-vibe-coders' || activeSection === 'how-it-works';
+    }
+    // For other items, check if the href matches the active section
+    const sectionId = navItem.href.replace('#', '');
+    return activeSection === sectionId;
+  };
 
   // Smooth scroll function
   const handleScrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -72,7 +106,11 @@ export default function Header() {
                 key={item.name}
                 href={item.href}
                 onClick={(e) => handleScrollToSection(e, item.href)}
-                className="font-lexend text-lg text-white/60 transition-colors hover:text-white/90"
+                className={`font-lexend text-lg transition-colors ${
+                  isNavItemActive(item) 
+                    ? 'text-white/90' 
+                    : 'text-white/60 hover:text-white/90'
+                }`}
               >
                 {item.name}
               </a>
@@ -115,7 +153,11 @@ export default function Header() {
                     <a 
                       href={item.href}
                       onClick={(e) => handleScrollToSection(e, item.href)}
-                      className="block py-2 font-lexend text-lg text-white/60 transition-colors hover:text-white/90"
+                      className={`block py-2 font-lexend text-lg transition-colors ${
+                        isNavItemActive(item) 
+                          ? 'text-white/90' 
+                          : 'text-white/60 hover:text-white/90'
+                      }`}
                     >
                       {item.name}
                     </a>
