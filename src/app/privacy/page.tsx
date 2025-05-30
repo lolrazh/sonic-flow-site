@@ -187,10 +187,7 @@ export default function PrivacyPage() {
               </div>
 
               {/* Navigation */}
-              <div className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row gap-4 sm:justify-between">
-                <Link href="/terms" className="btn-secondary rounded-full px-6 py-3 text-center font-lexend text-sm font-medium">
-                  terms of service
-                </Link>
+              <div className="mt-12 pt-8 border-t border-white/10 flex justify-center">
                 <Link href="/" className="btn-primary rounded-full px-6 py-3 text-center font-lexend text-sm font-medium">
                   back to home
                 </Link>

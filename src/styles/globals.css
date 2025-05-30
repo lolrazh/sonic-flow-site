@@ -253,7 +253,6 @@
 
   .btn-primary:hover {
     background: rgba(255, 255, 255, 1);
-    transform: translateY(-1px);
     box-shadow: 
       0 2px 6px rgba(0, 0, 0, 0.15),
       0 8px 20px rgba(0, 0, 0, 0.1);
@@ -270,7 +269,6 @@
   .btn-secondary:hover {
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    transform: translateY(-1px);
   }
 
   /* Utility for text that needs vertical breathing room */
