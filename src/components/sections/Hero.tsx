@@ -17,6 +17,20 @@ interface HeroProps {
 
 /**
  * Hero section component for the landing page
+ * 
+ * DEBUG CLIPPING: If you still see descender clipping:
+ * 1. Right-click on clipped text → Inspect Element
+ * 2. Look for any parent with overflow:hidden in the Computed styles
+ * 3. In console, run: $0.style.overflow = 'visible' on the clipping parent
+ * 
+ * OR use this snippet to find all overflow:hidden elements:
+ * document.querySelectorAll('*').forEach(el => {
+ *   const style = getComputedStyle(el);
+ *   if (style.overflow === 'hidden' || style.overflowY === 'hidden') {
+ *     console.log(el.tagName, el.className, el);
+ *     el.style.outline = '2px solid red';
+ *   }
+ * });
  */
 export default function Hero({
   headline = "this could be you but you're still typing",
@@ -55,7 +69,7 @@ export default function Hero({
   const secondaryCtaHref = secondaryCta?.href ?? "#features";
 
   return (
-    <section className="relative min-h-screen overflow-hidden">
+    <section className="relative min-h-screen overflow-x-hidden overflow-y-visible">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -70,10 +84,13 @@ export default function Hero({
       </div>
 
       <div className="relative z-10 flex min-h-screen w-full items-center">
-        <div className="w-full">
+        <div className="w-full overflow-visible">
           <div className="mx-auto flex w-full max-w-[90rem] justify-center px-8 lg:justify-end">
-            <div className="w-full max-w-3xl lg:-mr-12 xl:-mr-24 2xl:-mr-48">
-              <h1 className="mb-8 font-serif text-4xl font-normal lowercase leading-tight tracking-normal heading-gradient sm:text-5xl md:text-6xl lg:text-7xl">
+            <div className="w-full max-w-3xl lg:-mr-12 xl:-mr-24 2xl:-mr-48 overflow-visible">
+              <h1 
+                className="mb-8 font-serif text-4xl font-normal lowercase leading-[1.3] tracking-normal heading-gradient text-breathe sm:text-5xl md:text-6xl lg:text-7xl"
+                style={{ lineHeight: 1.3 }}
+              >
                 {firstPart}
                 {hasTwoParts && (
                   <>

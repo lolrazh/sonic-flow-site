@@ -272,4 +272,24 @@
     border: 1px solid rgba(255, 255, 255, 0.2);
     transform: translateY(-1px);
   }
+
+  /* Utility for text that needs vertical breathing room */
+  .text-breathe {
+    overflow: visible !important;
+    line-height: 1.3 !important;
+  }
+
+  /* Specific fix for serif headlines at large sizes */
+  .heading-gradient {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(255, 255, 255, 0.7) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    overflow: visible !important;
+    line-height: 1.3 !important;
+  }
 }

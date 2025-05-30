@@ -17,7 +17,7 @@ const lexendDeca = Lexend_Deca({
 });
 
 export const metadata: Metadata = {
-  title: "Sonic Flow - AI-Powered Dictation Tool",
+  title: "Sonic Flow - AI-Powered Dictation",
   description: "Sonic Flow is an AI-powered dictation tool that seamlessly transcribes your speech into any text field. Save time, boost productivity, and say goodbye to manual typing.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
